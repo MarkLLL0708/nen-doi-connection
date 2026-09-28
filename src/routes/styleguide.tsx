@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { PRODUCT_NAME, PRODUCT_WORDMARK } from "@/config/product";
 import { AvatarPair, BottomSheet, BottomTabBar, Card, DuotoneScreen, duotones, EmptyState, FadeUp, FlameGlyph, FlameStreak, Hairline, ImageSlot, LightBloom, PrimaryButton, SwipeCard, Tag, TextButton, Wordmark, type TabKey } from "@/components/visual";
 import i18n from "@/i18n";
@@ -17,8 +17,13 @@ export const Route = createFileRoute("/styleguide")({
   component: Styleguide,
 });
 
-const TONE_MARKS = "ấ ầ ẩ ẫ ậ · ế ề ể ễ ệ · ỡ ờ ở ợ ớ · ự ừ ử ữ ứ · ỷ ỳ ỹ ỵ";
-const TONE_WORDS = "Nguyễn Thượng Hữu Ưởng Kỹ Mỗi";
+const TONE_TEST = "Ấm áp từ điều nhỏ xíu, ề ữ ở ự ệ ổ ầ ẫ ậ ọ ợ ẵ";
+const specimen = [
+  { key: "display", cls: "type-display" }, { key: "displayItalic", cls: "type-display italic" },
+  { key: "title", cls: "type-title" }, { key: "titleItalic", cls: "type-title italic" },
+  { key: "body", cls: "type-body" }, { key: "button", cls: "type-button" },
+  { key: "caption", cls: "type-caption text-muted-foreground" }, { key: "label", cls: "label-caps" },
+] as const;
 const swatches = [
   { key: "ivory", light: "#FAF6F0", dark: "#14100E", cls: "bg-background border border-hairline" },
   { key: "surface", light: "#FFFFFF · 70%", dark: "#1E1815", cls: "bg-card border border-hairline" },
@@ -51,7 +56,7 @@ function Showcase({ dark }: { dark: boolean }) {
 
       <header className="px-6 pb-12 pt-12">
         <p className="label-caps">{t("hero.label")}</p>
-        <h1 className="mt-5 type-display">{t("hero.title")}</h1>
+        <h1 className="mt-5 type-display"><Trans i18nKey="hero.title" components={{ i: <em /> }} /></h1>
         <p className="mt-5 max-w-[300px] type-body text-muted-foreground">{t("hero.sub")}</p>
         <ImageSlot className="mt-10 h-[260px]" />
       </header>
@@ -68,21 +73,18 @@ function Showcase({ dark }: { dark: boolean }) {
 
         <Section title={t("sections.type")}>
           <div className="space-y-7">
-            <div><p className="label-caps mb-2">{t("type.display")} · 52</p><p className="type-display">{t("type.displaySample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.display")} · 56</p><p className="type-display nums">{t("type.displaySample")}</p></div>
             <div><p className="label-caps mb-2">{t("type.title")} · 30</p><p className="type-title">{t("type.titleSample")}</p></div>
-            <div><p className="label-caps mb-2">{t("type.body")} · 16.5</p><p className="type-body">{t("type.bodySample")}</p></div>
-            <div><p className="label-caps mb-2">{t("type.caption")} · 13</p><p className="type-caption text-muted-foreground">{t("type.captionSample")}</p></div>
-            <div><p className="label-caps mb-2">{t("type.label")} · 11.5</p><p className="label-caps">{t("hero.label")} · {t("card.label")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.body")} · 16</p><p className="type-body">{t("type.bodySample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.caption")} · 13</p><p className="type-caption text-muted-foreground nums">{t("type.captionSample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.label")} · 11</p><p className="label-caps">{t("hero.label")} · {t("card.label")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.button")} · 15</p><p className="type-button">{t("actions.begin")}</p></div>
           </div>
         </Section>
 
         <Section title={t("sections.toneMarks")}>
-          <div className="space-y-4" data-testid="tone-marks">
-            {[56, 44, 30].map((s) => <p key={s} className="font-serif leading-[1.35]" style={{ fontSize: s }}>{TONE_WORDS}</p>)}
-            <p className="type-title">{TONE_MARKS}</p>
-            <p className="type-body">{TONE_MARKS} — {TONE_WORDS}</p>
-            <p className="type-caption">{TONE_MARKS} — {TONE_WORDS}</p>
-            <p className="label-caps">{TONE_WORDS}</p>
+          <div className="space-y-5" data-testid="tone-marks">
+            {specimen.map((st) => <div key={st.key}><p className="label-caps mb-1.5">{t(`type.${st.key}`)}</p><p className={st.cls}>{TONE_TEST}</p></div>)}
           </div>
         </Section>
 
