@@ -24,3 +24,5 @@
 
 - One React copy: vite.config.ts dedupes react/react-dom/router/query and pre-bundles them plus every lazily-found library (optimizeDeps.include); a mid-session re-optimize once loaded two Reacts and blanked pages.
 - Test pill parks in the top bar (never over content), draggable, collapses to a dot; off the Home tabs it is always a dot.
+- Games run in rounds: `start_round(type)` RPC picks least-played cards, reads `round_size` and `daily_game_limit` from `app_settings`, and enforces the limit; round answers are readable only when both finished (`can_see_response`) and final once sent — so the UI never decides visibility or the limit.
+- Reveal floods pick a contrasting colour via `src/lib/flood.ts` (`flood-auto` = ink on light, ember on dark) — same-colour floods were invisible.

@@ -5,6 +5,8 @@
 - [x] Streak logic (both partners, couple timezone, 1 freeze/month, 8pm at-risk), occasions with lunar dates, milestone burst
 - [x] One-phone test mode (Thử A/Thử B switcher) + two-person question test
 - [x] Daily Question screen
-- [x] Photo of the day, Play (Chọn một, Ai dễ... hơn?), Date swipe + shared list, Memories
-- [ ] Signed-in browser test of the new screens (blocked: no test accounts / email confirmation)
-- [ ] Part B: sensitive-topics row in Settings, camera-first photo + diary, 4 games (8-item rounds, daily limit), share cards, rapid_qa/guess content
+- [x] Photo of the day, Play, Date swipe + shared list, Memories
+- [x] Contrasting reveal floods; game rounds (8, admin setting) + 2/day limit in the database
+- [x] Đoán ý, Hỏi nhanh, Chủ đề nhạy cảm in Cài đặt, Nhật ký ảnh, share cards, verdict lines
+- [x] LAUNCH_CHECKLIST.md
+- [ ] Launch steps in LAUNCH_CHECKLIST.md (waiting on your go-ahead)
