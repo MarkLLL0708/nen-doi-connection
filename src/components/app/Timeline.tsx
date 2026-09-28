@@ -87,8 +87,8 @@ export function Timeline({ me }: { me: Me }) {
   return <div className="mt-5">
     <p className="flex items-center gap-2 px-1 type-button text-[14px]"><Lock strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.timeline.privacy")}</p>
     <div className="mt-4 grid grid-cols-2 gap-2">
-      <SecondaryButton onClick={() => setAdding(adding === "note" ? null : "note")} className="h-12"><PenLine strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.timeline.addNote")}</SecondaryButton>
-      <SecondaryButton onClick={() => setAdding(adding === "voice" ? null : "voice")} className="h-12"><Mic strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.timeline.addVoice")}</SecondaryButton>
+      <SecondaryButton onClick={() => setAdding(adding === "note" ? null : "note")} className="h-12 whitespace-nowrap px-3 text-[15px]"><PenLine strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.timeline.addNote")}</SecondaryButton>
+      <SecondaryButton onClick={() => setAdding(adding === "voice" ? null : "voice")} className="h-12 whitespace-nowrap px-3 text-[15px]"><Mic strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.timeline.addVoice")}</SecondaryButton>
     </div>
     {adding && <AddEntry me={me} kind={adding} onDone={() => { setAdding(null); refresh(); }} />}
     {resurface && <div className="grain block-ember mt-5 rounded-[24px] p-5"><p className="relative z-[2] type-label">{resurface.label}</p><div className="relative z-[2] mt-3"><EntryBody e={resurface.e} /></div></div>}
