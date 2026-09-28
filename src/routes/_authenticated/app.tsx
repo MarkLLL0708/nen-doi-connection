@@ -10,6 +10,9 @@ import {
   Pressable, SlideUp, Stagger, StaggerItem, StreakLine, Ticker, applyTheme, formatNumber, type TabKey, type ThemeMode,
 } from "@/components/visual";
 import { Shell } from "@/components/app/Shell";
+import { PlayTab } from "@/components/app/PlayTab";
+import { DateTab } from "@/components/app/DateTab";
+import { MemoriesTab } from "@/components/app/MemoriesTab";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
 import { diffDays, milestoneToday, parseDate, todayIn, upcomingOccasions } from "@/lib/occasions";
 import i18n from "@/i18n";
@@ -44,7 +47,7 @@ function AppScreen() {
 
   return <Shell className="pb-28">
     <PageTransition key={tab} className="flex flex-1 flex-col">
-      {tab === "home" ? <Home me={me} /> : tab === "settings" ? <SettingsTab me={me} /> : <Soon tab={tab} />}
+      {tab === "home" ? <Home me={me} /> : tab === "settings" ? <SettingsTab me={me} /> : tab === "play" ? <PlayTab me={me} /> : tab === "date" ? <DateTab me={me} /> : <MemoriesTab me={me} />}
     </PageTransition>
     <div className="fixed inset-x-0 bottom-4 z-30 mx-auto max-w-[390px] px-4">
       <BottomTabBar id="app-tabs" active={tab} onSelect={(k: TabKey) => void navigate({ to: "/app", search: k === "home" ? {} : { tab: k } })} />
@@ -94,7 +97,7 @@ function Home({ me }: { me: Me }) {
     { name: partnerName, done: !!theirs?.[k], avatar: me.partner?.avatar, url: partnerUrl },
   ];
   const tile = (k: "question" | "photo" | "game", tone: string, icon: typeof Camera) =>
-    <ActionTile onClick={k === "question" ? () => void navigate({ to: "/question" }) : undefined} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
+    <ActionTile onClick={k === "question" ? () => void navigate({ to: "/question" }) : k === "photo" ? () => void navigate({ to: "/photo" }) : () => void navigate({ to: "/app", search: { tab: "play" } })} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
       youName={t("app.home.you")} partnerName={partnerName} avatars={<AvatarDuo size={32} people={people(k)} />} />;
 
   const occName = occasion ? t(`app.occasionNames.${occasion.kind}`, { year: occasion.year, count: occasion.count ?? 0, name: occasion.name ?? "" }) : "";
@@ -135,18 +138,6 @@ function Home({ me }: { me: Me }) {
     {occasion && <div className="mt-6 px-4"><OccasionBanner
       label={occasion.days === 0 ? t("app.home.occasionToday", { name: occName }) : t("app.home.occasion", { name: occName, count: occasion.days })}
       note={t(`app.home.occasionNotes.${occasion.kind}`)} /></div>}
-  </div>;
-}
-
-const soonTone: Record<string, string> = { play: "block-butter", date: "block-blush", memories: "block-plum" };
-function Soon({ tab }: { tab: string }) {
-  const { t } = useTranslation();
-  return <div className="flex flex-1 flex-col px-4 pt-6">
-    <Block tone={soonTone[tab] ?? "block-ember"} className="flex min-h-[60vh] flex-col justify-end">
-      <p className="type-label">{t(`tabs.${tab}`)} · {t("app.soon.label")}</p>
-      <h1 className="mt-3 type-display"><SlideUp>{t("app.soon.title")}</SlideUp></h1>
-      <p className="mt-3 type-body">{t("app.soon.body")}</p>
-    </Block>
   </div>;
 }
 

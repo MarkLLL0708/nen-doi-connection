@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { appEn, appVi } from "./app";
 import { questionEn, questionVi } from "./question";
+import { featEn, featVi } from "./features";
 
 export const resources = {
   vi: { translation: {
@@ -66,6 +67,7 @@ export const resources = {
       countReplay: "Đếm lại", odometerNext: "Thêm một ngày", burstFire: "Chạm cột mốc", burstLabel: "CỘT MỐC", burstText: "30 ngày liên tiếp. Ngọn lửa này là của hai người.", reducedNote: "Đang bật giảm chuyển động: chỉ còn hiệu ứng mờ dần." },
     app: appVi,
     question: questionVi,
+    feat: featVi,
   } },
   en: { translation: {
     pageTitle: "Design system", pageDescription: "Nến Đôi colour, type and interface components in light and dark mode.",
@@ -129,6 +131,7 @@ export const resources = {
       countReplay: "Count again", odometerNext: "Add a day", burstFire: "Hit a milestone", burstLabel: "MILESTONE", burstText: "30 days in a row. This flame belongs to you both.", reducedNote: "Reduced motion is on: simple fades only." },
     app: appEn,
     question: questionEn,
+    feat: featEn,
   } },
 } as const;
 
