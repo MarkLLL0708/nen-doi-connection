@@ -106,8 +106,9 @@ export const mockProvider: CoachProvider = {
       v = { short: first, medium: clean, long: `${clean} ${dialect === "south" ? "Vậy nha." : "Thế nhé."}` };
     } else {
       const lower = text.toLowerCase();
-      v = APPROVED.find((a) => a.useCase === useCase && lower.includes(a.match))?.out ?? BASE[useCase];
-      v = toneApply(v, tone);
+      const approved = APPROVED.find((a) => a.useCase === useCase && lower.includes(a.match))?.out;
+      // Approved samples are used word for word; only the parents tone rewrites them.
+      v = approved && tone !== "parents" ? approved : toneApply(approved ?? BASE[useCase], tone);
     }
     const fill = (s: string) => dialectApply(s, dialect).split("{partner}").join(partner);
     return { short: fill(v.short), medium: fill(v.medium), long: fill(v.long) };
