@@ -4,4 +4,6 @@
 - [x] Intro, auth, profile + couple setup, pairing, Home with real data, tabs, theme setting
 - [x] Streak logic (both partners, couple timezone, 1 freeze/month, 8pm at-risk), occasions with lunar dates, milestone burst
 - [ ] Two-account end-to-end test in the browser (blocked: email confirmation; needs user's choice on auto-confirm or real inboxes)
-- [ ] Feature screens behind the tiles (question, photo, game, dates, memories) — next prompt
+- [x] Daily Question screen
+- [ ] Feature screens behind the photo, game, dates, memories tiles
+- [ ] Two-account browser test of Daily Question (blocked: no test accounts / email confirmation)
