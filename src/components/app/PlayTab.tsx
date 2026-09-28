@@ -331,8 +331,8 @@ function RapidReveal({ sessions, pick, me, partnerId, partner }: { sessions: Ses
   const [at, setAt] = useState<{ x: number; y: number } | null>(null);
   const advancing = useRef(false); // the flood's exit animation also reports "done"; advance once per tap
   const s = sessions[i]!;
-  // Alternate the flood between two contrasting colours so every switch is visible on the ember card.
-  const floodTone = i % 2 ? "block-ink" : "block-butter";
+  // Butter on the ember card, per the flood contrast rule.
+  const floodTone = floodFor(tone.rapid_qa);
   return <div ref={box} className={`grain ${tone.rapid_qa} relative overflow-hidden rounded-[28px] p-5`}>
     <ColourFlood at={at} active={flood} colourClass={floodTone} onDone={() => { if (!advancing.current) return; advancing.current = false; setI((n) => n + 1); setFlood(false); }} />
     <div className="relative z-[2]">
