@@ -177,7 +177,7 @@ function Reveal({ tone, q, text, me, mine, theirs, partnerName, onBack }: { tone
   return <Shell>
     <div ref={ref} className="relative flex flex-1 flex-col">
       <ColourFlood at={at} active={flood} colourClass={tone} onDone={() => setOpen(true)} />
-      <div className={`relative z-[2] flex flex-1 flex-col ${flood ? tone.replace("block-", "text-on-") : ""}`}>
+      <div className="relative z-[2] flex flex-1 flex-col transition-colors duration-300" style={flood ? { color: `var(--on-${tone === "block-deep" ? "ink" : tone.slice(6)})` } : undefined}>
         <TopBar label={t(`question.packs.${q.pack}`)} onBack={onBack} />
         {!open ? <div className="flex flex-1 flex-col justify-end gap-5 px-5 pb-10">
           <p className="type-label">{t("question.bothLabel")}</p>
