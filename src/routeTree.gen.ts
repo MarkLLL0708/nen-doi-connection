@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PreviewHomeRouteImport } from './routes/preview-home'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreviewHomeRoute = PreviewHomeRouteImport.update({
+  id: '/preview-home',
+  path: '/preview-home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StyleguideRoute = StyleguideRouteImport.update({
@@ -25,27 +31,31 @@ const StyleguideRoute = StyleguideRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/styleguide'
+  fullPaths: '/' | '/preview-home' | '/styleguide'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/styleguide'
-  id: '__root__' | '/' | '/styleguide'
+  to: '/' | '/preview-home' | '/styleguide'
+  id: '__root__' | '/' | '/preview-home' | '/styleguide'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PreviewHomeRoute: typeof PreviewHomeRoute
   StyleguideRoute: typeof StyleguideRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/preview-home': {
+      id: '/preview-home'
+      path: '/preview-home'
+      fullPath: '/preview-home'
+      preLoaderRoute: typeof PreviewHomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/styleguide': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PreviewHomeRoute: PreviewHomeRoute,
   StyleguideRoute: StyleguideRoute,
 }
 export const routeTree = rootRouteImport
