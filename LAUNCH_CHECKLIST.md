@@ -12,7 +12,7 @@
 
 3. **Connect a proper email provider** for confirmation and magic-link emails (custom sending domain). Check the provider's daily/hourly sending limits against expected sign-ups, and test delivery to Gmail, Outlook and Yahoo.
 
-4. **Review the signed-in-only functions flagged by the security check** (security-definer helpers such as `today_question`, `today_status`, `start_round`, `round_status`, `swipe_date`, `join_couple`, `refresh_invite`, `create_couple`, `has_answered`, `has_posted`, `has_responded`, `round_completed`, `can_see_response`). Confirm each one only acts on the caller's own couple, and revoke any that are no longer used.
+4. **Review the signed-in-only functions flagged by the security check** (security-definer helpers such as `today_question`, `today_status`, `start_round`, `round_status`, `swipe_date`, `join_couple`, `refresh_invite`, `create_couple`, `has_answered`, `has_posted`, `has_responded`, `round_completed`, `can_see_response`, and the capsule set: `list_capsules`, `seal_capsule`, `open_capsule`, `sync_capsule_notices`, `capsule_readable`, `capsule_file_readable`). Confirm each one only acts on the caller's own couple, and revoke any that are no longer used.
 
 5. **Update the saved project instructions** in Settings so they describe the real app (screens, Colour Block, reveal rule, rounds and daily limit) rather than the old style guide.
 

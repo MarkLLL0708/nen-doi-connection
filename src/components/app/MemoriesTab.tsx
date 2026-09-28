@@ -8,6 +8,9 @@ import { PrimaryButton, SecondaryButton, SlideUp } from "@/components/visual";
 import type { Me } from "@/lib/couple";
 import { dateKey } from "@/lib/daily";
 import { PhotoDiary } from "@/components/app/PhotoDiary";
+import { Timeline } from "@/components/app/Timeline";
+import { Capsules } from "@/components/app/Capsules";
+import { MEM_VIEW_KEY } from "@/components/app/NotificationBell";
 import { todayIn } from "@/lib/occasions";
 
 const tones = ["block-plum", "block-butter", "block-blush", "block-ember"];
@@ -17,7 +20,8 @@ export function MemoriesTab({ me }: { me: Me }) {
   const { t } = useTranslation();
   const qc = useQueryClient();
   const [adding, setAdding] = useState(false);
-  const [view, setView] = useState<"list" | "diary">("list");
+  const [view, setView] = useState<"timeline" | "capsules" | "diary" | "list">("timeline");
+  useEffect(() => { try { const v = localStorage.getItem(MEM_VIEW_KEY); if (v === "capsules") { setView("capsules"); localStorage.removeItem(MEM_VIEW_KEY); } } catch { /* ignore */ } }, []);
   const list = useQuery({ queryKey: ["memories"], queryFn: async () => {
     const { data, error } = await supabase.from("memories").select("*").order("happened_on", { ascending: false }).order("created_at", { ascending: false });
     if (error) throw error; return data;
@@ -27,11 +31,13 @@ export function MemoriesTab({ me }: { me: Me }) {
   return <div className="px-4 pt-8">
     <p className="px-1 type-label text-muted-foreground">{t("feat.memories.label")}</p>
     <h1 className="mt-3 px-1 type-display"><SlideUp>{t("feat.memories.title")}</SlideUp></h1>
-    <div className="mt-5 grid grid-cols-2 gap-2 rounded-[20px] bg-surface p-1" role="tablist">
-      {(["list", "diary"] as const).map((k) => <button key={k} role="tab" aria-selected={view === k} onClick={() => setView(k)}
-        className={`h-12 rounded-[16px] type-button ${view === k ? "block-blush" : ""}`}>{t(`feat.memories.tabs.${k}`)}</button>)}
+    <div className="mt-5 grid grid-cols-3 gap-1 rounded-[20px] bg-surface p-1" role="tablist">
+      {(["timeline", "capsules", "diary"] as const).map((k) => <button key={k} role="tab" aria-selected={view === k} onClick={() => setView(k)}
+        className={`min-h-12 rounded-[16px] px-1 py-2 type-button text-[13px] leading-tight ${view === k ? "block-blush" : ""}`}>{t(`feat.memories.tabs.${k}`)}</button>)}
     </div>
-    {view === "diary" ? <PhotoDiary me={me} /> : <>
+    {view === "timeline" ? <><Timeline me={me} /><div className="mt-6">{adding ? <AddMemory me={me} onDone={() => { setAdding(false); void qc.invalidateQueries({ queryKey: ["timeline"] }); void qc.invalidateQueries({ queryKey: ["memories"] }); }} />
+      : <SecondaryButton onClick={() => setAdding(true)}>{t("feat.timeline.addPhoto")}</SecondaryButton>}</div></>
+    : view === "capsules" ? <Capsules me={me} /> : view === "diary" ? <PhotoDiary me={me} /> : <>
     <div className="mt-6">{adding ? <AddMemory me={me} onDone={() => { setAdding(false); void qc.invalidateQueries({ queryKey: ["memories"] }); }} />
       : <PrimaryButton onClick={() => setAdding(true)}>{t("feat.memories.add")}</PrimaryButton>}</div>
     {list.data && !list.data.length && <p className="mt-6 px-1 type-body text-muted-foreground">{t("feat.memories.empty")}</p>}
@@ -70,7 +76,7 @@ function AddMemory({ me, onDone }: { me: Me; onDone: () => void }) {
       const up = await supabase.storage.from("photos").upload(storage_path, file, { contentType: file.type });
       if (up.error) { setErr(true); setBusy(false); return; }
     }
-    const { error } = await supabase.from("memories").insert({ couple_id: me.couple!.id, title: title.trim(), happened_on: date, note: note.trim() || null, storage_path });
+    const { error } = await supabase.from("memories").insert({ couple_id: me.couple!.id, created_by: me.userId, kind: storage_path ? "photo" : "note", title: title.trim(), happened_on: date, note: note.trim() || null, storage_path });
     setBusy(false);
     if (error) setErr(true); else onDone();
   };

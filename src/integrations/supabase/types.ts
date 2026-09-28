@@ -119,6 +119,71 @@ export type Database = {
         }
         Relationships: []
       }
+      capsules: {
+        Row: {
+          body: string
+          couple_id: string
+          created_at: string
+          id: string
+          notified_at: string | null
+          opened_at: string | null
+          photo_path: string | null
+          recipient_id: string
+          sealed_at: string | null
+          sender_id: string
+          status: string
+          type: string
+          unlock_on: string | null
+          updated_at: string
+          voice_path: string | null
+          voice_seconds: number | null
+        }
+        Insert: {
+          body?: string
+          couple_id: string
+          created_at?: string
+          id?: string
+          notified_at?: string | null
+          opened_at?: string | null
+          photo_path?: string | null
+          recipient_id: string
+          sealed_at?: string | null
+          sender_id: string
+          status?: string
+          type: string
+          unlock_on?: string | null
+          updated_at?: string
+          voice_path?: string | null
+          voice_seconds?: number | null
+        }
+        Update: {
+          body?: string
+          couple_id?: string
+          created_at?: string
+          id?: string
+          notified_at?: string | null
+          opened_at?: string | null
+          photo_path?: string | null
+          recipient_id?: string
+          sealed_at?: string | null
+          sender_id?: string
+          status?: string
+          type?: string
+          unlock_on?: string | null
+          updated_at?: string
+          voice_path?: string | null
+          voice_seconds?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "capsules_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       couple_members: {
         Row: {
           city: string | null
@@ -523,9 +588,11 @@ export type Database = {
           created_by: string
           happened_on: string | null
           id: string
+          kind: string
           note: string | null
           storage_path: string | null
           title: string
+          voice_seconds: number | null
         }
         Insert: {
           couple_id: string
@@ -533,9 +600,11 @@ export type Database = {
           created_by?: string
           happened_on?: string | null
           id?: string
+          kind?: string
           note?: string | null
           storage_path?: string | null
           title: string
+          voice_seconds?: number | null
         }
         Update: {
           couple_id?: string
@@ -543,9 +612,11 @@ export type Database = {
           created_by?: string
           happened_on?: string | null
           id?: string
+          kind?: string
           note?: string | null
           storage_path?: string | null
           title?: string
+          voice_seconds?: number | null
         }
         Relationships: [
           {
@@ -556,6 +627,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json
+          id: string
+          kind: string
+          read_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json
+          id?: string
+          kind: string
+          read_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          id?: string
+          kind?: string
+          read_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       occasion_catalog: {
         Row: {
@@ -976,6 +1074,9 @@ export type Database = {
         Returns: undefined
       }
       can_see_response: { Args: { _session: string }; Returns: boolean }
+      capsule_file_readable: { Args: { _name: string }; Returns: boolean }
+      capsule_local_today: { Args: { _couple: string }; Returns: string }
+      capsule_readable: { Args: { _id: string }; Returns: boolean }
       couple_size: { Args: { _couple: string }; Returns: number }
       create_couple: {
         Args: {
@@ -1005,12 +1106,16 @@ export type Database = {
       }
       is_couple_member: { Args: { _user: string }; Returns: boolean }
       join_couple: { Args: { _code: string }; Returns: string }
+      list_capsules: { Args: never; Returns: Json }
       my_couple_id: { Args: never; Returns: string }
+      open_capsule: { Args: { _id: string }; Returns: undefined }
       refresh_invite: { Args: never; Returns: string }
       round_completed: { Args: { _round: string }; Returns: boolean }
       round_status: { Args: { _round: string }; Returns: Json }
+      seal_capsule: { Args: { _id: string }; Returns: undefined }
       start_round: { Args: { _type: string }; Returns: string }
       swipe_date: { Args: { _idea: string; _liked: boolean }; Returns: boolean }
+      sync_capsule_notices: { Args: never; Returns: number }
       today_question: { Args: never; Returns: Json }
       today_status: { Args: never; Returns: Json }
     }
