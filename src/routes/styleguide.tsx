@@ -35,7 +35,7 @@ function Styleguide() {
   useEffect(() => { if (!celebrating) return; const timeout = window.setTimeout(() => setCelebrating(false), 1700); return () => window.clearTimeout(timeout); }, [celebrating]);
   return <div className={dark ? "dark min-h-screen bg-page" : "min-h-screen bg-page"}>
     <div className="mx-auto min-h-screen w-full max-w-[390px] overflow-hidden bg-background shadow-card">
-      <main className="pb-10">
+      <main className="pb-28">
         <header className="relative overflow-hidden bg-background px-6 pb-11 pt-9">
           <div className="mb-12 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><FlameMascot size={35} expression="vui"/><span className="text-[20px] font-black text-foreground">{PRODUCT_NAME}</span></div><div className="flex items-center gap-2"><button onClick={() => { void i18n.changeLanguage(i18n.language === "vi" ? "en" : "vi"); }} className="rounded-full bg-secondary px-3 py-2 text-xs font-extrabold text-secondary-foreground transition-transform active:scale-95" aria-label={t("actions.switchLanguage")}>{i18n.language === "vi" ? "EN" : "VI"}</button><button onClick={() => setDark(!dark)} className="grid size-9 place-items-center rounded-full bg-secondary text-lg transition-transform active:scale-95" aria-label={t("actions.switchTheme")}>{dark ? "☀" : "☾"}</button></div></div>
           <PillTag className="-rotate-3">✦ {t("eyebrow")}</PillTag>
@@ -57,7 +57,7 @@ function Styleguide() {
           <Section title={t("sections.navigation")}><p className="text-[17px] font-semibold text-muted-foreground">{t("brandLine")}</p></Section>
         </div>
       </main>
-      <div className="sticky bottom-0 z-20 bg-background/80 px-4 pb-4 pt-2 backdrop-blur-md"><BottomTabBar active={activeTab} onSelect={setActiveTab}/></div>
+      <div className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 bg-background/80 px-4 pb-4 pt-2 backdrop-blur-md"><BottomTabBar active={activeTab} onSelect={setActiveTab}/></div>
     </div>
     <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen}><div className="flex flex-col items-center gap-5 text-center"><FlameMascot expression="yeu" size={112} pulse/><PillTag>{t("sheet.tag")}</PillTag><h2 className="text-[30px] font-black leading-tight">{t("sheet.title")}</h2><p className="text-[17px] font-semibold leading-relaxed text-muted-foreground">{t("sheet.body")}</p><PrimaryButton className="mt-4" onClick={() => setSheetOpen(false)}>{t("actions.close")}</PrimaryButton></div></BottomSheet>
   </div>;
