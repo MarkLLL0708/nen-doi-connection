@@ -658,6 +658,7 @@ export type Database = {
           dialect: string | null
           display_name: string | null
           id: string
+          is_test_account: boolean
           language: string
           onboarded: boolean
           partner_call_name: string | null
@@ -674,6 +675,7 @@ export type Database = {
           dialect?: string | null
           display_name?: string | null
           id: string
+          is_test_account?: boolean
           language?: string
           onboarded?: boolean
           partner_call_name?: string | null
@@ -690,6 +692,7 @@ export type Database = {
           dialect?: string | null
           display_name?: string | null
           id?: string
+          is_test_account?: boolean
           language?: string
           onboarded?: boolean
           partner_call_name?: string | null
