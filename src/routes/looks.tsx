@@ -94,7 +94,7 @@ function CountUp({ to, className, style }: { to: number; className?: string; sty
 function Status({ done, name }: { done: boolean; name: string }) {
   const { t } = useTranslation();
   const Icon = done ? Check : Clock;
-  return <span className="inline-flex items-center gap-1.5 text-[13px] font-bold"><Icon strokeWidth={2.5} className="size-4" aria-hidden="true" />{name} · {t(done ? "looks.done" : "looks.waiting")}</span>;
+  return <span className="inline-flex items-center gap-1.5 text-[13px] l-bold"><Icon strokeWidth={2.5} className="size-4" aria-hidden="true" />{name} · {t(done ? "looks.done" : "looks.waiting")}</span>;
 }
 
 function Tile({ n, icon: Icon, title, you, partner }: { n: 1 | 2 | 3; icon: LucideIcon; title: string; you: boolean; partner: boolean }) {
@@ -108,7 +108,7 @@ function Tile({ n, icon: Icon, title, you, partner }: { n: 1 | 2 | 3; icon: Luci
 function PhotoSlot({ className = "" }: { className?: string }) {
   const { t } = useTranslation();
   return <div className={`l-grain flex items-end overflow-hidden rounded-[24px] p-4 ${className}`} style={{ background: "linear-gradient(145deg, var(--l-photo-a) 20%, var(--l-photo-b) 130%)" }}>
-    <span className="l-label relative z-[2]" style={{ color: "var(--l-card2-fg)", mixBlendMode: "normal", opacity: 0.9 }}><span style={{ color: "#F5EFE6" }}>{t("looks.photoSlot")}</span></span>
+    <span className="l-label relative z-[2]" style={{ color: "var(--l-photo-fg)" }}>{t("looks.photoSlot")}</span>
   </div>;
 }
 
@@ -125,7 +125,7 @@ function HomeScreen({ dir }: { dir: Dir }) {
       <p className="l-head relative mt-1 text-[32px]">{t("looks.daysLabel")}</p>
       <motion.div className="relative mt-5 flex items-center gap-3" initial={reduce ? false : { scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.9, duration: 0.3, ease: overshoot }}>
         <div className="rounded-full p-1.5" style={{ boxShadow: dir === "midnight" ? "0 0 32px var(--l-glow)" : undefined }}><FlameMark size={30} /></div>
-        <div><p className="text-[18px] font-bold">{t("looks.streak", { count: 23 })}</p><p className="text-[14px] font-medium opacity-75">{t("looks.streakNote")}</p></div>
+        <div><p className="text-[18px] l-bold">{t("looks.streak", { count: 23 })}</p><p className="text-[14px] font-medium opacity-75">{t("looks.streakNote")}</p></div>
       </motion.div>
     </section>
     <div className="mt-6"><Ticker /></div>
@@ -151,11 +151,11 @@ function QuestionScreen({ dir }: { dir: Dir }) {
     <AnimatePresence>{open && <motion.div key="flood" className="absolute inset-0" style={{ background: "var(--l-flood)" }} initial={{ clipPath: "circle(0% at 50% 90%)" }} animate={{ clipPath: "circle(150% at 50% 90%)" }} exit={{ opacity: 0 }} transition={{ duration: 0.5 * d, ease: snap }} />}</AnimatePresence>
     <div className="relative flex min-h-[844px] flex-col px-6 pb-8 pt-12" style={{ color: open ? "var(--l-flood-fg)" : "var(--l-fg)", transition: "color .25s" }}>
       <Logo />
-      <span className="l-label mt-10 w-fit rounded-full px-3 py-1.5" style={{ background: open ? "var(--l-flood-fg)" : "var(--l-accent)", color: open ? "var(--l-flood)" : dir === "midnight" ? "#0E0E10" : "var(--l-bg)" }}>{t("looks.pack")}</span>
+      <span className="l-label mt-10 w-fit rounded-full px-3 py-1.5" style={{ background: open ? "var(--l-flood-fg)" : "var(--l-accent)", color: open ? "var(--l-flood)" : "var(--l-accent-fg)" }}>{t("looks.pack")}</span>
       <h3 className="l-head mt-5 text-[40px]" style={{ textWrap: "balance" }}>{t("looks.question", { partner: t("looks.partner") })}</h3>
       {!open ? <div className="mt-auto pt-10">
-        <p className="mb-4 flex items-center gap-2 text-[15px] font-bold"><Check strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("looks.bothAnswered")}</p>
-        <motion.button whileTap={{ scale: 0.97 }} onClick={() => setOpen(true)} className="h-14 w-full rounded-[18px] text-[16px] font-bold" style={{ background: "var(--l-btn)", color: "var(--l-btn-fg)" }}>{t("looks.reveal")}</motion.button>
+        <p className="mb-4 flex items-center gap-2 text-[15px] l-bold"><Check strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("looks.bothAnswered")}</p>
+        <motion.button whileTap={{ scale: 0.97 }} onClick={() => setOpen(true)} className="h-14 w-full rounded-[18px] text-[16px] l-bold" style={{ background: "var(--l-btn)", color: "var(--l-btn-fg)" }}>{t("looks.reveal")}</motion.button>
       </div> : <div className="mt-8 space-y-3">
         <motion.p className="l-head text-[28px]" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 * d, duration: 0.25 }}>{t("looks.revealed")}</motion.p>
         {[{ who: t("looks.you"), a: t("looks.answerA"), bg: "var(--l-card)", fg: "var(--l-card-fg)" }, { who: t("looks.partner"), a: t("looks.answerB"), bg: "var(--l-card2)", fg: "var(--l-card2-fg)" }].map((c, i) =>
@@ -163,7 +163,7 @@ function QuestionScreen({ dir }: { dir: Dir }) {
             <p className="l-label opacity-70">{c.who}</p><p className="l-head mt-2 text-[30px]">{c.a}</p>
           </motion.div>)}
         <p className="pt-2 text-[16px] font-medium">{t("looks.verdict")}</p>
-        <button onClick={() => setOpen(false)} className="h-14 text-[15px] font-bold underline underline-offset-4">{t("looks.replay")}</button>
+        <button onClick={() => setOpen(false)} className="h-14 text-[15px] l-bold underline underline-offset-4">{t("looks.replay")}</button>
       </div>}
     </div>
   </div>;

@@ -103,7 +103,7 @@
 
 /* ---- /looks comparison: three candidate directions (scoped, not app-wide) ---- */
 .look { background: var(--l-bg); color: var(--l-fg); font-family: var(--l-body); font-weight: 500; }
-.look-block { --l-head: "Bricolage Grotesque", "Be Vietnam Pro", sans-serif; --l-body: "Plus Jakarta Sans", sans-serif; --l-head-w: 800; --l-stretch: 100%;
+.look-block { --l-photo-fg: #F5EFE6; --l-accent-fg: #121212; --l-head: "Bricolage Grotesque", "Be Vietnam Pro", sans-serif; --l-body: "Plus Jakarta Sans", sans-serif; --l-head-w: 800; --l-stretch: 100%;
   --l-bg: #F5EFE6; --l-fg: #121212; --l-muted: rgb(18 18 18 / .62); --l-surface: #FFFFFF; --l-surface-fg: #121212;
   --l-hero: #FF5A1F; --l-hero-fg: #121212; --l-num: #121212; --l-glow: transparent;
   --l-t1: #3A1B4B; --l-t1-fg: #F5EFE6; --l-t2: #FFD447; --l-t2-fg: #121212; --l-t3: #FF9EB5; --l-t3-fg: #121212;
@@ -111,7 +111,7 @@
   --l-card: #F5EFE6; --l-card-fg: #121212; --l-card2: #121212; --l-card2-fg: #F5EFE6; --l-ticker: #121212; --l-ticker-fg: #FFD447;
   --l-photo-a: #3A1B4B; --l-photo-b: #FF5A1F; --l-banner: #3A1B4B; --l-banner-fg: #FFD447; }
 .look-block.look-dark { --l-bg: #121212; --l-fg: #F5EFE6; --l-muted: rgb(245 239 230 / .62); --l-surface: #1F1F1F; --l-surface-fg: #F5EFE6; --l-btn: #F5EFE6; --l-btn-fg: #121212; --l-ticker: #FFD447; --l-ticker-fg: #121212; --l-card: #121212; --l-card-fg: #F5EFE6; --l-card2: #F5EFE6; --l-card2-fg: #121212; }
-.look-midnight { --l-head: "Space Grotesk", "Be Vietnam Pro", sans-serif; --l-body: "Inter", sans-serif; --l-head-w: 700; --l-stretch: 100%;
+.look-midnight { --l-photo-fg: #F5F2EC; --l-accent-fg: #0E0E10; --l-head: "Space Grotesk", "Be Vietnam Pro", sans-serif; --l-body: "Inter", sans-serif; --l-head-w: 700; --l-stretch: 100%;
   --l-bg: #0E0E10; --l-fg: #F5F2EC; --l-muted: rgb(245 242 236 / .6); --l-surface: #1A1A1D; --l-surface-fg: #F5F2EC;
   --l-hero: transparent; --l-hero-fg: #F5F2EC; --l-num: #F5F2EC; --l-glow: rgb(255 77 58 / .45);
   --l-t1: #1A1A1D; --l-t1-fg: #F5F2EC; --l-t2: #1A1A1D; --l-t2-fg: #F5F2EC; --l-t3: #1A1A1D; --l-t3-fg: #F5F2EC;
@@ -121,7 +121,7 @@
 .look-midnight.look-light { --l-bg: #F5F2EC; --l-fg: #0E0E10; --l-muted: rgb(14 14 16 / .6); --l-surface: #E9E4DB; --l-surface-fg: #0E0E10;
   --l-hero: #0E0E10; --l-hero-fg: #F5F2EC; --l-num: #F5F2EC; --l-t1: #0E0E10; --l-t1-fg: #F5F2EC; --l-t2: #E9E4DB; --l-t2-fg: #0E0E10; --l-t3: #E9E4DB; --l-t3-fg: #0E0E10;
   --l-ticker: #0E0E10; --l-ticker-fg: #F5F2EC; --l-banner: #0E0E10; --l-banner-fg: #F5F2EC; --l-btn: #0E0E10; --l-btn-fg: #F5F2EC; --l-glow: rgb(255 77 58 / .35); }
-.look-tomato { --l-head: "Archivo", "Be Vietnam Pro", sans-serif; --l-body: "Archivo", sans-serif; --l-head-w: 800; --l-stretch: 125%;
+.look-tomato { --l-photo-fg: #F4EDE1; --l-accent-fg: #F4EDE1; --l-head: "Archivo", "Be Vietnam Pro", sans-serif; --l-body: "Archivo", sans-serif; --l-head-w: 800; --l-stretch: 125%;
   --l-bg: #F4EDE1; --l-fg: #171412; --l-muted: rgb(23 20 18 / .62); --l-surface: #EAE0CF; --l-surface-fg: #171412;
   --l-hero: transparent; --l-hero-fg: #171412; --l-num: #E8442E; --l-glow: transparent;
   --l-t1: #171412; --l-t1-fg: #F4EDE1; --l-t2: #E8442E; --l-t2-fg: #F4EDE1; --l-t3: #EAE0CF; --l-t3-fg: #171412;
@@ -136,3 +136,4 @@
 @keyframes l-ticker { to { transform: translateX(-50%); } }
 .l-grain { position: relative; isolation: isolate; }
 .l-grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .18; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.look .l-bold { font-weight: 700; }

@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LooksRouteImport } from './routes/looks'
 import { Route as PreviewHomeRouteImport } from './routes/preview-home'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LooksRoute = LooksRouteImport.update({
+  id: '/looks',
+  path: '/looks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PreviewHomeRoute = PreviewHomeRouteImport.update({
@@ -31,30 +37,34 @@ const StyleguideRoute = StyleguideRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/looks': typeof LooksRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/looks': typeof LooksRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/looks': typeof LooksRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/preview-home' | '/styleguide'
+  fullPaths: '/' | '/looks' | '/preview-home' | '/styleguide'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/preview-home' | '/styleguide'
-  id: '__root__' | '/' | '/preview-home' | '/styleguide'
+  to: '/' | '/looks' | '/preview-home' | '/styleguide'
+  id: '__root__' | '/' | '/looks' | '/preview-home' | '/styleguide'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LooksRoute: typeof LooksRoute
   PreviewHomeRoute: typeof PreviewHomeRoute
   StyleguideRoute: typeof StyleguideRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/looks': {
+      id: '/looks'
+      path: '/looks'
+      fullPath: '/looks'
+      preLoaderRoute: typeof LooksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/preview-home': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LooksRoute: LooksRoute,
   PreviewHomeRoute: PreviewHomeRoute,
   StyleguideRoute: StyleguideRoute,
 }
