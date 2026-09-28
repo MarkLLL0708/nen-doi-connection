@@ -9,4 +9,6 @@
 - [ ] Wait for user feedback.
 - [x] Replace typography with Newsreader + Inter type scale.
 - [x] Build /looks with three bold design directions (Colour Block, Midnight, Cream & Tomato).
-- [ ] Wait for the user to pick a direction before applying anything app-wide.
+- [x] User picked Colour Block.
+- [x] Adopt Colour Block app-wide (tokens, fonts, FitText, components, motion system, styleguide + motion lab, preview-home); remove /looks.
+- [ ] Wait for user feedback.
