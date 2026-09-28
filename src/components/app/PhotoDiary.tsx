@@ -9,6 +9,7 @@ import type { Me } from "@/lib/couple";
 
 type Post = { id: string; user_id: string; post_date: string; storage_path: string; caption: string | null };
 type Pair = { date: string; mine: Post; theirs: Post };
+const cap = (s: string) => s.charAt(0).toLocaleUpperCase("vi") + s.slice(1);
 
 /** Past days where both partners posted. The database only returns the partner's photo for days you posted too. */
 export function PhotoDiary({ me }: { me: Me }) {
@@ -42,7 +43,7 @@ export function PhotoDiary({ me }: { me: Me }) {
 
   return <div className="mt-6 space-y-8">
     {[...months].map(([m, pairs]) => <section key={m}>
-      <h2 className="px-1 type-title">{new Date(`${m}-01T00:00:00`).toLocaleDateString(loc, { month: "long", year: "numeric" })}</h2>
+      <h2 className="px-1 type-title">{cap(new Date(`${m}-01T00:00:00`).toLocaleDateString(loc, { month: "long", year: "numeric" }))}</h2>
       <div className="mt-3 grid grid-cols-3 gap-2">
         {pairs.map((p) => <button key={p.date} onClick={() => setOpen(p)} aria-label={new Date(`${p.date}T00:00:00`).toLocaleDateString(loc)} className="relative grid aspect-square grid-cols-2 overflow-hidden rounded-[12px] bg-surface">
           {[p.mine, p.theirs].map((x) => <img key={x.id} src={data.urls[x.storage_path]} alt="" loading="lazy" className="size-full object-cover" />)}
@@ -67,7 +68,7 @@ function Viewer({ pair, urls, loc, partner, onClose, onDeleted }: { pair: Pair; 
     if (error) setErr(true); else onDeleted();
   };
   return <motion.div role="dialog" aria-modal="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 overflow-y-auto bg-ink text-cream">
-    <div className="mx-auto flex min-h-dvh max-w-[390px] flex-col px-4 pb-8 pt-4">
+    <div className="mx-auto flex min-h-dvh max-w-[390px] flex-col px-4 pb-8 pt-16">
       <div className="flex items-center justify-between">
         <button onClick={onClose} aria-label={t("feat.memories.close")} className="grid size-12 place-items-center rounded-full bg-cream/10"><X strokeWidth={2.5} className="size-5" /></button>
         <p className="type-label">{new Date(`${pair.date}T00:00:00`).toLocaleDateString(loc)}</p>
