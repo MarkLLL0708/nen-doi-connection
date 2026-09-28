@@ -74,7 +74,7 @@ export function AvatarPair({ firstDone = true, secondDone = false }: { firstDone
   const { t } = useTranslation();
   const you = t("avatars.you"), partner = t("avatars.partner");
   return <div className="flex items-center gap-5">
-    <div className="flex -space-x-3"><Portrait initial={you[0]} tone="photo" done={firstDone} /><Portrait initial={partner[0]} tone="memory" done={secondDone} /></div>
+    <div className="flex -space-x-3"><Portrait initial={you.charAt(0)} tone="photo" done={firstDone} /><Portrait initial={partner.charAt(0)} tone="memory" done={secondDone} /></div>
     <div className="flex flex-col gap-0.5 text-[14px]">
       <span className="text-foreground">{you} <span className="text-muted-foreground">· {t(firstDone ? "avatars.done" : "avatars.waiting")}</span></span>
       <span className="text-foreground">{partner} <span className="text-muted-foreground">· {t(secondDone ? "avatars.done" : "avatars.waiting")}</span></span>
