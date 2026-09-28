@@ -9,4 +9,7 @@
 - [x] Contrasting reveal floods; game rounds (8, admin setting) + 2/day limit in the database
 - [x] Đoán ý, Hỏi nhanh, Chủ đề nhạy cảm in Cài đặt, Nhật ký ảnh, share cards, verdict lines
 - [x] LAUNCH_CHECKLIST.md
+- [x] Brief batch 1: landing, demo mode, legal drafts, guest sign-in removed
+- [ ] Brief batch 2: onboarding merge, QR pairing, Today for Us home (waiting for "batch 2")
+- [ ] Brief batch 3: 10 decks, activity types, seeds
 - [ ] Launch steps in LAUNCH_CHECKLIST.md (waiting on your go-ahead)
