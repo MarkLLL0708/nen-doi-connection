@@ -12,7 +12,7 @@ import { VoicePlayer, VoiceRecorder, voiceExt } from "@/components/app/Voice";
 import { cn } from "@/lib/utils";
 
 type Filter = "all" | "photo" | "voice" | "date" | "question" | "milestone";
-type Entry = { id: string; group: Exclude<Filter, "all">; kind: string; date: string; title?: string; note?: string | null; paths?: string[]; voice?: { path: string; seconds: number | null };
+type Entry = { id: string; group: Exclude<Filter, "all"> | "note"; kind: string; date: string; title?: string; note?: string | null; paths?: string[]; voice?: { path: string; seconds: number | null };
   answers?: { name: string; body: string }[]; own?: boolean; memoryId?: string };
 
 const toneFor: Record<string, string> = { note: "block-butter", voice: "block-plum", photo: "block-blush", dailyPhoto: "block-blush", date: "block-ember", question: "block-deep", milestone: "block-butter", capsule: "block-plum" };
@@ -34,7 +34,7 @@ function useTimeline(me: Me) {
       const date = m.happened_on ?? m.created_at.slice(0, 10);
       if (m.kind === "voice" && m.storage_path) out.push({ id: `m-${m.id}`, memoryId: m.id, group: "voice", kind: "voice", date, title: m.title, note: m.note, voice: { path: m.storage_path, seconds: m.voice_seconds }, own: m.created_by === me.userId });
       else if (m.storage_path) out.push({ id: `m-${m.id}`, memoryId: m.id, group: "photo", kind: "photo", date, title: m.title, note: m.note, paths: [m.storage_path], own: m.created_by === me.userId });
-      else out.push({ id: `m-${m.id}`, memoryId: m.id, group: "milestone", kind: "note", date, title: m.title, note: m.note, own: m.created_by === me.userId });
+      else out.push({ id: `m-${m.id}`, memoryId: m.id, group: "note", kind: "note", date, title: m.title, note: m.note, own: m.created_by === me.userId });
     }
     // Daily photos appear only once both posted (the database already hides the partner's until you post).
     const byDay = new Map<string, string[]>();
