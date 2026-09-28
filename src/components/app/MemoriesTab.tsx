@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { ImagePlus, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { PrimaryButton, Pressable, SecondaryButton, SlideUp, Stagger, StaggerItem } from "@/components/visual";
+import { PrimaryButton, SecondaryButton, SlideUp, Stagger, StaggerItem } from "@/components/visual";
 import type { Me } from "@/lib/couple";
 import { dateKey } from "@/lib/daily";
 import { todayIn } from "@/lib/occasions";
@@ -80,4 +80,3 @@ function AddMemory({ me, onDone }: { me: Me; onDone: () => void }) {
     </div>
   </div>;
 }
-export { Pressable };
