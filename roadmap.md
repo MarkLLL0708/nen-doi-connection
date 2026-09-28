@@ -1,14 +1,7 @@
 # Roadmap
-
-- [x] Replace design system with editorial "fun but classy" language (tokens, fonts, grain).
-- [x] Remove mascot, emoji icons, confetti, springs.
-- [x] Rebuild components: PrimaryButton, TextButton, Tag, Card, DuotoneScreen, BottomSheet, AvatarPair, FlameStreak, EmptyState, LightBloom, SwipeCard, tab bar.
-- [x] Rebuild /styleguide in light and dark.
-- [x] Add /preview-home with sample data.
-- [ ] Test both pages' controls, light/dark readability, and Vietnamese tone-mark clipping; fix any failures without redesign.
-- [ ] Wait for user feedback.
-- [x] Replace typography with Newsreader + Inter type scale.
-- [x] Build /looks with three bold design directions (Colour Block, Midnight, Cream & Tomato).
-- [x] User picked Colour Block.
-- [x] Adopt Colour Block app-wide (tokens, fonts, FitText, components, motion system, styleguide + motion lab, preview-home); remove /looks.
-- [ ] Wait for user feedback.
+- [x] Visual foundation, Colour Block system, styleguide + motion lab
+- [x] Backend (19 tables, RLS, reveal rule, private photo bucket), email/Google/Apple sign-in
+- [x] Intro, auth, profile + couple setup, pairing, Home with real data, tabs, theme setting
+- [x] Streak logic (both partners, couple timezone, 1 freeze/month, 8pm at-risk), occasions with lunar dates, milestone burst
+- [ ] Two-account end-to-end test in the browser (blocked: email confirmation; needs user's choice on auto-confirm or real inboxes)
+- [ ] Feature screens behind the tiles (question, photo, game, dates, memories) — next prompt
