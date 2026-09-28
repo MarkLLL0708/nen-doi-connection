@@ -24,7 +24,7 @@ const sample = { days: 412, streak: 27 };
 function Row({ Icon, title, status }: { Icon: LucideIcon; title: string; status: string }) {
   return <div className="group flex items-center gap-4 py-5">
     <Icon strokeWidth={ICON_STROKE} className="size-[22px] shrink-0 text-foreground" aria-hidden="true" />
-    <div className="min-w-0 flex-1"><p className="text-[16px] text-foreground">{title}</p><p className="mt-0.5 text-[13px] text-muted-foreground">{status}</p></div>
+    <div className="min-w-0 flex-1"><p className="type-body text-foreground">{title}</p><p className="mt-0.5 type-caption text-muted-foreground">{status}</p></div>
     <ChevronRight strokeWidth={ICON_STROKE} className="size-5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
   </div>;
 }
@@ -40,12 +40,12 @@ function PreviewHome() {
   return <div className="min-h-screen bg-page">
     <div className="relative mx-auto min-h-screen w-full max-w-[390px] overflow-hidden bg-background text-foreground shadow-soft">
       <main className="px-6 pb-32">
-        <div className="flex items-center justify-between py-5"><Wordmark text={PRODUCT_WORDMARK} /><span className="text-[12px] text-muted-foreground">{t("home.sampleNote")}</span></div>
+        <div className="flex items-center justify-between py-5"><Wordmark text={PRODUCT_WORDMARK} /><span className="type-caption text-muted-foreground">{t("home.sampleNote")}</span></div>
 
         <motion.section className="pt-10" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }}>
           <p className="label-caps">{t("hero.label")}</p>
-          <p className="mt-3 font-serif text-[112px] leading-[1.05] tracking-[-0.03em]">{sample.days}</p>
-          <p className="mt-1 font-serif text-[22px] italic leading-snug text-muted-foreground">{t("home.daysLabel")}</p>
+          <p className="mt-3 type-display">{sample.days}</p>
+          <p className="mt-1 type-title italic text-muted-foreground">{t("home.daysLabel")}</p>
           <div className="mt-8"><FlameStreak count={sample.streak} /></div>
         </motion.section>
 
@@ -63,13 +63,13 @@ function PreviewHome() {
           <div ref={photoRef} className="overflow-hidden rounded-[16px]">
             <motion.div style={{ y }} className="-my-5"><ImageSlot className="h-[340px] rounded-none" /></motion.div>
           </div>
-          <p className="mt-3 text-[13px] text-muted-foreground">{t("home.photoCaption")}</p>
+          <p className="mt-3 type-caption text-muted-foreground">{t("home.photoCaption")}</p>
         </FadeUp>
 
         <FadeUp className="mt-12">
           <div className="flex items-baseline justify-between gap-4 rounded-[16px] bg-secondary px-5 py-5">
-            <div><p className="label-caps">{t("home.occasionLabel")}</p><p className="mt-1.5 font-serif text-[21px] leading-[1.35]">{t("home.occasion")}</p></div>
-            <p className="shrink-0 text-[14px] text-accent">{t("home.occasionIn")}</p>
+            <div><p className="label-caps">{t("home.occasionLabel")}</p><p className="mt-1.5 type-title">{t("home.occasion")}</p></div>
+            <p className="shrink-0 type-body text-accent">{t("home.occasionIn")}</p>
           </div>
         </FadeUp>
       </main>
