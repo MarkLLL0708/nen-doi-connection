@@ -4,6 +4,7 @@ import { appEn, appVi } from "./app";
 import { questionEn, questionVi } from "./question";
 import { testEn, testVi } from "./test";
 import { featEn, featVi } from "./features";
+import { landingEn, landingVi } from "./landing";
 
 export const resources = {
   vi: { translation: {
@@ -70,6 +71,7 @@ export const resources = {
     question: questionVi,
     test: testVi,
     feat: featVi,
+    landing: landingVi,
   } },
   en: { translation: {
     pageTitle: "Design system", pageDescription: "Nến Đôi colour, type and interface components in light and dark mode.",
@@ -135,6 +137,7 @@ export const resources = {
     question: questionEn,
     test: testEn,
     feat: featEn,
+    landing: landingEn,
   } },
 } as const;
 
