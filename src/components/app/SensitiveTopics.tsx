@@ -32,7 +32,7 @@ export function SensitiveTopics({ me }: { me: Me }) {
     <div className="relative z-[2]">
       <div className="flex items-center justify-between gap-3">
         <p className="type-label">{t("feat.sensitive.label")}</p>
-        <span className={`rounded-full px-3 py-1 type-label ${on ? "bg-cream text-ink" : "bg-ink text-cream"}`} data-testid="sensitive-state">{on ? t("feat.sensitive.on") : t("feat.sensitive.off")}</span>
+        <span className={`rounded-full px-3 py-1 type-label ${on ? "bg-cream text-ink" : "bg-foreground text-background"}`} data-testid="sensitive-state">{on ? t("feat.sensitive.on") : t("feat.sensitive.off")}</span>
       </div>
       <p id="sensitive-title" className="mt-3 type-title">{t("feat.sensitive.title")}</p>
       <p className="mt-2 type-caption">{t("feat.sensitive.body")}</p>
