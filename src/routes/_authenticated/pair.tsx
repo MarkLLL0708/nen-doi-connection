@@ -111,7 +111,7 @@ function JoinForm({ partner, onJoined, flood }: { partner: string; onJoined: () 
       <Logo onBlock />
       <p className="mt-12 type-label">{t("app.pair.joinLabel")}</p>
       <h1 className="mt-3 type-display"><SlideUp>{t("app.pair.joinTitle", { partner })}</SlideUp></h1>
-      <input autoFocus className={`${stepInput} mt-8 text-center font-display text-[32px] uppercase tracking-[0.2em]`} maxLength={6} placeholder={t("app.pair.joinPh")} aria-label={t("app.pair.joinPh")}
+      <input autoFocus className={`${stepInput} mt-8 text-center type-title text-[32px] uppercase tracking-[0.2em]`} maxLength={6} placeholder={t("app.pair.joinPh")} aria-label={t("app.pair.joinPh")}
         value={code} onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))} />
       {err && <p role="alert" className="mt-4 rounded-[18px] bg-ink px-4 py-3 text-[14px] font-bold text-cream">{err}</p>}
       <PrimaryButton className="mt-auto" disabled={code.length !== 6 || busy} onClick={() => void join()}>{t("app.pair.join")}</PrimaryButton>
