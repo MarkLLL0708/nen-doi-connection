@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { appEn, appVi } from "./app";
 
 export const resources = {
   vi: { translation: {
@@ -62,6 +63,7 @@ export const resources = {
       chooseLabel: "CHỌN MỘT", or: "hay",
       floodPack: "ẨM THỰC", floodQuestion: "Nếu chỉ được ăn một món suốt tuần cùng {{partner}}: phở, bún chả, cơm tấm hay bánh mì?", floodBoth: "Cả hai đã trả lời", floodReveal: "Mở câu trả lời", floodReplay: "Xem lại", floodRevealed: "Lộ bài rồi.",
       countReplay: "Đếm lại", odometerNext: "Thêm một ngày", burstFire: "Chạm cột mốc", burstLabel: "CỘT MỐC", burstText: "30 ngày liên tiếp. Ngọn lửa này là của hai người.", reducedNote: "Đang bật giảm chuyển động: chỉ còn hiệu ứng mờ dần." },
+    app: appVi,
   } },
   en: { translation: {
     pageTitle: "Design system", pageDescription: "Nến Đôi colour, type and interface components in light and dark mode.",
@@ -123,6 +125,7 @@ export const resources = {
       chooseLabel: "PICK ONE", or: "or",
       floodPack: "FOOD", floodQuestion: "If you could eat only one dish all week with {{partner}}: phở, bún chả, cơm tấm or bánh mì?", floodBoth: "You both answered", floodReveal: "Reveal answers", floodReplay: "Replay", floodRevealed: "Cards on the table.",
       countReplay: "Count again", odometerNext: "Add a day", burstFire: "Hit a milestone", burstLabel: "MILESTONE", burstText: "30 days in a row. This flame belongs to you both.", reducedNote: "Reduced motion is on: simple fades only." },
+    app: appEn,
   } },
 } as const;
 

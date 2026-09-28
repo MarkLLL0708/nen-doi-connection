@@ -10,12 +10,38 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as IntroRouteImport } from './routes/intro'
+import { Route as JoinRouteImport } from './routes/join'
 import { Route as PreviewHomeRouteImport } from './routes/preview-home'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPairRouteImport } from './routes/_authenticated/pair'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntroRoute = IntroRouteImport.update({
+  id: '/intro',
+  path: '/intro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoute = JoinRouteImport.update({
+  id: '/join',
+  path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PreviewHomeRoute = PreviewHomeRouteImport.update({
@@ -28,33 +54,100 @@ const StyleguideRoute = StyleguideRouteImport.update({
   path: '/styleguide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPairRoute = AuthenticatedPairRouteImport.update({
+  id: '/pair',
+  path: '/pair',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/intro': typeof IntroRoute
+  '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
+  '/app': typeof AuthenticatedAppRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/pair': typeof AuthenticatedPairRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/intro': typeof IntroRoute
+  '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
+  '/app': typeof AuthenticatedAppRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/pair': typeof AuthenticatedPairRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/intro': typeof IntroRoute
+  '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
+  '/_authenticated/app': typeof AuthenticatedAppRoute
+  '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/pair': typeof AuthenticatedPairRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/preview-home' | '/styleguide'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/intro'
+    | '/join'
+    | '/preview-home'
+    | '/styleguide'
+    | '/app'
+    | '/onboarding'
+    | '/pair'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/preview-home' | '/styleguide'
-  id: '__root__' | '/' | '/preview-home' | '/styleguide'
+  to:
+    | '/'
+    | '/auth'
+    | '/intro'
+    | '/join'
+    | '/preview-home'
+    | '/styleguide'
+    | '/app'
+    | '/onboarding'
+    | '/pair'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/intro'
+    | '/join'
+    | '/preview-home'
+    | '/styleguide'
+    | '/_authenticated/app'
+    | '/_authenticated/onboarding'
+    | '/_authenticated/pair'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  IntroRoute: typeof IntroRoute
+  JoinRoute: typeof JoinRoute
   PreviewHomeRoute: typeof PreviewHomeRoute
   StyleguideRoute: typeof StyleguideRoute
 }
@@ -66,6 +159,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intro': {
+      id: '/intro'
+      path: '/intro'
+      fullPath: '/intro'
+      preLoaderRoute: typeof IntroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join': {
+      id: '/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/preview-home': {
@@ -82,11 +203,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StyleguideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/onboarding': {
+      id: '/_authenticated/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pair': {
+      id: '/_authenticated/pair'
+      path: '/pair'
+      fullPath: '/pair'
+      preLoaderRoute: typeof AuthenticatedPairRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRoute: typeof AuthenticatedAppRoute
+  AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPairRoute: typeof AuthenticatedPairRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRoute: AuthenticatedAppRoute,
+  AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPairRoute: AuthenticatedPairRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  IntroRoute: IntroRoute,
+  JoinRoute: JoinRoute,
   PreviewHomeRoute: PreviewHomeRoute,
   StyleguideRoute: StyleguideRoute,
 }
