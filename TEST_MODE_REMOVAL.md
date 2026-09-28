@@ -14,4 +14,5 @@ Test mode lets one person act as "Thử A" and "Thử B" on one phone. Delete al
 ## How it is gated
 - `TEST_MODE_ENABLED = import.meta.env.DEV`. The preview runs the development server (true); the published site is a production build where it is `false`, so the pill code is removed at build time.
 - The backend functions check the `TEST_MODE` secret on every call and return 403 unless it equals `true`. The secret is shared by preview and the published site, so switch it off whenever you are not testing.
-- Check the published site: no yellow "THỬ" pill appears in the bottom-left corner.
+- Check the published site: no yellow "THỬ" pill or dot appears in the top bar.
+- The pill remembers its spot and dot state in `nendoi.test.pillPos` / `nendoi.test.pillDot` (browser storage, harmless leftovers).

@@ -1,7 +1,7 @@
 // TEST MODE ONLY — see TEST_MODE_REMOVAL.md. Rendered only when TEST_MODE_ENABLED (dev/preview build).
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
+import { useRouter, useRouterState } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useTranslation } from "react-i18next";
 import { BottomSheet, Pressable, PrimaryButton, SecondaryButton } from "@/components/visual";
@@ -41,12 +41,7 @@ export function TestPill() {
   };
 
   return <>
-    <div className="pointer-events-none fixed inset-x-0 bottom-28 z-50 mx-auto max-w-[390px]">
-      <Pressable onClick={() => setOpen(true)} aria-label={t("test.title")}
-        className="pointer-events-auto absolute left-3 rounded-full bg-butter px-4 py-2 type-label text-ink shadow-float">
-        {t("test.pill")}{who ? ` · ${who}` : ""}
-      </Pressable>
-    </div>
+    <FloatingHandle label={who ? `${t("test.pill")} · ${who}` : t("test.pill")} aria={t("test.title")} collapseLabel={t("test.collapse")} onOpen={() => setOpen(true)} />
     <BottomSheet open={open} onOpenChange={setOpen}>
       <p className="type-label text-muted-foreground">{t("test.title")}</p>
       <p className="mt-2 type-title">{who ? `${t("test.now")} Thử ${who}` : t("test.nobody")}</p>
@@ -72,4 +67,54 @@ export function TestPill() {
       {msg && <p role="status" className="mt-4 rounded-[18px] bg-ink px-4 py-3 type-button text-cream">{msg}</p>}
     </BottomSheet>
   </>;
+}
+
+// Draggable handle: drag anywhere, tap to open, collapse to a dot. Position + collapsed state persist.
+const POS_KEY = "nendoi.test.pillPos", DOT_KEY = "nendoi.test.pillDot";
+type Pos = { x: number; y: number };
+function FloatingHandle({ label, aria, collapseLabel, onOpen }: { label: string; aria: string; collapseLabel: string; onOpen: () => void }) {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const [saved, setSaved] = useState<Pos | null>(null), [dot, setDot] = useState<boolean | null>(null);
+  const [vp, setVp] = useState({ w: 390, h: 800 }), [drag, setDrag] = useState<Pos | null>(null);
+  const start = useRef<{ px: number; py: number; x: number; y: number; moved: boolean } | null>(null);
+  const el = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    try { const p = localStorage.getItem(POS_KEY); if (p) setSaved(JSON.parse(p) as Pos); } catch { /* ignore */ }
+    const d = localStorage.getItem(DOT_KEY); setDot(d === null ? null : d === "1");
+    const r = () => setVp({ w: window.innerWidth, h: window.innerHeight }); r();
+    window.addEventListener("resize", r); return () => window.removeEventListener("resize", r);
+  }, []);
+  const hasTabs = path === "/app";
+  // Off the tab screen the handle is a dot unless just tapped open; it folds back on every page change.
+  const [peek, setPeek] = useState(false);
+  useEffect(() => { setPeek(false); }, [path]);
+  const collapsed = hasTabs ? !!dot : !peek;
+  const size = collapsed ? { w: 28, h: 28 } : { w: 110, h: 36 };
+  // Parked in the top bar, left of the language/theme pill: the only strip no screen fills with content.
+  const def: Pos = { x: vp.w - size.w - 104, y: 20 };
+  const clamp = (p: Pos): Pos => ({ x: Math.min(Math.max(2, p.x), vp.w - size.w - 2), y: Math.min(Math.max(8, p.y), vp.h - size.h - 8) });
+  const pos = clamp(drag ?? saved ?? def);
+  const down = (e: RPointerEvent) => { if ((e.target as HTMLElement).closest("button")) return; start.current = { px: e.clientX, py: e.clientY, x: pos.x, y: pos.y, moved: false }; el.current?.setPointerCapture(e.pointerId); };
+  const move = (e: RPointerEvent) => {
+    const s = start.current; if (!s) return;
+    const dx = e.clientX - s.px, dy = e.clientY - s.py;
+    if (!s.moved && Math.hypot(dx, dy) < 6) return;
+    s.moved = true; setDrag({ x: s.x + dx, y: s.y + dy });
+  };
+  const up = () => {
+    const s = start.current; start.current = null; if (!s) return;
+    if (s.moved && drag) { const p = clamp(drag); setSaved(p); localStorage.setItem(POS_KEY, JSON.stringify(p)); setDrag(null); }
+    else if (collapsed) setCollapsed(false); else { onOpen(); if (!hasTabs) setPeek(false); }
+  };
+  const setCollapsed = (v: boolean) => { if (!hasTabs) { setPeek(!v); return; } setDot(v); localStorage.setItem(DOT_KEY, v ? "1" : "0"); };
+  return <div ref={el} role="button" tabIndex={0} aria-label={aria} data-testid="test-pill"
+    onPointerDown={down} onPointerMove={move} onPointerUp={up} onKeyDown={(e) => { if (e.key === "Enter") onOpen(); }}
+    style={{ left: pos.x, top: pos.y, touchAction: "none" }}
+    className={`fixed z-50 flex cursor-grab select-none items-center rounded-full bg-butter text-ink shadow-float ${collapsed ? "size-7 justify-center" : "h-9 gap-2 pl-4 pr-1"}`}>
+    {collapsed
+      ? <span className="size-2.5 rounded-full bg-ink" />
+      : <><span className="type-label whitespace-nowrap">{label}</span>
+        <button type="button" aria-label={collapseLabel} onPointerDown={(e) => e.stopPropagation()} onPointerUp={(e) => e.stopPropagation()} onClick={() => setCollapsed(true)}
+          className="grid size-7 place-items-center rounded-full bg-ink text-cream type-label">–</button></>}
+  </div>;
 }

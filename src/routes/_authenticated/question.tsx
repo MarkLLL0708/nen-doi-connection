@@ -168,7 +168,7 @@ function Waiting({ q, me, mine, partnerCall, onBack, onConsent }: { q: Today; me
 function Reveal({ tone, q, text, me, mine, theirs, partnerName, onBack }: { tone: string; q: Today; text: string; me: Me; mine: Answer; theirs: Answer; partnerName: string; onBack: () => void }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
-  const key = `nendoi.revealed.${q.id}.${q.date}`;
+  const key = `nendoi.revealed.${me.userId}.${q.id}.${q.date}`;
   const ref = useRef<HTMLDivElement>(null);
   const [at, setAt] = useState<{ x: number; y: number } | null>(null);
   const [flood, setFlood] = useState(false);
