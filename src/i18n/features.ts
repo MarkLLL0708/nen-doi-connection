@@ -121,7 +121,7 @@ export const featEn: typeof featVi = {
     label: "MEMORIES", title: "Your memories", add: "Add a memory", save: "Save", cancel: "Cancel", saving: "Saving…",
     fTitle: "What happened?", fDate: "Date", fNote: "Note (optional)", fPhoto: "Add a photo",
     empty: "No memories yet. Save a great answer, or add a moment here.", delete: "Delete",
-    tabs: { list: "Memories", diary: "Photo diary" },
+    tabs: { timeline: "Timeline", capsules: "Open when...", list: "Memories", diary: "Photo diary" },
     diaryEmpty: "No days where you both sent a photo yet. Send one today.", close: "Close", menu: "Options",
     deleteMine: "Delete your photo", deleteConfirm: "Delete your photo from this day? The pair will leave the diary.", deleteYes: "Delete", you: "You",
   },
