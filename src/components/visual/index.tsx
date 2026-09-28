@@ -76,11 +76,11 @@ export function AvatarPair({ firstDone = true, secondDone = false }: { firstDone
   </div>;
 }
 
-export function ActionTile({ tone, icon: Icon, title, youDone, partnerDone, youName, partnerName, onClick }: { tone: string; icon: LucideIcon; title: string; youDone: boolean; partnerDone: boolean; youName?: string | undefined; partnerName?: string | undefined; onClick?: (() => void) | undefined }) {
+export function ActionTile({ tone, icon: Icon, title, youDone, partnerDone, youName, partnerName, onClick, avatars }: { avatars?: ReactNode; tone: string; icon: LucideIcon; title: string; youDone: boolean; partnerDone: boolean; youName?: string | undefined; partnerName?: string | undefined; onClick?: (() => void) | undefined }) {
   const { t } = useTranslation();
   return <Pressable haptics onClick={onClick ?? (() => undefined)} className={cn("grain flex min-h-[140px] w-full flex-col justify-between rounded-[24px] p-5 text-left", tone)}>
     <span className="relative z-[2] flex items-start justify-between gap-3"><span className="type-title">{title}</span><Icon strokeWidth={2} className="size-7 shrink-0" aria-hidden="true" /></span>
-    <span className="relative z-[2] mt-4 flex flex-wrap gap-x-4 gap-y-1"><Status done={youDone} name={youName ?? t("avatars.you")} /><Status done={partnerDone} name={partnerName ?? t("avatars.partner")} /></span>
+    <span className="relative z-[2] mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">{avatars}<Status done={youDone} name={youName ?? t("avatars.you")} /><Status done={partnerDone} name={partnerName ?? t("avatars.partner")} /></span>
   </Pressable>;
 }
 
