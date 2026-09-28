@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, type ComponentProps } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
@@ -8,8 +8,9 @@ import { FlameMascot } from "./FlameMascot";
 
 const MotionButton = motion.create(Button);
 const press = { scale: 0.95 };
-export function PrimaryButton({ className, children, ...props }: ButtonProps) { return <MotionButton whileTap={press} transition={{ type: "spring", stiffness: 430, damping: 23 }} className={cn("h-[52px] w-full rounded-full bg-primary px-7 text-base font-extrabold text-primary-foreground shadow-ember hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring", className)} {...props}>{children}</MotionButton>; }
-export function SecondaryButton({ className, children, ...props }: ButtonProps) { return <MotionButton whileTap={press} transition={{ type: "spring", stiffness: 430, damping: 23 }} className={cn("h-[52px] w-full rounded-full bg-secondary px-7 text-base font-extrabold text-secondary-foreground shadow-soft hover:bg-secondary/80 focus-visible:ring-2 focus-visible:ring-ring", className)} {...props}>{children}</MotionButton>; }
+type VisualButtonProps = ComponentProps<typeof MotionButton>;
+export function PrimaryButton({ className, children, ...props }: VisualButtonProps) { return <MotionButton whileTap={press} transition={{ type: "spring", stiffness: 430, damping: 23 }} className={cn("h-[52px] w-full rounded-full bg-primary px-7 text-base font-extrabold text-primary-foreground shadow-ember hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring", className)} {...props}>{children}</MotionButton>; }
+export function SecondaryButton({ className, children, ...props }: VisualButtonProps) { return <MotionButton whileTap={press} transition={{ type: "spring", stiffness: 430, damping: 23 }} className={cn("h-[52px] w-full rounded-full bg-secondary px-7 text-base font-extrabold text-secondary-foreground shadow-soft hover:bg-secondary/80 focus-visible:ring-2 focus-visible:ring-ring", className)} {...props}>{children}</MotionButton>; }
 export function PillTag({ children, className }: { children: ReactNode; className?: string }) { return <span className={cn("inline-flex w-fit items-center rounded-full bg-tag px-4 py-2 text-[11px] font-black uppercase text-tag-foreground", className)}>{children}</span>; }
 export function BigCard({ children, className }: { children: ReactNode; className?: string }) { return <div className={cn("rounded-[28px] bg-card p-6 text-card-foreground shadow-card", className)}>{children}</div>; }
 export type GradientName = "memory" | "food" | "tet" | "distance" | "deep" | "fun";

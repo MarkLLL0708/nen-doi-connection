@@ -16,8 +16,8 @@ export function FlameMascot({ expression = "vui", size = 116, pulse = false, cla
   const celebrating = expression === "mung";
   return <svg className={cn(pulse && "flame-pulse", className)} width={size} height={size} viewBox="0 0 160 160" role="img" aria-label={t("mascotLabel", { expression: t(`expressions.${expression}`) })} xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id={`${id}-outer`} x1="0.19" y1="0.14" x2="0.81" y2="0.92" objectBoundingBox="true"><stop stopColor="#FFCA73"/><stop offset="0.42" stopColor="#FF882C"/><stop offset="1" stopColor="#E95418"/></linearGradient>
-      <linearGradient id={`${id}-inner`} x1="0" y1="0" x2="1" y2="1" objectBoundingBox="true"><stop stopColor="#FFF3BA"/><stop offset="1" stopColor="#FFBD62"/></linearGradient>
+      <linearGradient id={`${id}-outer`} x1="19%" y1="14%" x2="81%" y2="92%"><stop stopColor="#FFCA73"/><stop offset="0.42" stopColor="#FF882C"/><stop offset="1" stopColor="#E95418"/></linearGradient>
+      <linearGradient id={`${id}-inner`} x1="0%" y1="0%" x2="100%" y2="100%"><stop stopColor="#FFF3BA"/><stop offset="1" stopColor="#FFBD62"/></linearGradient>
       <filter id={`${id}-shadow`} x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="8" floodColor="#AC582C" floodOpacity="0.22"/></filter>
     </defs>
     <ellipse cx="80" cy="143" rx="42" ry="8" fill="#7B4029" opacity="0.11"/>
