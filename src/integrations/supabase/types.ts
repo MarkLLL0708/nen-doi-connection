@@ -101,6 +101,24 @@ export type Database = {
           },
         ]
       }
+      app_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       couple_members: {
         Row: {
           city: string | null
@@ -373,6 +391,44 @@ export type Database = {
           },
         ]
       }
+      game_rounds: {
+        Row: {
+          answerer: string | null
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          played_on: string
+          type: string
+        }
+        Insert: {
+          answerer?: string | null
+          couple_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          played_on: string
+          type: string
+        }
+        Update: {
+          answerer?: string | null
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          played_on?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_rounds_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       game_sessions: {
         Row: {
           content_id: string
@@ -380,6 +436,7 @@ export type Database = {
           created_at: string
           id: string
           played_on: string
+          round_id: string | null
         }
         Insert: {
           content_id: string
@@ -387,6 +444,7 @@ export type Database = {
           created_at?: string
           id?: string
           played_on: string
+          round_id?: string | null
         }
         Update: {
           content_id?: string
@@ -394,6 +452,7 @@ export type Database = {
           created_at?: string
           id?: string
           played_on?: string
+          round_id?: string | null
         }
         Relationships: [
           {
@@ -408,6 +467,13 @@ export type Database = {
             columns: ["couple_id"]
             isOneToOne: false
             referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "game_sessions_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "game_rounds"
             referencedColumns: ["id"]
           },
         ]
@@ -909,6 +975,7 @@ export type Database = {
         Args: { _couple: string; _day: string }
         Returns: undefined
       }
+      can_see_response: { Args: { _session: string }; Returns: boolean }
       couple_size: { Args: { _couple: string }; Returns: number }
       create_couple: {
         Args: {
@@ -940,6 +1007,9 @@ export type Database = {
       join_couple: { Args: { _code: string }; Returns: string }
       my_couple_id: { Args: never; Returns: string }
       refresh_invite: { Args: never; Returns: string }
+      round_completed: { Args: { _round: string }; Returns: boolean }
+      round_status: { Args: { _round: string }; Returns: Json }
+      start_round: { Args: { _type: string }; Returns: string }
       swipe_date: { Args: { _idea: string; _liked: boolean }; Returns: boolean }
       today_question: { Args: never; Returns: Json }
       today_status: { Args: never; Returns: Json }

@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PrimaryButton, SecondaryButton, SlideUp } from "@/components/visual";
 import type { Me } from "@/lib/couple";
 import { dateKey } from "@/lib/daily";
+import { PhotoDiary } from "@/components/app/PhotoDiary";
 import { todayIn } from "@/lib/occasions";
 
 const tones = ["block-plum", "block-butter", "block-blush", "block-ember"];
@@ -16,6 +17,7 @@ export function MemoriesTab({ me }: { me: Me }) {
   const { t } = useTranslation();
   const qc = useQueryClient();
   const [adding, setAdding] = useState(false);
+  const [view, setView] = useState<"list" | "diary">("list");
   const list = useQuery({ queryKey: ["memories"], queryFn: async () => {
     const { data, error } = await supabase.from("memories").select("*").order("happened_on", { ascending: false }).order("created_at", { ascending: false });
     if (error) throw error; return data;
@@ -25,6 +27,11 @@ export function MemoriesTab({ me }: { me: Me }) {
   return <div className="px-4 pt-8">
     <p className="px-1 type-label text-muted-foreground">{t("feat.memories.label")}</p>
     <h1 className="mt-3 px-1 type-display"><SlideUp>{t("feat.memories.title")}</SlideUp></h1>
+    <div className="mt-5 grid grid-cols-2 gap-2 rounded-[20px] bg-surface p-1" role="tablist">
+      {(["list", "diary"] as const).map((k) => <button key={k} role="tab" aria-selected={view === k} onClick={() => setView(k)}
+        className={`h-12 rounded-[16px] type-button ${view === k ? "block-blush" : ""}`}>{t(`feat.memories.tabs.${k}`)}</button>)}
+    </div>
+    {view === "diary" ? <PhotoDiary me={me} /> : <>
     <div className="mt-6">{adding ? <AddMemory me={me} onDone={() => { setAdding(false); void qc.invalidateQueries({ queryKey: ["memories"] }); }} />
       : <PrimaryButton onClick={() => setAdding(true)}>{t("feat.memories.add")}</PrimaryButton>}</div>
     {list.data && !list.data.length && <p className="mt-6 px-1 type-body text-muted-foreground">{t("feat.memories.empty")}</p>}
@@ -41,6 +48,7 @@ export function MemoriesTab({ me }: { me: Me }) {
         </div>
       </article>
     </motion.div>)}</div>
+    </>}
   </div>;
 }
 
