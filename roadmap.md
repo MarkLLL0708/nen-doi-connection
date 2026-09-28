@@ -7,3 +7,4 @@
 - [x] Add /preview-home with sample data.
 - [ ] Test both pages' controls, light/dark readability, and Vietnamese tone-mark clipping; fix any failures without redesign.
 - [ ] Wait for user feedback.
+- [x] Replace typography with Newsreader + Inter type scale.
