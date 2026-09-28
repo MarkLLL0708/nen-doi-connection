@@ -184,6 +184,60 @@ export type Database = {
           },
         ]
       }
+      coach_history: {
+        Row: {
+          created_at: string
+          dialect: string
+          id: string
+          input: string
+          output: Json
+          tone: string
+          use_case: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dialect: string
+          id?: string
+          input: string
+          output: Json
+          tone: string
+          use_case: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          dialect?: string
+          id?: string
+          input?: string
+          output?: Json
+          tone?: string
+          use_case?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      coach_usage: {
+        Row: {
+          updated_at: string
+          used: number
+          user_id: string
+          week_start: string
+        }
+        Insert: {
+          updated_at?: string
+          used?: number
+          user_id: string
+          week_start: string
+        }
+        Update: {
+          updated_at?: string
+          used?: number
+          user_id?: string
+          week_start?: string
+        }
+        Relationships: []
+      }
       couple_members: {
         Row: {
           city: string | null
@@ -826,6 +880,7 @@ export type Database = {
           language: string
           onboarded: boolean
           partner_call_name: string | null
+          save_coach_history: boolean
           theme: string
           timezone: string
           tone: string | null
@@ -843,6 +898,7 @@ export type Database = {
           language?: string
           onboarded?: boolean
           partner_call_name?: string | null
+          save_coach_history?: boolean
           theme?: string
           timezone?: string
           tone?: string | null
@@ -860,6 +916,7 @@ export type Database = {
           language?: string
           onboarded?: boolean
           partner_call_name?: string | null
+          save_coach_history?: boolean
           theme?: string
           timezone?: string
           tone?: string | null
@@ -1077,6 +1134,7 @@ export type Database = {
       capsule_file_readable: { Args: { _name: string }; Returns: boolean }
       capsule_local_today: { Args: { _couple: string }; Returns: string }
       capsule_readable: { Args: { _id: string }; Returns: boolean }
+      coach_premium: { Args: { _user: string }; Returns: boolean }
       couple_size: { Args: { _couple: string }; Returns: number }
       create_couple: {
         Args: {
@@ -1118,6 +1176,7 @@ export type Database = {
       sync_capsule_notices: { Args: never; Returns: number }
       today_question: { Args: never; Returns: Json }
       today_status: { Args: never; Returns: Json }
+      use_coach: { Args: { _consume: boolean; _user: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
