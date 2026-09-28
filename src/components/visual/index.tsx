@@ -25,7 +25,7 @@ export function TextButton({ className, children, ...props }: ButtonHTMLAttribut
 }
 
 export function Tag({ children, accent = false, className }: { children: ReactNode; accent?: boolean; className?: string }) {
-  return <span className={cn("inline-flex w-fit items-center rounded-full px-3 py-1 type-label normal-case tracking-normal", accent ? "bg-accent/10 text-accent" : "bg-secondary text-muted-foreground", className)}>{children}</span>;
+  return <span className={cn("inline-flex w-fit items-center rounded-full px-3 py-1 type-label", accent ? "bg-accent/10 text-accent" : "bg-secondary text-muted-foreground", className)}>{children}</span>;
 }
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {

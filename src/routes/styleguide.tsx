@@ -120,7 +120,7 @@ function Showcase({ dark }: { dark: boolean }) {
         <Section title={t("sections.motion")}>
           <div className="relative overflow-hidden rounded-[16px] border border-hairline px-6 py-12">
             <LightBloom active={bloom} />
-            <div className="relative z-[1] text-center"><p className="label-caps">{t("bloom.label")}</p><p className="mt-3 type-title">{t("bloom.text")}</p><div className="mt-6 flex justify-center"><TextButton onClick={() => setBloom(true)}>{t("actions.bloom")}</TextButton></div></div>
+            <div className="relative z-[1]"><p className="label-caps">{t("bloom.label")}</p><p className="mt-3 type-title">{t("bloom.text")}</p><div className="mt-6 flex"><TextButton onClick={() => setBloom(true)}>{t("actions.bloom")}</TextButton></div></div>
           </div>
         </Section>
 
