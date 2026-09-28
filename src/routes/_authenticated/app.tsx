@@ -7,7 +7,7 @@ import { Camera, Gamepad2, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   ActionTile, AvatarDuo, Block, BottomTabBar, CountUp, FitText, FlameMark, GeometricBurst, Logo, OccasionBanner, PageTransition, PhotoTile,
-  Pressable, SlideUp, Stagger, StaggerItem, StreakLine, ThemeSwitch, Ticker, applyTheme, formatNumber, type TabKey, type ThemeMode,
+  Pressable, SlideUp, Stagger, StaggerItem, StreakLine, Ticker, applyTheme, formatNumber, type TabKey, type ThemeMode,
 } from "@/components/visual";
 import { Shell } from "@/components/app/Shell";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
@@ -179,6 +179,5 @@ function ThemeSwitchLabelled({ mode, onChange }: { mode: ThemeMode; onChange: (m
   return <div className="space-y-3">
     {(["system", "light", "dark"] as const).map((m) => <Pressable key={m} haptics aria-pressed={mode === m} onClick={() => onChange(m)}
       className={`flex h-16 w-full items-center rounded-[20px] px-5 type-button text-[17px] ${mode === m ? "block-ember" : "bg-surface text-foreground"}`}>{t(`app.settings.${m}`)}</Pressable>)}
-    <span className="hidden"><ThemeSwitch mode={mode} onChange={onChange} /></span>
   </div>;
 }
