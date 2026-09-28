@@ -8,3 +8,5 @@
 - [ ] Test both pages' controls, light/dark readability, and Vietnamese tone-mark clipping; fix any failures without redesign.
 - [ ] Wait for user feedback.
 - [x] Replace typography with Newsreader + Inter type scale.
+- [x] Build /looks with three bold design directions (Colour Block, Midnight, Cream & Tomato).
+- [ ] Wait for the user to pick a direction before applying anything app-wide.
