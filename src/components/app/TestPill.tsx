@@ -107,6 +107,7 @@ function FloatingHandle({ label, aria, collapseLabel, onOpen }: { label: string;
     else if (collapsed) setCollapsed(false); else { onOpen(); if (!hasTabs) setPeek(false); }
   };
   const setCollapsed = (v: boolean) => { if (!hasTabs) { setPeek(!v); return; } setDot(v); localStorage.setItem(DOT_KEY, v ? "1" : "0"); };
+  if (["/", "/demo", "/privacy", "/terms", "/contact"].includes(path)) return null;
   return <div ref={el} role="button" tabIndex={0} aria-label={aria} data-testid="test-pill"
     onPointerDown={down} onPointerMove={move} onPointerUp={up} onKeyDown={(e) => { if (e.key === "Enter") onOpen(); }}
     style={{ left: pos.x, top: pos.y, touchAction: "none" }}

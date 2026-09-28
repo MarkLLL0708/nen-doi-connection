@@ -21,10 +21,10 @@ export function LangSwitch({ className }: { className?: string }) {
 export function SiteHeader() {
   const { t } = useTranslation();
   return <header className="mx-auto flex max-w-[1120px] items-center justify-between gap-3 px-5 py-4">
-    <Link to="/" aria-label="Nến Đôi"><Logo /></Link>
+    <Link to="/" aria-label="Nến Đôi" className="shrink-0 whitespace-nowrap"><Logo /></Link>
     <div className="flex items-center gap-2">
       <LangSwitch />
-      <Link to="/auth" className="inline-flex h-11 items-center rounded-full block-ember px-5 type-button">{t("landing.nav.start")}</Link>
+      <Link to="/auth" className="inline-flex h-11 items-center shrink-0 whitespace-nowrap rounded-full block-ember px-4 type-button">{t("landing.nav.start")}</Link>
     </div>
   </header>;
 }
