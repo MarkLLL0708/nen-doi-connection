@@ -76,31 +76,31 @@ export function AvatarPair({ firstDone = true, secondDone = false }: { firstDone
   </div>;
 }
 
-export function ActionTile({ tone, icon: Icon, title, youDone, partnerDone }: { tone: string; icon: LucideIcon; title: string; youDone: boolean; partnerDone: boolean }) {
+export function ActionTile({ tone, icon: Icon, title, youDone, partnerDone, youName, partnerName, onClick }: { tone: string; icon: LucideIcon; title: string; youDone: boolean; partnerDone: boolean; youName?: string | undefined; partnerName?: string | undefined; onClick?: (() => void) | undefined }) {
   const { t } = useTranslation();
-  return <Pressable haptics className={cn("grain flex min-h-[140px] w-full flex-col justify-between rounded-[24px] p-5 text-left", tone)}>
+  return <Pressable haptics onClick={onClick ?? (() => undefined)} className={cn("grain flex min-h-[140px] w-full flex-col justify-between rounded-[24px] p-5 text-left", tone)}>
     <span className="relative z-[2] flex items-start justify-between gap-3"><span className="type-title">{title}</span><Icon strokeWidth={2} className="size-7 shrink-0" aria-hidden="true" /></span>
-    <span className="relative z-[2] mt-4 flex flex-wrap gap-x-4 gap-y-1"><Status done={youDone} name={t("avatars.you")} /><Status done={partnerDone} name={t("avatars.partner")} /></span>
+    <span className="relative z-[2] mt-4 flex flex-wrap gap-x-4 gap-y-1"><Status done={youDone} name={youName ?? t("avatars.you")} /><Status done={partnerDone} name={partnerName ?? t("avatars.partner")} /></span>
   </Pressable>;
 }
 
 /* ---------- Streak ---------- */
 
-export function StreakLine({ count, atRisk = false }: { count: number; atRisk?: boolean }) {
+export function StreakLine({ count, atRisk = false, note }: { count: number; atRisk?: boolean; note?: string | undefined }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
   return <motion.div className="flex items-center gap-3" key={atRisk ? "risk" : "ok"} initial={reduce ? { opacity: 0 } : { scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.3, ease: [0.34, 1.4, 0.64, 1] }}>
     <FlameMark size={30} streak={count} atRisk={atRisk} />
     <div>
       <p className="type-title text-[22px]"><Odometer value={count} /> <span>{t("streak.unit")}</span></p>
-      <p className="type-caption text-muted-foreground">{atRisk ? t("cb.streakRisk") : t("sample.streakNote")}</p>
+      <p className="type-caption text-muted-foreground">{note ?? (atRisk ? t("cb.streakRisk") : t("sample.streakNote"))}</p>
     </div>
   </motion.div>;
 }
 
 /* ---------- Photo, occasion, empty ---------- */
 
-export function PhotoTile({ className, title }: { className?: string; title?: string }) {
+export function PhotoTile({ className, title }: { className?: string | undefined; title?: string | undefined }) {
   const { t } = useTranslation();
   return <div className={className}>
     <div role="img" aria-label={t("image.alt")} className="grain block-plum flex h-[220px] items-end rounded-[24px] p-5">
@@ -110,9 +110,9 @@ export function PhotoTile({ className, title }: { className?: string; title?: st
   </div>;
 }
 
-export function OccasionBanner({ days = 131 }: { days?: number }) {
+export function OccasionBanner({ days = 131, label, note }: { days?: number; label?: string | undefined; note?: string | undefined }) {
   const { t } = useTranslation();
-  return <Block tone="block-tet" className="rounded-[24px] p-5"><p className="type-title">{t("sample.occasion", { count: days })}</p><p className="mt-2 type-body opacity-90">{t("sample.occasionNote")}</p></Block>;
+  return <Block tone="block-tet" className="rounded-[24px] p-5"><p className="type-title">{label ?? t("sample.occasion", { count: days })}</p><p className="mt-2 type-body opacity-90">{note ?? t("sample.occasionNote")}</p></Block>;
 }
 
 export function EmptyState() {
@@ -158,13 +158,15 @@ export function BottomTabBar({ active = "home", onSelect, id = "tabs", className
 
 export type ThemeMode = "system" | "light" | "dark";
 /** Follows the phone's setting by default; an explicit choice adds .light or .dark on <html>. */
+export function applyTheme(mode: ThemeMode) {
+  if (typeof document === "undefined") return;
+  const el = document.documentElement;
+  el.classList.remove("light", "dark");
+  if (mode !== "system") el.classList.add(mode);
+}
 export function useThemeMode() {
   const [mode, setMode] = useState<ThemeMode>("system");
-  useEffect(() => {
-    const el = document.documentElement;
-    el.classList.remove("light", "dark");
-    if (mode !== "system") el.classList.add(mode);
-  }, [mode]);
+  useEffect(() => { applyTheme(mode); }, [mode]);
   return [mode, setMode] as const;
 }
 
@@ -174,4 +176,43 @@ export function ThemeSwitch({ mode, onChange }: { mode: ThemeMode; onChange: (m:
     {(["system", "light", "dark"] as const).map((m) => <Pressable key={m} aria-pressed={mode === m} onClick={() => onChange(m)}
       className={cn("h-10 rounded-full px-3 text-[13px] font-bold", mode === m ? "bg-primary text-primary-foreground" : "text-muted-foreground")}>{t(`cb.theme.${m}`)}</Pressable>)}
   </div>;
+}
+
+/* ---------- Geometric avatars (no faces) ---------- */
+
+export const geoAvatars = ["geo:1", "geo:2", "geo:3", "geo:4", "geo:5", "geo:6"] as const;
+const geoSpec: Record<string, { bg: string; fg: string; shape: "circle" | "square" | "moon" | "diamond" | "stripes" | "dot" }> = {
+  "geo:1": { bg: "var(--ember)", fg: "var(--butter)", shape: "circle" },
+  "geo:2": { bg: "var(--plum)", fg: "var(--blush)", shape: "moon" },
+  "geo:3": { bg: "var(--butter)", fg: "var(--ink)", shape: "square" },
+  "geo:4": { bg: "var(--blush)", fg: "var(--plum)", shape: "diamond" },
+  "geo:5": { bg: "var(--ink)", fg: "var(--ember)", shape: "stripes" },
+  "geo:6": { bg: "var(--cream)", fg: "var(--ember)", shape: "dot" },
+};
+
+/** Bold palette shape, an uploaded photo (signed URL), or the first letter as fallback. */
+export function Avatar({ value, url, name, size = 56, className }: { value?: string | null | undefined; url?: string | null | undefined; name?: string | undefined; size?: number; className?: string | undefined }) {
+  const spec = value ? geoSpec[value] : undefined;
+  const base = cn("relative grid shrink-0 place-items-center overflow-hidden rounded-full", className);
+  if (url) return <img src={url} alt="" width={size} height={size} className={cn(base, "object-cover")} style={{ width: size, height: size }} />;
+  if (!spec) return <span className={cn(base, "block-plum type-title")} style={{ width: size, height: size, fontSize: size * 0.4 }}>{(name ?? "?").charAt(0).toUpperCase()}</span>;
+  const s = size;
+  return <span className={base} style={{ width: s, height: s, background: spec.bg }} aria-hidden="true">
+    <svg viewBox="0 0 40 40" width={s} height={s}>
+      {spec.shape === "circle" && <circle cx="20" cy="20" r="11" fill={spec.fg} />}
+      {spec.shape === "moon" && <path d="M8 24 A12 12 0 0 1 32 24 Z" fill={spec.fg} />}
+      {spec.shape === "square" && <rect x="11" y="11" width="18" height="18" rx="3" fill={spec.fg} />}
+      {spec.shape === "diamond" && <rect x="12" y="12" width="16" height="16" rx="2" fill={spec.fg} transform="rotate(45 20 20)" />}
+      {spec.shape === "stripes" && <g fill={spec.fg}><rect x="0" y="10" width="40" height="5" /><rect x="0" y="20" width="40" height="5" /><rect x="0" y="30" width="40" height="5" /></g>}
+      {spec.shape === "dot" && <g fill={spec.fg}><circle cx="14" cy="14" r="5" /><circle cx="26" cy="26" r="5" /></g>}
+    </svg>
+  </span>;
+}
+
+/** Two overlapping avatars with a done/waiting badge each. */
+export function AvatarDuo({ people, size = 44 }: { people: { name: string; done: boolean; avatar?: string | null | undefined; url?: string | null | undefined }[]; size?: number }) {
+  return <div className="flex -space-x-3">{people.map((p, i) => <span key={i} className="relative rounded-full ring-4 ring-background">
+    <Avatar value={p.avatar} url={p.url} name={p.name} size={size} />
+    <span className={cn("absolute -bottom-1 -right-1 grid size-5 place-items-center rounded-full ring-2 ring-background", p.done ? "block-ember" : "bg-surface text-foreground")}>{p.done ? <Check strokeWidth={3} className="size-3" /> : <Clock strokeWidth={3} className="size-3" />}</span>
+  </span>)}</div>;
 }
