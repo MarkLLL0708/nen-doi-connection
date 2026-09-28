@@ -1,3 +1,4 @@
+import { NotificationBell } from "@/components/app/NotificationBell";
 import { SensitiveTopics } from "@/components/app/SensitiveTopics";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
@@ -110,7 +111,7 @@ function Home({ me }: { me: Me }) {
   return <div className="relative">
     <GeometricBurst fire={burst} />
     <Ticker text={t("app.ticker")} className="block-butter" />
-    <header className="flex items-center justify-between px-5 py-4"><Logo /></header>
+    <header className="flex items-center gap-3 px-5 py-4"><Logo /><NotificationBell me={me} /></header>
 
     {solo && <div className="px-4 pb-4"><Pressable haptics onClick={() => void navigate({ to: "/pair" })} className="grain block-plum flex w-full items-center justify-between gap-3 rounded-[24px] p-5 text-left">
       <span className="relative z-[2] type-title text-[20px]">{t("app.home.soloBanner", { partner: partnerCall })}</span>
