@@ -91,7 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&subset=vietnamese&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@500;700&family=Space+Grotesk:wght@500;700&family=Archivo:wdth,wght@62..125,500;62..125,700;62..125,800&family=Be+Vietnam+Pro:wght@800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&subset=vietnamese&display=swap" },
     ],
   }),
   shellComponent: RootShell,
