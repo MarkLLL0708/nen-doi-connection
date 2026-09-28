@@ -329,11 +329,12 @@ function RapidReveal({ sessions, pick, me, partnerId, partner }: { sessions: Ses
   const [i, setI] = useState(0);
   const [flood, setFlood] = useState(false);
   const [at, setAt] = useState<{ x: number; y: number } | null>(null);
+  const advancing = useRef(false); // the flood's exit animation also reports "done"; advance once per tap
   const s = sessions[i]!;
   // Alternate the flood between two contrasting colours so every switch is visible on the ember card.
   const floodTone = i % 2 ? "block-ink" : "block-butter";
   return <div ref={box} className={`grain ${tone.rapid_qa} relative overflow-hidden rounded-[28px] p-5`}>
-    <ColourFlood at={at} active={flood} colourClass={floodTone} onDone={() => { setI((n) => n + 1); setFlood(false); }} />
+    <ColourFlood at={at} active={flood} colourClass={floodTone} onDone={() => { if (!advancing.current) return; advancing.current = false; setI((n) => n + 1); setFlood(false); }} />
     <div className="relative z-[2]">
       <p className="type-label nums">{i + 1}/{sessions.length}</p>
       <p className="mt-2 type-title">{fill(s.content.text_vi, partner)}</p>
@@ -341,7 +342,7 @@ function RapidReveal({ sessions, pick, me, partnerId, partner }: { sessions: Ses
         {[{ n: t("feat.play.you"), v: pick(s.id, me.userId)?.text }, { n: partner, v: pick(s.id, partnerId)?.text }].map((x) =>
           <div key={x.n} className="min-h-[96px] rounded-[18px] bg-cream p-4 text-ink"><p className="type-label">{x.n}</p><p className="mt-2 type-button break-words">{x.v || t("feat.play.rapid.blank")}</p></div>)}
       </div>
-      {i < sessions.length - 1 && <PrimaryButton className="mt-4 bg-ink text-cream" onClick={(e: MouseEvent<HTMLButtonElement>) => { setAt(pointFrom(e, box.current)); setFlood(true); }}>{t("feat.play.rapid.nextPrompt")}</PrimaryButton>}
+      {i < sessions.length - 1 && <PrimaryButton className="mt-4 bg-ink text-cream" onClick={(e: MouseEvent<HTMLButtonElement>) => { if (flood) return; advancing.current = true; setAt(pointFrom(e, box.current)); setFlood(true); }}>{t("feat.play.rapid.nextPrompt")}</PrimaryButton>}
     </div>
   </div>;
 }
