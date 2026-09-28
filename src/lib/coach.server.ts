@@ -78,10 +78,12 @@ const TONE: Record<CoachTone, { open?: string; close?: string }> = {
   parents: {},
 };
 
+const w = (word: string) => new RegExp(`(?<![\\p{L}])${word}(?![\\p{L}])`, "gu");
+const swap = (s: string, pairs: [string, string][]) => pairs.reduce((acc, [a, b]) => acc.replace(w(a), b), s);
+
 function toneApply(v: Base, tone: CoachTone): Base {
   if (tone === "parents") {
-    const p = (s: string) => s.replace(/\bMình\b/g, "Cháu").replace(/\bmình\b/g, "cháu").replace(/hai đứa/g, "hai cháu").replace(/\{partner\}/g, "cô chú")
-      .replace(/ nhé\b/g, " ạ").replace(/ nha\b/g, " ạ").replace(/ ghê\b/g, "");
+    const p = (s: string) => swap(s.replace(/\{partner\}/g, "cô chú"), [["Mình", "Cháu"], ["mình", "cháu"], ["hai đứa", "hai cháu"], ["tụi", "chúng"], ["nhé", "ạ"], ["nha", "ạ"]]).replace(/ ghê/g, "");
     return { short: p(v.short), medium: p(v.medium), long: p(v.long) };
   }
   const t = TONE[tone];
@@ -89,8 +91,8 @@ function toneApply(v: Base, tone: CoachTone): Base {
 }
 
 export function dialectApply(s: string, d: CoachDialect) {
-  if (d === "south") return s.replace(/\bnhé\b/g, "nha").replace(/\bthế nào\b/g, "sao").replace(/\bthế\b/g, "vậy").replace(/\bvẫn\b/g, "vẫn").replace(/\bghê\b/g, "ghê");
-  if (d === "north") return s.replace(/\bnha\b/g, "nhé").replace(/\bvậy\b/g, "thế").replace(/\bhông\b/g, "không").replace(/\btui\b/g, "tớ");
+  if (d === "south") return swap(s, [["nhé", "nha"], ["thế nào", "sao"], ["thế", "vậy"], ["tớ", "tui"]]);
+  if (d === "north") return swap(s, [["nha", "nhé"], ["vậy", "thế"], ["hông", "không"], ["tui", "tớ"]]);
   return s;
 }
 
