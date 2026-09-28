@@ -17,6 +17,7 @@ import { MemoriesTab } from "@/components/app/MemoriesTab";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
 import { diffDays, milestoneToday, parseDate, todayIn, upcomingOccasions } from "@/lib/occasions";
 import i18n from "@/i18n";
+import { FAKE_HOUR_KEY, testFlag } from "@/lib/testmode";
 
 const tabKeys = ["home", "play", "date", "memories", "settings"] as const;
 
@@ -74,7 +75,8 @@ function Home({ me }: { me: Me }) {
   const mine = status?.members.find((m) => m.user_id === me.userId);
   const theirs = status?.members.find((m) => m.user_id !== me.userId);
   const anyDone = (m?: { question: boolean; photo: boolean; game: boolean }) => !!m && (m.question || m.photo || m.game);
-  const atRisk = !!status && status.local_hour >= 20 && !(anyDone(mine) && anyDone(theirs));
+  const hour = testFlag(FAKE_HOUR_KEY) ? 20 : status?.local_hour ?? 0;
+  const atRisk = !!status && hour >= 20 && !(anyDone(mine) && anyDone(theirs));
 
   const occasion = useMemo(() => {
     const birthdays = [me.profile, me.partner].filter((p) => p?.birthday).map((p) => ({ name: (p!.display_name ?? "").toUpperCase(), date: p!.birthday! }));
