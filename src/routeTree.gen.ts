@@ -16,6 +16,7 @@ import { Route as IntroRouteImport } from './routes/intro'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as PreviewHomeRouteImport } from './routes/preview-home'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPairRouteImport } from './routes/_authenticated/pair'
 
@@ -53,6 +54,11 @@ const StyleguideRoute = StyleguideRouteImport.update({
   path: '/styleguide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
+  '/app': typeof AuthenticatedAppRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pair': typeof AuthenticatedPairRoute
 }
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
+  '/app': typeof AuthenticatedAppRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pair': typeof AuthenticatedPairRoute
 }
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
   '/styleguide': typeof StyleguideRoute
+  '/_authenticated/app': typeof AuthenticatedAppRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pair': typeof AuthenticatedPairRoute
 }
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/preview-home'
     | '/styleguide'
+    | '/app'
     | '/onboarding'
     | '/pair'
   fileRoutesByTo: FileRoutesByTo
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/preview-home'
     | '/styleguide'
+    | '/app'
     | '/onboarding'
     | '/pair'
   id:
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/preview-home'
     | '/styleguide'
+    | '/_authenticated/app'
     | '/_authenticated/onboarding'
     | '/_authenticated/pair'
   fileRoutesById: FileRoutesById
@@ -191,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StyleguideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/onboarding': {
       id: '/_authenticated/onboarding'
       path: '/onboarding'
@@ -209,11 +228,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRoute: typeof AuthenticatedAppRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPairRoute: typeof AuthenticatedPairRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRoute: AuthenticatedAppRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPairRoute: AuthenticatedPairRoute,
 }
