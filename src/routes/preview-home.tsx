@@ -44,7 +44,7 @@ function PreviewHome() {
 
         <motion.section className="pt-10" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }}>
           <p className="label-caps">{t("hero.label")}</p>
-          <p className="mt-3 type-display nums">{sample.days}</p>
+          <p className="mt-3 type-numeral">{sample.days}</p>
           <p className="mt-1 type-title italic text-muted-foreground">{t("home.daysLabel")}</p>
           <div className="mt-8"><FlameStreak count={sample.streak} /></div>
         </motion.section>
