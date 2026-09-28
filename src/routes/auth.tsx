@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,12 +64,14 @@ function AuthPage() {
     void navigate({ to: "/app", replace: true });
   };
 
+  const qc = useQueryClient();
   const guest = async () => {
     setErr(null); setBusy(true);
     const { error } = await supabase.auth.signInAnonymously();
     setBusy(false);
     if (error) { setErr(t("app.error")); return; }
-    void navigate({ to: "/app", replace: true });
+    await qc.resetQueries({ queryKey: ["me"] });
+    void navigate({ to: "/onboarding", replace: true });
   };
 
   return <Shell>
