@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,6 +64,16 @@ function AuthPage() {
     void navigate({ to: "/app", replace: true });
   };
 
+  const qc = useQueryClient();
+  const guest = async () => {
+    setErr(null); setBusy(true);
+    const { error } = await supabase.auth.signInAnonymously();
+    setBusy(false);
+    if (error) { setErr(t("app.error")); return; }
+    await qc.resetQueries({ queryKey: ["me"] });
+    void navigate({ to: "/onboarding", replace: true });
+  };
+
   return <Shell>
     <div className="flex flex-1 flex-col px-5 pb-8 pt-10">
       <div className="flex items-center gap-3"><FlameMark size={34} /><span className="type-display text-[34px] lowercase">{PRODUCT_WORDMARK}</span></div>
@@ -72,7 +83,9 @@ function AuthPage() {
         <GhostButton className="mt-6" onClick={() => { setSent(false); setMode("in"); }}>{t("app.auth.toSignIn")}</GhostButton>
       </div> : <>
         <h1 className="mt-14 type-display"><SlideUp key={mode}>{mode === "in" ? t("app.auth.signInTitle") : t("app.auth.signUpTitle")}</SlideUp></h1>
-        <form onSubmit={submit} className="mt-8 space-y-3">
+        <PrimaryButton type="button" tone="ember" className="mt-8" disabled={busy} onClick={() => void guest()}>{t("app.auth.guest")}</PrimaryButton>
+        <p className="mt-2 type-caption text-muted-foreground">{t("app.auth.guestNote")}</p>
+        <form onSubmit={submit} className="mt-6 space-y-3">
           <label className="block"><span className="sr-only">{t("app.auth.email")}</span>
             <input className={inputCls} type="email" autoComplete="email" required placeholder={t("app.auth.email")} value={email} onChange={(e) => setEmail(e.target.value)} /></label>
           <label className="block"><span className="sr-only">{t("app.auth.password")}</span>

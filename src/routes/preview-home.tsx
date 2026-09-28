@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -34,6 +35,9 @@ function PreviewHome() {
           <ThemeSwitch mode={mode} onChange={setMode} />
         </div>
       </header>
+      <div className="px-4 pb-4"><Link to="/auth" className="grain block-ink flex items-center justify-between gap-3 rounded-[24px] p-5">
+        <span className="relative z-[2] type-button">{t("app.previewBanner")}</span><span className="relative z-[2] type-button">→</span>
+      </Link></div>
 
       <div className="px-4">
         <Block tone="block-ember" className="pb-7 pt-5">

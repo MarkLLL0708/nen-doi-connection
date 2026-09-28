@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { motion } from "motion/react";
 import { ImagePlus, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { PrimaryButton, SecondaryButton, SlideUp, Stagger, StaggerItem } from "@/components/visual";
+import { PrimaryButton, SecondaryButton, SlideUp } from "@/components/visual";
 import type { Me } from "@/lib/couple";
 import { dateKey } from "@/lib/daily";
 import { todayIn } from "@/lib/occasions";
@@ -27,7 +28,7 @@ export function MemoriesTab({ me }: { me: Me }) {
     <div className="mt-6">{adding ? <AddMemory me={me} onDone={() => { setAdding(false); void qc.invalidateQueries({ queryKey: ["memories"] }); }} />
       : <PrimaryButton onClick={() => setAdding(true)}>{t("feat.memories.add")}</PrimaryButton>}</div>
     {list.data && !list.data.length && <p className="mt-6 px-1 type-body text-muted-foreground">{t("feat.memories.empty")}</p>}
-    <Stagger className="mt-6 space-y-3">{(list.data ?? []).map((m, i) => <StaggerItem key={m.id}>
+    <div className="mt-6 space-y-3">{(list.data ?? []).map((m, i) => <motion.div key={m.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28, delay: Math.min(i, 8) * 0.04 }}>
       <article className={`grain ${tones[i % tones.length]} rounded-[24px] p-5`}>
         <div className="relative z-[2]">
           {m.storage_path && <MemoryPhoto path={m.storage_path} />}
@@ -39,7 +40,7 @@ export function MemoriesTab({ me }: { me: Me }) {
           {m.note && <p className="mt-2 whitespace-pre-line type-body">{m.note}</p>}
         </div>
       </article>
-    </StaggerItem>)}</Stagger>
+    </motion.div>)}</div>
   </div>;
 }
 
