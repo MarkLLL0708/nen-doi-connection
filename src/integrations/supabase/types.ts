@@ -937,6 +937,7 @@ export type Database = {
       join_couple: { Args: { _code: string }; Returns: string }
       my_couple_id: { Args: never; Returns: string }
       refresh_invite: { Args: never; Returns: string }
+      swipe_date: { Args: { _idea: string; _liked: boolean }; Returns: boolean }
       today_question: { Args: never; Returns: Json }
       today_status: { Args: never; Returns: Json }
     }
