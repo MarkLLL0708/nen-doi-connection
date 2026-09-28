@@ -14,7 +14,8 @@ const OFF = 520;
  * Physics swipe deck. Cards rotate with drag (up to 12deg), fly off past a threshold or on a flick,
  * snap back otherwise. Stamps and a colour wash grow with drag distance. Buttons and undo reuse the same motion.
  */
-export function SwipeDeck<T>({ items, getKey, renderCard, onSwipe, className, cardClassName }: {
+export function SwipeDeck<T>({ items, getKey, renderCard, onSwipe, className, cardClassName, labels }: {
+  labels?: { like: string; skip: string } | undefined;
   items: T[]; getKey: (item: T) => string; renderCard: (item: T) => ReactNode;
   onSwipe?: (item: T, dir: SwipeDir) => void; className?: string; cardClassName?: string | ((item: T) => string);
 }) {
@@ -76,17 +77,17 @@ export function SwipeDeck<T>({ items, getKey, renderCard, onSwipe, className, ca
         if (depth === 0) return <motion.div key={getKey(item)} data-testid="deck-top" drag={busy ? false : "x"} dragMomentum={false} onDragEnd={onDragEnd}
           style={{ x, rotate, touchAction: "pan-y" }} whileDrag={{ cursor: "grabbing" }}
           className={cn("grain absolute inset-0 z-10 flex cursor-grab select-none flex-col rounded-[28px] p-6 shadow-float", cls)}>
-          <Stamp label={t("cb.like")} opacity={likeO} side="right" colour="var(--ember)" />
-          <Stamp label={t("cb.skip")} opacity={skipO} side="left" colour="var(--ink)" />
+          <Stamp label={labels?.like ?? t("cb.like")} opacity={likeO} side="right" colour="var(--ember)" />
+          <Stamp label={labels?.skip ?? t("cb.skip")} opacity={skipO} side="left" colour="var(--ink)" />
           {renderCard(item)}
         </motion.div>;
         return <PeekCard key={getKey(item)} depth={depth} scale={depth === 1 ? nextScale : undefined} y={depth === 1 ? nextY : undefined} className={cls}>{renderCard(item)}</PeekCard>;
       })}
     </div>
     <div className="mt-6 flex items-center justify-center gap-4">
-      <Pressable aria-label={t("cb.skipBtn")} onClick={() => void fly("left")} disabled={remaining === 0} className="block-ink grid size-16 place-items-center rounded-full disabled:opacity-40"><X strokeWidth={2.5} className="size-7" /></Pressable>
+      <Pressable aria-label={labels?.skip ?? t("cb.skipBtn")} onClick={() => void fly("left")} disabled={remaining === 0} className="block-ink grid size-16 place-items-center rounded-full disabled:opacity-40"><X strokeWidth={2.5} className="size-7" /></Pressable>
       <Pressable aria-label={t("cb.undo")} onClick={() => void undo()} disabled={history.length === 0} className="grid size-12 place-items-center rounded-full bg-surface text-foreground disabled:opacity-40"><RotateCcw strokeWidth={2.5} className="size-5" /></Pressable>
-      <Pressable aria-label={t("cb.likeBtn")} onClick={() => void fly("right")} disabled={remaining === 0} className="block-ember grid size-16 place-items-center rounded-full disabled:opacity-40"><Heart strokeWidth={2.5} className="size-7" /></Pressable>
+      <Pressable aria-label={labels?.like ?? t("cb.likeBtn")} onClick={() => void fly("right")} disabled={remaining === 0} className="block-ember grid size-16 place-items-center rounded-full disabled:opacity-40"><Heart strokeWidth={2.5} className="size-7" /></Pressable>
     </div>
     <p className="mt-3 text-center type-caption text-muted-foreground" aria-live="polite">{t("cb.deckLeft", { count: remaining })}</p>
   </div>;
