@@ -45,7 +45,7 @@ export function GlobalControls() {
   const lang = () => { const l = i18n.language === "vi" ? "en" : "vi"; void i18n.changeLanguage(l); try { localStorage.setItem(LANG_KEY, l); } catch { /* ignore */ } };
 
   return <div className="pointer-events-none fixed inset-x-0 top-0 z-50 mx-auto max-w-[390px]">
-    <div className="pointer-events-auto absolute right-3 top-3 flex items-center gap-1 rounded-full bg-ink p-1 text-cream shadow-float">
+    <div className={`pointer-events-auto absolute right-3 ${path === "/intro" ? "top-14" : "top-3"} flex items-center gap-1 rounded-full bg-ink p-1 text-cream shadow-float`}>
       <Pressable onClick={lang} aria-label={t("actions.switchLanguage")} className="h-9 min-w-10 rounded-full px-3 text-[12px] font-bold tracking-[0.08em]">
         {i18n.language === "vi" ? "EN" : "VI"}
       </Pressable>

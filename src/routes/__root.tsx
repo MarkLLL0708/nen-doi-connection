@@ -1,4 +1,6 @@
 import { GlobalControls } from "@/components/app/GlobalControls";
+import { TestPill } from "@/components/app/TestPill";
+import { TEST_MODE_ENABLED } from "@/lib/testmode";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -133,6 +135,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <GlobalControls />
+      {TEST_MODE_ENABLED && <TestPill />}
     </QueryClientProvider>
   );
 }

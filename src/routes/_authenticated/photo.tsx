@@ -11,6 +11,15 @@ import { useMe, type Me } from "@/lib/couple";
 import { dailySlice, dateKey } from "@/lib/daily";
 import { todayIn } from "@/lib/occasions";
 import i18n from "@/i18n";
+import { SAMPLE_PHOTOS_KEY, testFlag } from "@/lib/testmode";
+import s1 from "@/assets/sample-1.jpg";
+import s2 from "@/assets/sample-2.jpg";
+import s3 from "@/assets/sample-3.jpg";
+import s4 from "@/assets/sample-4.jpg";
+import s5 from "@/assets/sample-5.jpg";
+import s6 from "@/assets/sample-6.jpg";
+
+const SAMPLES = [s1, s2, s3, s4, s5, s6];
 
 export const Route = createFileRoute("/_authenticated/photo")({
   head: () => ({ meta: [
@@ -68,6 +77,12 @@ function PhotoFlow({ me }: { me: Me }) {
     if (f && f.size > 10 * 1024 * 1024) { setErr(t("feat.photo.tooBig")); return; }
     setErr(null); setFile(f); setPreview(f ? URL.createObjectURL(f) : null);
   };
+  const [useSamples, setUseSamples] = useState(false);
+  useEffect(() => { setUseSamples(testFlag(SAMPLE_PHOTOS_KEY) === "1"); }, []);
+  const pickSample = async (src: string, i: number) => {
+    const blob = await (await fetch(src)).blob();
+    pick(new File([blob], `sample-${i + 1}.jpg`, { type: "image/jpeg" }));
+  };
   const send = async () => {
     if (!file) return;
     setBusy(true); setErr(null);
@@ -92,6 +107,10 @@ function PhotoFlow({ me }: { me: Me }) {
             {preview ? <img src={preview} alt="" className="absolute inset-0 size-full object-cover" /> : <span className="relative z-[2] flex flex-col items-center gap-3 type-button"><Camera strokeWidth={2} className="size-10" />{t("feat.photo.pick")}</span>}
             <input type="file" accept="image/*" className="sr-only" aria-label={t("feat.photo.pick")} onChange={(e) => pick(e.target.files?.[0] ?? null)} />
           </label>
+          {useSamples && <div><p className="type-label">{t("test.pickSample")}</p><div className="mt-2 grid grid-cols-6 gap-2">
+            {SAMPLES.map((src, i) => <button key={src} type="button" aria-label={`${t("test.pickSample")} ${i + 1}`} onClick={() => void pickSample(src, i)} className="overflow-hidden rounded-[12px]">
+              <img src={src} alt="" width={768} height={960} loading="lazy" className="aspect-[4/5] w-full object-cover" /></button>)}
+          </div></div>}
           <input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder={t("feat.photo.caption")} aria-label={t("feat.photo.caption")}
             className="h-14 w-full rounded-[18px] bg-surface px-4 type-body focus:outline-none focus-visible:ring-4 focus-visible:ring-ring/50" />
           {err && <p role="alert" className="type-button">{err}</p>}
