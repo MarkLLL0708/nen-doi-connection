@@ -9,6 +9,7 @@ import { ColourFlood, FlameMark, PrimaryButton, Pressable, SlideUp, haptic, poin
 import { Shell } from "@/components/app/Shell";
 import { useMe, type Me } from "@/lib/couple";
 import i18n from "@/i18n";
+import { floodFor, floodText } from "@/lib/flood";
 
 export const Route = createFileRoute("/_authenticated/question")({
   head: () => ({ meta: [
@@ -176,15 +177,16 @@ function Reveal({ tone, q, text, me, mine, theirs, partnerName, onBack }: { tone
   useEffect(() => { if (localStorage.getItem(key)) { setFlood(true); setOpen(true); } }, [key]);
   const reveal = (e: MouseEvent<HTMLButtonElement>) => { setAt(pointFrom(e, ref.current)); setFlood(true); haptic(20); localStorage.setItem(key, "1"); };
 
-  return <Shell>
+  const fl = floodFor(tone);
+  return <Shell className={`grain ${tone}`}>
     <div ref={ref} className="relative flex flex-1 flex-col">
-      <ColourFlood at={at} active={flood} colourClass={tone} onDone={() => setOpen(true)} />
-      <div className="relative z-[2] flex flex-1 flex-col transition-colors duration-300" style={flood ? { color: `var(--on-${tone === "block-deep" ? "ink" : tone.slice(6)})` } : undefined}>
+      <ColourFlood at={at} active={flood} colourClass={fl} onDone={() => setOpen(true)} />
+      <div className="relative z-[2] flex flex-1 flex-col transition-colors duration-300" style={flood ? { color: floodText(fl) } : undefined}>
         <TopBar label={t(`question.packs.${q.pack}`)} onBack={onBack} />
         {!open ? <div className="flex flex-1 flex-col justify-end gap-5 px-5 pb-10">
           <p className="type-label">{t("question.bothLabel")}</p>
           <h1 className="type-display"><SlideUp>{t("question.bothTitle")}</SlideUp></h1>
-          <PrimaryButton tone="ember" className="h-16 text-[18px]" onClick={reveal}>{t("question.reveal")}</PrimaryButton>
+          <PrimaryButton className={`h-16 text-[18px] ${fl}`} onClick={reveal}>{t("question.reveal")}</PrimaryButton>
         </div> : <div className="flex flex-1 flex-col gap-4 px-4 pb-10 pt-6">
           <h1 className={`px-1 font-display font-extrabold leading-[1.15] tracking-[-0.01em] text-balance break-words ${sizeFor(text) === "text-[34px]" ? "text-[26px]" : "text-[22px]"}`}>{text}</h1>
           {[{ a: mine, name: t("question.you"), from: -1 }, { a: theirs, name: partnerName, from: 1 }].map(({ a, name, from }, i) =>

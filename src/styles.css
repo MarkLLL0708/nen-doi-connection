@@ -104,3 +104,8 @@
   .ticker-track, .flame-pulse { animation: none !important; }
   *, *::before, *::after { transition: none !important; }
 }
+
+/* Reveal flood that always contrasts with the page: ink on light, ember on dark */
+.flood-auto { background: var(--ink); color: var(--on-ink); } .flood-auto-text { color: var(--on-ink); }
+.dark .flood-auto { background: var(--ember); color: var(--on-ember); } .dark .flood-auto-text { color: var(--on-ember); }
+@media (prefers-color-scheme: dark) { html:not(.light) .flood-auto { background: var(--ember); color: var(--on-ember); } html:not(.light) .flood-auto-text { color: var(--on-ember); } }

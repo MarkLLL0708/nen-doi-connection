@@ -96,8 +96,8 @@ function PhotoFlow({ me }: { me: Me }) {
 
   return <Shell>
     <div ref={box} className="relative flex flex-1 flex-col overflow-hidden px-5 pb-10 pt-4">
-      <ColourFlood at={at} active={flood} colourClass="block-butter" onDone={() => setOpen(true)} />
-      <div className="relative z-[2] flex flex-1 flex-col" style={flood ? { color: "var(--on-butter)" } : undefined}>
+      <ColourFlood at={at} active={flood} colourClass="flood-auto" onDone={() => setOpen(true)} />
+      <div className={`relative z-[2] flex flex-1 flex-col ${flood ? "flood-auto-text" : ""}`}>
         <button onClick={() => void navigate({ to: "/app" })} className="flex h-12 w-fit items-center gap-2 type-button"><ArrowLeft strokeWidth={2.5} className="size-5" />{t("feat.photo.back")}</button>
         <p className="mt-4 type-label">{t("feat.photo.label")}</p>
         <h1 className="mt-3 type-display text-[34px]"><SlideUp>{prompt.data?.text_vi ?? "…"}</SlideUp></h1>

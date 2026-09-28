@@ -1,3 +1,4 @@
+import { SensitiveTopics } from "@/components/app/SensitiveTopics";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -164,6 +165,7 @@ function SettingsTab({ me }: { me: Me }) {
     <p className="type-label text-muted-foreground">{t("app.settings.label")}</p>
     <h1 className="mt-3 type-display"><SlideUp>{t("app.settings.title")}</SlideUp></h1>
     <div className="mt-8"><ThemeSwitchLabelled mode={mode} onChange={(m) => void change(m)} /></div>
+    {me.couple && <SensitiveTopics me={me} />}
     <button onClick={() => void signOut()} className="mt-12 type-button underline decoration-2 underline-offset-[6px]">{t("app.settings.signOut")}</button>
   </div>;
 }

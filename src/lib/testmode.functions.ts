@@ -102,6 +102,7 @@ export const testClearToday = createServerFn({ method: "POST" }).handler(async (
     await a.from("game_responses").delete().in("session_id", ses.map((s) => s.id));
     await a.from("game_sessions").delete().in("id", ses.map((s) => s.id));
   }
+  await a.from("game_rounds").delete().eq("couple_id", cid).eq("played_on", day);
   // Undo today's streak step so the day can be replayed.
   const { data: st } = await a.from("streaks").select("current,last_completed").eq("couple_id", cid).single();
   if (st?.last_completed === day) {
@@ -120,7 +121,7 @@ export const testClearAll = createServerFn({ method: "POST" }).handler(async () 
     const { data: ph } = await a.from("photo_posts").select("storage_path").eq("couple_id", cid);
     const { data: mem } = await a.from("memories").select("storage_path").eq("couple_id", cid);
     await removePhotos([...(ph ?? []), ...(mem ?? [])].map((p) => p.storage_path).filter((p): p is string => !!p));
-    for (const t of ["answer_reactions", "answer_replies", "question_answers", "photo_posts", "game_responses", "game_sessions", "date_swipes", "shared_date_list",
+    for (const t of ["answer_reactions", "answer_replies", "question_answers", "photo_posts", "game_responses", "game_sessions", "game_rounds", "date_swipes", "shared_date_list",
       "memories", "occasions", "pack_consents", "couple_questions", "streak_freezes", "streaks", "subscriptions", "invites", "couple_members"] as const) {
       await a.from(t).delete().eq("couple_id", cid);
     }
