@@ -1,6 +1,6 @@
 // TEST MODE ONLY — see TEST_MODE_REMOVAL.md.
 export const testVi = {
-  pill: "THỬ", title: "Chế độ thử", now: "Đang là", nobody: "Chưa đăng nhập tài khoản thử",
+  pill: "THỬ", collapse: "Thu nhỏ", title: "Chế độ thử", now: "Đang là", nobody: "Chưa đăng nhập tài khoản thử",
   switchTo: "Đổi sang {{who}}", signInAs: "Vào bằng {{who}}", working: "Đang làm…",
   setup: "Tạo cặp thử", setupDone: "Đã có cặp thử. Sẵn sàng.", setupNew: "Đã tạo cặp thử.",
   clearToday: "Xóa dữ liệu hôm nay", clearedToday: "Đã xóa dữ liệu hôm nay.",
@@ -11,7 +11,7 @@ export const testVi = {
   pickSample: "Chọn một ảnh mẫu",
 };
 export const testEn: typeof testVi = {
-  pill: "TEST", title: "Test mode", now: "Signed in as", nobody: "Not signed in to a test account",
+  pill: "TEST", collapse: "Collapse", title: "Test mode", now: "Signed in as", nobody: "Not signed in to a test account",
   switchTo: "Switch to {{who}}", signInAs: "Sign in as {{who}}", working: "Working…",
   setup: "Create test couple", setupDone: "Test couple already exists. Ready.", setupNew: "Test couple created.",
   clearToday: "Clear today's data", clearedToday: "Today's data cleared.",

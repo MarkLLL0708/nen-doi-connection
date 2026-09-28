@@ -103,14 +103,17 @@ function PhotoFlow({ me }: { me: Me }) {
         <h1 className="mt-3 type-display text-[34px]"><SlideUp>{prompt.data?.text_vi ?? "…"}</SlideUp></h1>
 
         {!posts.data ? null : !mine ? <div className="mt-6 space-y-3">
-          <label className="grain block-butter relative flex aspect-[4/5] cursor-pointer items-center justify-center overflow-hidden rounded-[28px]">
+          {useSamples ? <>
+            {preview && <div className="relative aspect-[4/5] overflow-hidden rounded-[28px]"><img src={preview} alt="" className="absolute inset-0 size-full object-cover" /></div>}
+            <p className="type-label">{t("test.pickSample")}</p>
+            <div className="grid grid-cols-3 gap-2">
+              {SAMPLES.map((src, i) => <button key={src} type="button" aria-label={`${t("test.pickSample")} ${i + 1}`} onClick={() => void pickSample(src, i)} className="overflow-hidden rounded-[12px]">
+                <img src={src} alt="" width={768} height={960} loading="lazy" className="aspect-[4/5] w-full object-cover" /></button>)}
+            </div>
+          </> : <label className="grain block-butter relative flex aspect-[4/5] cursor-pointer items-center justify-center overflow-hidden rounded-[28px]">
             {preview ? <img src={preview} alt="" className="absolute inset-0 size-full object-cover" /> : <span className="relative z-[2] flex flex-col items-center gap-3 type-button"><Camera strokeWidth={2} className="size-10" />{t("feat.photo.pick")}</span>}
             <input type="file" accept="image/*" className="sr-only" aria-label={t("feat.photo.pick")} onChange={(e) => pick(e.target.files?.[0] ?? null)} />
-          </label>
-          {useSamples && <div><p className="type-label">{t("test.pickSample")}</p><div className="mt-2 grid grid-cols-6 gap-2">
-            {SAMPLES.map((src, i) => <button key={src} type="button" aria-label={`${t("test.pickSample")} ${i + 1}`} onClick={() => void pickSample(src, i)} className="overflow-hidden rounded-[12px]">
-              <img src={src} alt="" width={768} height={960} loading="lazy" className="aspect-[4/5] w-full object-cover" /></button>)}
-          </div></div>}
+          </label>}
           <input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder={t("feat.photo.caption")} aria-label={t("feat.photo.caption")}
             className="h-14 w-full rounded-[18px] bg-surface px-4 type-body focus:outline-none focus-visible:ring-4 focus-visible:ring-ring/50" />
           {err && <p role="alert" className="type-button">{err}</p>}
