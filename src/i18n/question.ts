@@ -1,0 +1,36 @@
+/** Copy for the Daily Question screen. */
+export const questionVi = {
+  metaTitle: "Câu hỏi hôm nay · Nến Đôi", metaDesc: "Mỗi ngày một câu hỏi, hai câu trả lời, mở cùng lúc.",
+  packs: { memory: "KỶ NIỆM", family: "GIA ĐÌNH & RA MẮT", tet: "TẾT & LỄ", food: "ẨM THỰC", fun: "VUI VẺ", money: "TIỀN BẠC & TƯƠNG LAI", distance: "YÊU XA", conflict: "CÃI NHAU & LÀM LÀNH", deep: "SÂU LẮNG" },
+  today: "CÂU HỎI HÔM NAY",
+  placeholder: "Viết thật lòng nhé. {{partner}} chỉ đọc được khi đã trả lời xong.",
+  send: "Gửi", sending: "Đang gửi…", back: "Về trang chủ",
+  waitingLabel: "ĐÃ GỬI", waiting: "Chờ {{partner}} trả lời nhé.", waitingNote: "Câu trả lời của bạn đang được giữ kín. Khi {{partner}} trả lời xong, hai bạn sẽ cùng mở.",
+  yourAnswer: "Bạn đã viết",
+  bothLabel: "CẢ HAI ĐÃ TRẢ LỜI", bothTitle: "Đến lúc lật bài.", reveal: "Mở câu trả lời",
+  you: "Bạn",
+  reactions: { heart: "Thương", laugh: "Buồn cười", fire: "Cháy", hug: "Ôm cái" },
+  replyPh: "Nhắn lại một câu…", reply: "Gửi", replies: "TRAO ĐỔI",
+  save: "Lưu vào Kỷ niệm", saved: "Đã lưu vào Kỷ niệm",
+  consent: { label: "CHỦ ĐỀ NHẠY CẢM", title: "Hai bạn có muốn mở chủ đề gia đình và tiền bạc không? Những chủ đề này có thể nhạy cảm.", yes: "Đồng ý", later: "Để sau",
+    mineYes: "Bạn đã đồng ý. Chờ {{partner}} nữa thôi.", on: "Đã mở chủ đề gia đình và tiền bạc.", partnerYes: "{{partner}} đã đồng ý." },
+  empty: "Chưa có câu hỏi nào. Quay lại sau nhé.", solo: "Mời {{partner}} vào trước, rồi hai bạn cùng trả lời nhé.",
+};
+
+export const questionEn: typeof questionVi = {
+  metaTitle: "Today's question · Nến Đôi", metaDesc: "One question a day, two answers, opened together.",
+  packs: { memory: "MEMORIES", family: "FAMILY & MEETING THE PARENTS", tet: "TẾT & HOLIDAYS", food: "FOOD", fun: "JUST FOR FUN", money: "MONEY & FUTURE", distance: "LONG DISTANCE", conflict: "FIGHTING & MAKING UP", deep: "DEEP" },
+  today: "TODAY'S QUESTION",
+  placeholder: "Be honest. {{partner}} can only read it after answering too.",
+  send: "Send", sending: "Sending…", back: "Back home",
+  waitingLabel: "SENT", waiting: "Waiting for {{partner}}.", waitingNote: "Your answer stays hidden. Once {{partner}} answers, you open them together.",
+  yourAnswer: "You wrote",
+  bothLabel: "YOU BOTH ANSWERED", bothTitle: "Cards on the table.", reveal: "Reveal answers",
+  you: "You",
+  reactions: { heart: "Love", laugh: "Funny", fire: "Fire", hug: "Hug" },
+  replyPh: "Reply with a line…", reply: "Send", replies: "REPLIES",
+  save: "Save to Memories", saved: "Saved to Memories",
+  consent: { label: "SENSITIVE TOPICS", title: "Do you two want to open up family and money topics? These can be sensitive.", yes: "I'm in", later: "Not now",
+    mineYes: "You said yes. Just waiting for {{partner}}.", on: "Family and money topics are on.", partnerYes: "{{partner}} said yes." },
+  empty: "No questions yet. Check back later.", solo: "Invite {{partner}} first, then answer together.",
+};
