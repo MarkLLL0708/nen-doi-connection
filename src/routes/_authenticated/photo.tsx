@@ -27,7 +27,9 @@ export const Route = createFileRoute("/_authenticated/photo")({
 type Post = { id: string; user_id: string; storage_path: string; caption: string | null };
 
 function PhotoScreen() {
-  const { data: me } = useMe();
+  const { data: me, isLoading } = useMe();
+  const go = useNavigate();
+  useEffect(() => { if (!isLoading && (!me?.couple || !me.profile?.onboarded)) void go({ to: "/onboarding", replace: true }); }, [isLoading, me, go]);
   if (!me?.couple) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
   return <PhotoFlow me={me} />;
 }
