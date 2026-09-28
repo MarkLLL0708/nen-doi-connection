@@ -1074,6 +1074,7 @@ export type Database = {
         Returns: undefined
       }
       can_see_response: { Args: { _session: string }; Returns: boolean }
+      capsule_file_readable: { Args: { _name: string }; Returns: boolean }
       capsule_local_today: { Args: { _couple: string }; Returns: string }
       capsule_readable: { Args: { _id: string }; Returns: boolean }
       couple_size: { Args: { _couple: string }; Returns: number }
