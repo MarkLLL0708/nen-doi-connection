@@ -60,7 +60,7 @@ function DirectionColumn({ dir, index, defaultDark }: { dir: Dir; index: number;
       </div>
     </div>
     <div data-look={dir} className={`look look-${dir} ${mode} mt-4 h-[844px] overflow-y-auto overflow-x-hidden rounded-[44px] shadow-soft ring-8 ring-foreground/90`}>
-      {screen === "home" ? <HomeScreen dir={dir} /> : <QuestionScreen dir={dir} />}
+      {screen === "home" ? <HomeScreen dir={dir} /> : <QuestionScreen />}
     </div>
   </section>;
 }
@@ -142,7 +142,7 @@ function HomeScreen({ dir }: { dir: Dir }) {
   </div>;
 }
 
-function QuestionScreen({ dir }: { dir: Dir }) {
+function QuestionScreen() {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
