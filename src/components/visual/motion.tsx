@@ -41,7 +41,7 @@ export function FitText({ children, measure, max = 140, min = 24, className, sty
   }, [fit]);
   return <div ref={box} className={cn("relative w-full min-w-0", className)} style={style}>
     {measure && <span ref={probe} aria-hidden="true" className="type-numeral invisible absolute left-0 top-0">{measure}</span>}
-    <span ref={text} className="type-numeral inline-block" style={{ fontSize: size }}>{children}</span>
+    <span ref={text} className="type-numeral inline-block" style={{ fontSize: size, transition: "none" }}>{children}</span>
   </div>;
 }
 

@@ -102,5 +102,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track, .flame-pulse { animation: none !important; }
-  *, *::before, *::after { transition-duration: 0.01ms !important; }
+  *, *::before, *::after { transition: none !important; }
 }
