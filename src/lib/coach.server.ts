@@ -70,11 +70,12 @@ const APPROVED: { match: string; useCase: CoachUseCase; out: Base }[] = [
 ];
 
 const TONE: Record<CoachTone, { open?: string; close?: string }> = {
-  gentle: {}, mature: {},
-  cute: { close: "Thương {partner}." },
+  gentle: { close: "Mình vẫn ở đây mà." },
+  mature: { open: "Mình muốn nói rõ ràng và bình tĩnh:" },
+  cute: { close: "Thương {partner} nhiều." },
   funny: { open: "Nói nghiêm túc nhưng không quá nghiêm túc nha:", close: "(Đọc xong nhớ cười một cái.)" },
   direct: { open: "Mình nói thẳng, nhưng không có ý gắt:" },
-  flirty: { close: "Mà nói thật, {partner} đáng yêu lắm đó." },
+  flirty: { close: "Mà nói nhỏ nè, {partner} vẫn là người mình muốn gặp nhất." },
   parents: {},
 };
 
@@ -83,11 +84,11 @@ const swap = (s: string, pairs: [string, string][]) => pairs.reduce((acc, [a, b]
 
 function toneApply(v: Base, tone: CoachTone): Base {
   if (tone === "parents") {
-    const p = (s: string) => swap(s.replace(/\{partner\}/g, "cô chú"), [["Mình", "Cháu"], ["mình", "cháu"], ["hai đứa", "hai cháu"], ["tụi", "chúng"], ["nhé", "ạ"], ["nha", "ạ"]]).replace(/ ghê/g, "");
+    const p = (s: string) => swap(s.replace(/\{partner\}/g, "cô chú").replace(/một mình/g, "\u0001"), [["Mình", "Cháu"], ["mình", "cháu"], ["hai đứa", "hai cháu"], ["tụi", "chúng"], ["nhé", "ạ"], ["nha", "ạ"]]).replace(/ ghê/g, "").replace(/\u0001/g, "một mình");
     return { short: p(v.short), medium: p(v.medium), long: p(v.long) };
   }
   const t = TONE[tone];
-  return { short: v.short, medium: [t.open, v.medium].filter(Boolean).join(" "), long: [t.open, v.long, t.close].filter(Boolean).join(" ") };
+  return { short: v.short, medium: [t.open, v.medium, t.close].filter(Boolean).join(" "), long: [t.open, v.long, t.close].filter(Boolean).join(" ") };
 }
 
 export function dialectApply(s: string, d: CoachDialect) {
