@@ -21,7 +21,7 @@ export function storedTheme(): ThemeMode | null {
 const order: ThemeMode[] = ["system", "light", "dark"];
 const icons = { system: Monitor, light: Sun, dark: Moon };
 /** Pages with their own full switches in the header. */
-const hidden = ["/preview-home", "/styleguide"];
+const hidden = ["/preview-home", "/styleguide", "/", "/demo", "/privacy", "/terms", "/contact"];
 
 /** Small floating language + light/dark switch shown on every screen. */
 export function GlobalControls() {

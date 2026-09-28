@@ -12,10 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IntroRouteImport } from './routes/intro'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as PreviewHomeRouteImport } from './routes/preview-home'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPairRouteImport } from './routes/_authenticated/pair'
@@ -36,6 +40,16 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IntroRoute = IntroRouteImport.update({
   id: '/intro',
   path: '/intro',
@@ -51,9 +65,19 @@ const PreviewHomeRoute = PreviewHomeRouteImport.update({
   path: '/preview-home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StyleguideRoute = StyleguideRouteImport.update({
   id: '/styleguide',
   path: '/styleguide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
@@ -85,10 +109,14 @@ const AuthenticatedQuestionRoute = AuthenticatedQuestionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/demo': typeof DemoRoute
   '/intro': typeof IntroRoute
   '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
+  '/privacy': typeof PrivacyRoute
   '/styleguide': typeof StyleguideRoute
+  '/terms': typeof TermsRoute
   '/app': typeof AuthenticatedAppRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pair': typeof AuthenticatedPairRoute
@@ -98,10 +126,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/demo': typeof DemoRoute
   '/intro': typeof IntroRoute
   '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
+  '/privacy': typeof PrivacyRoute
   '/styleguide': typeof StyleguideRoute
+  '/terms': typeof TermsRoute
   '/app': typeof AuthenticatedAppRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pair': typeof AuthenticatedPairRoute
@@ -113,10 +145,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/demo': typeof DemoRoute
   '/intro': typeof IntroRoute
   '/join': typeof JoinRoute
   '/preview-home': typeof PreviewHomeRoute
+  '/privacy': typeof PrivacyRoute
   '/styleguide': typeof StyleguideRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/app': typeof AuthenticatedAppRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pair': typeof AuthenticatedPairRoute
@@ -128,10 +164,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/contact'
+    | '/demo'
     | '/intro'
     | '/join'
     | '/preview-home'
+    | '/privacy'
     | '/styleguide'
+    | '/terms'
     | '/app'
     | '/onboarding'
     | '/pair'
@@ -141,10 +181,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/contact'
+    | '/demo'
     | '/intro'
     | '/join'
     | '/preview-home'
+    | '/privacy'
     | '/styleguide'
+    | '/terms'
     | '/app'
     | '/onboarding'
     | '/pair'
@@ -155,10 +199,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/contact'
+    | '/demo'
     | '/intro'
     | '/join'
     | '/preview-home'
+    | '/privacy'
     | '/styleguide'
+    | '/terms'
     | '/_authenticated/app'
     | '/_authenticated/onboarding'
     | '/_authenticated/pair'
@@ -170,10 +218,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ContactRoute: typeof ContactRoute
+  DemoRoute: typeof DemoRoute
   IntroRoute: typeof IntroRoute
   JoinRoute: typeof JoinRoute
   PreviewHomeRoute: typeof PreviewHomeRoute
+  PrivacyRoute: typeof PrivacyRoute
   StyleguideRoute: typeof StyleguideRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -199,6 +251,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/intro': {
       id: '/intro'
       path: '/intro'
@@ -220,11 +286,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PreviewHomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/styleguide': {
       id: '/styleguide'
       path: '/styleguide'
       fullPath: '/styleguide'
       preLoaderRoute: typeof StyleguideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/app': {
@@ -288,10 +368,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ContactRoute: ContactRoute,
+  DemoRoute: DemoRoute,
   IntroRoute: IntroRoute,
   JoinRoute: JoinRoute,
   PreviewHomeRoute: PreviewHomeRoute,
+  PrivacyRoute: PrivacyRoute,
   StyleguideRoute: StyleguideRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
