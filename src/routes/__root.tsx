@@ -17,7 +17,7 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-[56px] font-serif font-light text-foreground">404</h1>
+        <h1 className="type-numeral text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-medium text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           The page you're looking for doesn't exist or has been moved.
@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#FAF6F0" },
+      { name: "theme-color", content: "#F5EFE6" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -91,7 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@500;700&family=Space+Grotesk:wght@500;700&family=Archivo:wdth,wght@62..125,500;62..125,700;62..125,800&family=Be+Vietnam+Pro:wght@800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&subset=vietnamese&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Plus+Jakarta+Sans:wght@500;700&family=Bricolage+Grotesque:opsz,wdth,wght@96,100,800&display=swap" },
     ],
   }),
   shellComponent: RootShell,
