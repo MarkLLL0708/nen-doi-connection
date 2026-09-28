@@ -128,7 +128,7 @@
   --l-accent: #E8442E; --l-accent2: #5B6B3A; --l-btn: #171412; --l-btn-fg: #F4EDE1; --l-flood: #E8442E; --l-flood-fg: #171412;
   --l-card: #F4EDE1; --l-card-fg: #171412; --l-card2: #171412; --l-card2-fg: #F4EDE1; --l-ticker: #E8442E; --l-ticker-fg: #F4EDE1;
   --l-photo-a: #171412; --l-photo-b: #E8442E; --l-banner: #5B6B3A; --l-banner-fg: #F4EDE1; }
-.look-tomato.look-dark { --l-bg: #171412; --l-fg: #F4EDE1; --l-muted: rgb(244 237 225 / .62); --l-surface: #26211D; --l-surface-fg: #F4EDE1; --l-t1: #F4EDE1; --l-t1-fg: #171412; --l-t3: #26211D; --l-t3-fg: #F4EDE1; --l-btn: #F4EDE1; --l-btn-fg: #171412; --l-card2: #F4EDE1; --l-card2-fg: #171412; }
+.look-tomato.look-dark { --l-hero-fg: #F4EDE1; --l-bg: #171412; --l-fg: #F4EDE1; --l-muted: rgb(244 237 225 / .62); --l-surface: #26211D; --l-surface-fg: #F4EDE1; --l-t1: #F4EDE1; --l-t1-fg: #171412; --l-t3: #26211D; --l-t3-fg: #F4EDE1; --l-btn: #F4EDE1; --l-btn-fg: #171412; --l-card2: #F4EDE1; --l-card2-fg: #171412; }
 .l-head { font-family: var(--l-head); font-weight: var(--l-head-w); font-stretch: var(--l-stretch); letter-spacing: -0.03em; line-height: 1.02; }
 .l-num { font-family: var(--l-head); font-weight: var(--l-head-w); font-stretch: var(--l-stretch); letter-spacing: -0.05em; line-height: .95; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
 .l-label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; line-height: 1.4; }
