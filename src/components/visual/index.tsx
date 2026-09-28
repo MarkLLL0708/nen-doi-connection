@@ -11,21 +11,21 @@ export const ease = [0.22, 0.61, 0.36, 1] as const;
 export const ICON_STROKE = 1.5;
 
 export function Wordmark({ text, className }: { text: string; className?: string }) {
-  return <span className={cn("font-serif text-[22px] leading-none tracking-tight text-foreground", className)}>{text}</span>;
+  return <span className={cn("type-title text-foreground", className)}>{text}</span>;
 }
 
 export function PrimaryButton({ className, children, arrow = true, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { arrow?: boolean }) {
-  return <button className={cn("group inline-flex h-[54px] w-full items-center justify-center gap-2.5 rounded-[16px] bg-primary px-6 text-[15.5px] font-medium text-primary-foreground transition-[opacity,transform] duration-300 ease-[var(--ease-soft)] hover:opacity-90 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-40", className)} {...props}>
+  return <button className={cn("group inline-flex h-[54px] w-full items-center justify-center gap-2.5 rounded-[16px] bg-primary px-6 type-button text-primary-foreground transition-[opacity,transform] duration-300 ease-[var(--ease-soft)] hover:opacity-90 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-40", className)} {...props}>
     {children}{arrow && <ArrowRight strokeWidth={ICON_STROKE} className="size-[18px] transition-transform duration-300 group-hover:translate-x-0.5" />}
   </button>;
 }
 
 export function TextButton({ className, children, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button className={cn("inline-flex h-11 items-center text-[15px] font-medium text-foreground underline decoration-foreground/30 underline-offset-[6px] transition-colors duration-300 hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm", className)} {...props}>{children}</button>;
+  return <button className={cn("inline-flex h-11 items-center type-button text-foreground underline decoration-foreground/30 underline-offset-[6px] transition-colors duration-300 hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm", className)} {...props}>{children}</button>;
 }
 
 export function Tag({ children, accent = false, className }: { children: ReactNode; accent?: boolean; className?: string }) {
-  return <span className={cn("inline-flex w-fit items-center rounded-full px-3 py-1 text-[12px] font-medium", accent ? "bg-accent/10 text-accent" : "bg-secondary text-muted-foreground", className)}>{children}</span>;
+  return <span className={cn("inline-flex w-fit items-center rounded-full px-3 py-1 type-label", accent ? "bg-accent/10 text-accent" : "bg-secondary text-muted-foreground", className)}>{children}</span>;
 }
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
@@ -45,7 +45,7 @@ export function DuotoneScreen({ tone, children, className }: { tone: DuotoneName
 export function ImageSlot({ tone = "photo", className, label }: { tone?: DuotoneName | "photo"; className?: string; label?: string }) {
   const { t } = useTranslation();
   return <div role="img" aria-label={t("image.alt")} className={cn("grain flex items-end overflow-hidden rounded-[16px]", duoClass[tone], className)}>
-    <span className="relative z-[2] m-4 text-[11px] uppercase tracking-[0.12em] text-duo-foreground/80">{label ?? t("image.placeholder")}</span>
+    <span className="relative z-[2] m-4 type-label text-duo-foreground/80">{label ?? t("image.placeholder")}</span>
   </div>;
 }
 
@@ -66,7 +66,7 @@ export function BottomSheet({ open, onOpenChange, dark, children }: { open: bool
 
 function Portrait({ initial, tone, done }: { initial: string; tone: DuotoneName | "photo"; done: boolean }) {
   return <span className={cn("grain relative grid size-14 place-items-center overflow-hidden rounded-full ring-1 ring-offset-[3px] ring-offset-background transition-[box-shadow] duration-500", duoClass[tone], done ? "ring-gold" : "ring-hairline")}>
-    <span className="relative z-[2] font-serif text-[22px] text-duo-foreground">{initial}</span>
+    <span className="relative z-[2] font-serif type-body text-duo-foreground">{initial}</span>
   </span>;
 }
 
@@ -75,7 +75,7 @@ export function AvatarPair({ firstDone = true, secondDone = false }: { firstDone
   const you = t("avatars.you"), partner = t("avatars.partner");
   return <div className="flex items-center gap-5">
     <div className="flex -space-x-3"><Portrait initial={you.charAt(0)} tone="photo" done={firstDone} /><Portrait initial={partner.charAt(0)} tone="memory" done={secondDone} /></div>
-    <div className="flex flex-col gap-0.5 text-[14px]">
+    <div className="flex flex-col gap-0.5 type-body">
       <span className="text-foreground">{you} <span className="text-muted-foreground">· {t(firstDone ? "avatars.done" : "avatars.waiting")}</span></span>
       <span className="text-foreground">{partner} <span className="text-muted-foreground">· {t(secondDone ? "avatars.done" : "avatars.waiting")}</span></span>
     </div>
@@ -86,7 +86,7 @@ export function FlameStreak({ count = 27, atRisk = false }: { count?: number; at
   const { t } = useTranslation();
   return <div className="flex items-center gap-3.5">
     <FlameGlyph streak={count} atRisk={atRisk} size={30} />
-    <p className="text-[15px] leading-snug text-foreground">{t("streak.days", { count })}<span className="text-muted-foreground"> · {t(atRisk ? "streak.risk" : "streak.steady")}</span></p>
+    <p className="type-body text-foreground">{t("streak.days", { count })}<span className="text-muted-foreground"> · {t(atRisk ? "streak.risk" : "streak.steady")}</span></p>
   </div>;
 }
 
@@ -94,7 +94,7 @@ export function EmptyState() {
   const { t } = useTranslation();
   return <div className="flex flex-col items-start gap-5 py-6">
     <Camera strokeWidth={ICON_STROKE} className="size-7 text-muted-foreground" aria-hidden="true" />
-    <div><p className="font-serif text-[26px] leading-[1.35] text-foreground">{t("empty.title")}</p><p className="mt-2 max-w-[280px] text-[15px] leading-relaxed text-muted-foreground">{t("empty.body")}</p></div>
+    <div><p className="type-title text-foreground">{t("empty.title")}</p><p className="mt-2 max-w-[280px] type-body text-muted-foreground">{t("empty.body")}</p></div>
   </div>;
 }
 
@@ -115,8 +115,8 @@ export function SwipeCard({ onSwipe }: { onSwipe?: (direction: "left" | "right")
     initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease }}
     className="touch-pan-y cursor-grab select-none active:cursor-grabbing" aria-label={t("swipe.label")}>
     <DuotoneScreen tone="food" className="min-h-[300px]">
-      <span className="text-[11.5px] uppercase tracking-[0.12em] text-duo-foreground/75">{t("sheet.label")}</span>
-      <div><h3 className="font-serif text-[28px] leading-[1.3]">{t("sheet.title")}</h3><p className="mt-3 text-[15px] leading-relaxed text-duo-foreground/80">{t("sheet.body")}</p></div>
+      <span className="type-label text-duo-foreground/75">{t("sheet.label")}</span>
+      <div><h3 className="type-title">{t("sheet.title")}</h3><p className="mt-3 type-body text-duo-foreground/80">{t("sheet.body")}</p></div>
     </DuotoneScreen>
   </motion.div>;
 }
@@ -129,7 +129,7 @@ export function BottomTabBar({ active = "home", onSelect, className }: { active?
   return <nav aria-label={t("navigationLabel")} className={cn("flex h-[68px] items-center justify-around border-t border-hairline bg-nav px-2 pb-1 backdrop-blur-xl", className)}>
     {tabs.map(({ key, Icon }) => { const on = active === key; return <button key={key} aria-current={on ? "page" : undefined} onClick={() => onSelect?.(key)} className={cn("flex w-16 flex-col items-center gap-1 rounded-md py-1.5 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", on ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>
       <Icon strokeWidth={ICON_STROKE} className="size-[22px]" aria-hidden="true" />
-      <span className="text-[10.5px] tracking-[0.02em]">{t(`tabs.${key}`)}</span>
+      <span className="type-label">{t(`tabs.${key}`)}</span>
       <span className={cn("h-[3px] w-[3px] rounded-full bg-accent transition-opacity duration-300", on ? "opacity-100" : "opacity-0")} />
     </button>; })}
   </nav>;
