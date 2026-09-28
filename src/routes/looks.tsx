@@ -65,15 +65,15 @@ function DirectionColumn({ dir, index, defaultDark }: { dir: Dir; index: number;
   </section>;
 }
 
-function FlameMark({ size = 28 }: { size?: number }) {
+function FlameMark({ size = 28, ink = false }: { size?: number; ink?: boolean }) {
   return <svg width={size} height={size * 1.2} viewBox="0 0 40 48" aria-hidden="true">
-    <path d="M20 2 C28 12 36 20 36 31 A16 16 0 0 1 4 31 C4 22 10 17 14 10 C16 16 18 18 20 19 C20 13 19 8 20 2 Z" fill="var(--l-accent)" />
+    <path d="M20 2 C28 12 36 20 36 31 A16 16 0 0 1 4 31 C4 22 10 17 14 10 C16 16 18 18 20 19 C20 13 19 8 20 2 Z" fill={ink ? "currentColor" : "var(--l-accent)"} />
     <path d="M20 24 C25 29 28 33 28 37 A8 8 0 0 1 12 37 C12 32 16 28 20 24 Z" fill="var(--l-accent2)" />
   </svg>;
 }
 
-function Logo() {
-  return <div className="flex items-center gap-2"><FlameMark size={22} /><span className="l-head text-[24px]">{PRODUCT_WORDMARK}</span></div>;
+function Logo({ ink = false }: { ink?: boolean }) {
+  return <div className="flex items-center gap-2"><FlameMark size={22} ink={ink} /><span className="l-head text-[24px]">{PRODUCT_WORDMARK}</span></div>;
 }
 
 function Ticker() {
@@ -121,10 +121,10 @@ function HomeScreen({ dir }: { dir: Dir }) {
     <section className="relative mx-4 overflow-hidden rounded-[32px] px-5 pb-6 pt-5" style={{ background: heroBlock ? "var(--l-hero)" : "transparent", color: "var(--l-hero-fg)" }}>
       <div className="pointer-events-none absolute -left-10 top-10 size-72 rounded-full blur-3xl" style={{ background: "var(--l-glow)" }} />
       <p className="l-label relative">{t("looks.today")}</p>
-      <CountUp to={412} className="l-num relative mt-2 block text-[160px]" style={{ color: "var(--l-num)" }} />
+      <CountUp to={412} className={`l-num relative mt-2 block ${dir === "tomato" ? "text-[140px]" : "text-[160px]"}`} style={{ color: "var(--l-num)" }} />
       <p className="l-head relative mt-1 text-[32px]">{t("looks.daysLabel")}</p>
       <motion.div className="relative mt-5 flex items-center gap-3" initial={reduce ? false : { scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.9, duration: 0.3, ease: overshoot }}>
-        <div className="rounded-full p-1.5" style={{ boxShadow: dir === "midnight" ? "0 0 32px var(--l-glow)" : undefined }}><FlameMark size={30} /></div>
+        <div className="rounded-full p-1.5" style={{ boxShadow: dir === "midnight" ? "0 0 32px var(--l-glow)" : undefined }}><FlameMark size={30} ink={dir === "block"} /></div>
         <div><p className="text-[18px] l-bold">{t("looks.streak", { count: 23 })}</p><p className="text-[14px] font-medium opacity-75">{t("looks.streakNote")}</p></div>
       </motion.div>
     </section>
@@ -150,7 +150,7 @@ function QuestionScreen() {
   return <div className="relative min-h-full">
     <AnimatePresence>{open && <motion.div key="flood" className="absolute inset-0" style={{ background: "var(--l-flood)" }} initial={{ clipPath: "circle(0% at 50% 90%)" }} animate={{ clipPath: "circle(150% at 50% 90%)" }} exit={{ opacity: 0 }} transition={{ duration: 0.5 * d, ease: snap }} />}</AnimatePresence>
     <div className="relative flex min-h-[844px] flex-col px-6 pb-8 pt-12" style={{ color: open ? "var(--l-flood-fg)" : "var(--l-fg)", transition: "color .25s" }}>
-      <Logo />
+      <Logo ink={open} />
       <span className="l-label mt-10 w-fit rounded-full px-3 py-1.5" style={{ background: open ? "var(--l-flood-fg)" : "var(--l-accent)", color: open ? "var(--l-flood)" : "var(--l-accent-fg)" }}>{t("looks.pack")}</span>
       <h3 className="l-head mt-5 text-[40px]" style={{ textWrap: "balance" }}>{t("looks.question", { partner: t("looks.partner") })}</h3>
       {!open ? <div className="mt-auto pt-10">
