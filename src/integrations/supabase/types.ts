@@ -1134,7 +1134,7 @@ export type Database = {
       capsule_file_readable: { Args: { _name: string }; Returns: boolean }
       capsule_local_today: { Args: { _couple: string }; Returns: string }
       capsule_readable: { Args: { _id: string }; Returns: boolean }
-      coach_remaining: { Args: never; Returns: number }
+      coach_premium: { Args: { _user: string }; Returns: boolean }
       couple_size: { Args: { _couple: string }; Returns: number }
       create_couple: {
         Args: {
@@ -1176,7 +1176,7 @@ export type Database = {
       sync_capsule_notices: { Args: never; Returns: number }
       today_question: { Args: never; Returns: Json }
       today_status: { Args: never; Returns: Json }
-      use_coach: { Args: never; Returns: number }
+      use_coach: { Args: { _consume: boolean; _user: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
