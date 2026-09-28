@@ -26,5 +26,5 @@ function Entry() {
       else void navigate({ to: localStorage.getItem(INTRO_SEEN_KEY) ? "/auth" : "/intro", replace: true });
     });
   }, [navigate]);
-  return <div className="grid min-h-screen place-items-center bg-background"><FlameMark size={40} /></div>;
+  return <div className="grid min-h-dvh place-items-center bg-background"><FlameMark size={40} /></div>;
 }

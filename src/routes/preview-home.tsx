@@ -23,8 +23,8 @@ const sample = { days: 412, streak: 23, tet: 131 };
 function PreviewHome() {
   const { t, i18n: i } = useTranslation();
   const [tab, setTab] = useState<TabKey>("home");
-  return <div className="min-h-screen bg-page">
-    <PageTransition className="mx-auto min-h-screen max-w-[390px] bg-background pb-28 text-foreground">
+  return <div className="min-h-dvh bg-page">
+    <PageTransition className="mx-auto min-h-dvh max-w-[390px] bg-background pb-28 text-foreground">
       <Ticker text={t("sample.ticker")} className="block-butter" />
       <header className="flex items-center justify-between px-5 py-4"><Logo /><span className="type-label text-muted-foreground">{t("home.sampleNote")}</span></header>
 

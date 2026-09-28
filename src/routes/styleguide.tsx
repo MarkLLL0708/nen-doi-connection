@@ -38,7 +38,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 function Styleguide() {
   const { t, i18n: i } = useTranslation();
   const [mode, setMode] = useThemeMode();
-  return <div className="min-h-screen bg-page">
+  return <div className="min-h-dvh bg-page">
     <PageTransition className="mx-auto max-w-[390px] bg-background text-foreground">
       <div className="flex flex-wrap items-center justify-between gap-3 px-5 pt-5">
         <Logo />
