@@ -1,64 +1,159 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { PRODUCT_NAME } from "@/config/product";
-import { FlameMascot, flameExpressions } from "@/components/visual/FlameMascot";
-import { AvatarPair, BigCard, BottomSheet, BottomTabBar, Confetti, EmptyState, FlameStreak, GradientScreen, gradients, PillTag, PrimaryButton, SecondaryButton, SwipeCard, tabs } from "@/components/visual";
+import { PRODUCT_NAME, PRODUCT_WORDMARK } from "@/config/product";
+import { AvatarPair, BottomSheet, BottomTabBar, Card, DuotoneScreen, duotones, EmptyState, FadeUp, FlameGlyph, FlameStreak, Hairline, ImageSlot, LightBloom, PrimaryButton, SwipeCard, Tag, TextButton, Wordmark, type TabKey } from "@/components/visual";
 import i18n from "@/i18n";
-import { emoji } from "@/assets/emoji";
-
-const Section = ({ title, children, id }: { title: string; children: React.ReactNode; id?: string }) => <section id={id} className="space-y-5"><h2 className="text-[27px] font-black leading-tight text-foreground">{title}</h2>{children}</section>;
 
 export const Route = createFileRoute("/styleguide")({
   head: () => ({ meta: [
     { title: `${i18n.t("pageTitle")} · ${PRODUCT_NAME}` },
-    { name: "description", content: i18n.t("guideIntro") },
+    { name: "description", content: i18n.t("pageDescription") },
     { property: "og:title", content: `${i18n.t("pageTitle")} · ${PRODUCT_NAME}` },
-    { property: "og:description", content: i18n.t("guideIntro") },
+    { property: "og:description", content: i18n.t("pageDescription") },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
   component: Styleguide,
 });
 
-function Styleguide() {
+const TONE_MARKS = "ấ ầ ẩ ẫ ậ · ế ề ể ễ ệ · ỡ ờ ở ợ ớ · ự ừ ử ữ ứ · ỷ ỳ ỹ ỵ";
+const TONE_WORDS = "Nguyễn Thượng Hữu Ưởng Kỹ Mỗi";
+const swatches = [
+  { key: "ivory", light: "#FAF6F0", dark: "#14100E", cls: "bg-background border border-hairline" },
+  { key: "surface", light: "#FFFFFF · 70%", dark: "#1E1815", cls: "bg-card border border-hairline" },
+  { key: "espresso", light: "#1F1A17", dark: "#F3EBDD", cls: "bg-foreground" },
+  { key: "secondary", light: "#6B5F57", dark: "#B3A596", cls: "bg-muted-foreground" },
+  { key: "terracotta", light: "#B8432A", dark: "#D9694F", cls: "bg-accent" },
+  { key: "gold", light: "#B08D57", dark: "#C9A46A", cls: "bg-gold" },
+  { key: "rose", light: "#C98B86", dark: "#C98B86", cls: "bg-rose" },
+] as const;
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return <FadeUp><section className="space-y-6"><p className="label-caps">{title}</p>{children}</section></FadeUp>;
+}
+
+function Showcase({ dark }: { dark: boolean }) {
   const { t } = useTranslation();
-  const reduceMotion = useReducedMotion();
-  const [dark, setDark] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [celebrating, setCelebrating] = useState(false);
-  const [activeTab, setActiveTab] = useState<typeof tabs[number]["key"]>("home");
+  const [bloom, setBloom] = useState(false);
   const [firstDone, setFirstDone] = useState(true);
   const [secondDone, setSecondDone] = useState(false);
-  const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(null);
-  useEffect(() => { if (!celebrating) return; const timeout = window.setTimeout(() => setCelebrating(false), 1700); return () => window.clearTimeout(timeout); }, [celebrating]);
-  return <div className={dark ? "dark min-h-screen bg-page" : "min-h-screen bg-page"}>
-    <div className="mx-auto min-h-screen w-full max-w-[390px] overflow-hidden bg-background shadow-card">
-      <main className="pb-28">
-        <header className="relative overflow-hidden bg-background px-6 pb-11 pt-9">
-          <div className="mb-12 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><FlameMascot size={35} expression="vui"/><span className="text-[20px] font-black text-foreground">{PRODUCT_NAME}</span></div><div className="flex items-center gap-2"><button onClick={() => { void i18n.changeLanguage(i18n.language === "vi" ? "en" : "vi"); }} className="rounded-full bg-secondary px-3 py-2 text-xs font-extrabold text-secondary-foreground transition-transform active:scale-95" aria-label={t("actions.switchLanguage")}>{i18n.language === "vi" ? "EN" : "VI"}</button><button onClick={() => setDark(!dark)} className="grid size-9 place-items-center rounded-full bg-secondary text-lg transition-transform active:scale-95" aria-label={t("actions.switchTheme")}>{dark ? "☀" : "☾"}</button></div></div>
-          <PillTag className="-rotate-3">✦ {t("eyebrow")}</PillTag>
-          <h1 className="mt-6 max-w-[330px] text-[40px] font-black leading-[1.12] text-foreground">{t("guideTitle")}</h1>
-          <p className="mt-5 text-[17px] font-semibold leading-relaxed text-muted-foreground">{t("guideIntro")}</p>
-          <div className="relative mt-10 flex h-[193px] items-center justify-center rounded-[30px] bg-secondary"><img src={emoji.redHeart.url} alt="" className="absolute left-7 top-6 size-9 rotate-[-15deg] object-contain"/><img src={emoji.sparkles.url} alt="" className="absolute bottom-6 right-7 size-9 rotate-[18deg] object-contain"/><motion.div initial={reduceMotion ? false : { scale: 0.75, y: 18, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 240, damping: 18 }}><FlameMascot size={166} expression="yeu" pulse/></motion.div></div>
-          <p className="mt-5 text-center text-[14px] font-extrabold text-primary">{t("brandLine")}</p>
-        </header>
+  const [swiped, setSwiped] = useState<"left" | "right" | null>(null);
+  const [tab, setTab] = useState<TabKey>("home");
+  const [streak, setStreak] = useState(27);
+  const [atRisk, setAtRisk] = useState(false);
+  useEffect(() => { if (!bloom) return; const id = window.setTimeout(() => setBloom(false), 2600); return () => window.clearTimeout(id); }, [bloom]);
 
-        <div className="space-y-14 px-6 pt-8">
-          <Section title={t("sections.colors")}><div className="grid grid-cols-2 gap-3">{(["cream", "ember", "rose", "charcoal"] as const).map((color) => <div key={color} className="min-w-0"><div role="img" aria-label={`${t("colorSample")}: ${t(`colors.${color}`)}`} className={`h-24 rounded-[22px] shadow-soft ${{ cream: "bg-cream", ember: "bg-ember", rose: "bg-rose", charcoal: "bg-charcoal" }[color]}`}/><div className="mt-2 flex flex-col"><span className="text-sm font-extrabold text-foreground">{t(`colors.${color}`)}</span><span className="text-xs font-bold text-muted-foreground">{{ cream: "#FFF8F1", ember: "#E8590C", rose: "#F4A6A0", charcoal: "#2B2320" }[color]}</span></div></div>)}</div></Section>
-          <Section title={t("sections.gradients")}><div className="grid grid-cols-2 gap-3">{gradients.map((gradient) => <div key={gradient} role="img" aria-label={`${t("gradientLabel")}: ${t(`categories.${gradient}`)}`} className={`gradient-${gradient} flex h-[112px] items-end rounded-[23px] p-4 text-sm font-black text-gradient-foreground shadow-soft`}><span className="rounded-full bg-card/70 px-3 py-1.5">{t(`categories.${gradient}`)}</span></div>)}</div><GradientScreen gradient="memory" className="relative"><img src={emoji.loveLetter.url} alt="" className="size-10 object-contain"/><div><PillTag>{t("preview")}</PillTag><h3 className="mt-3 max-w-[240px] text-[32px] font-black leading-tight">{t("type.heading")}</h3></div></GradientScreen></Section>
-          <Section title={t("sections.type")}><div className="space-y-6"><div><PillTag>{t("type.caption")}</PillTag><p className="mt-3 text-[40px] font-black leading-[1.1] text-foreground">{t("type.display")}</p></div><p className="text-[30px] font-black leading-tight text-foreground">{t("type.heading")}</p><p className="text-[17px] font-semibold leading-relaxed text-foreground">{t("type.body")}</p></div></Section>
-          <Section title={t("sections.mascot")}><div className="grid grid-cols-4 gap-x-1 gap-y-6">{flameExpressions.map((expression) => <div key={expression} className="flex min-w-0 flex-col items-center gap-1.5"><FlameMascot expression={expression} size={72}/><span className="text-center text-[12px] font-extrabold text-foreground">{t(`expressions.${expression}`)}</span></div>)}</div></Section>
-          <Section title={t("sections.buttons")}><div className="space-y-3"><PrimaryButton onClick={() => setSheetOpen(true)}>{t("actions.start")} <span aria-hidden="true">↗</span></PrimaryButton><SecondaryButton onClick={() => setSheetOpen(true)}>{t("actions.later")}</SecondaryButton><div className="flex flex-wrap gap-2 pt-2"><PillTag>💗 {t("card.tag")}</PillTag><PillTag className="-rotate-3 bg-accent">✨ {t("type.caption")}</PillTag></div></div></Section>
-          <Section title={t("sections.cards")}><BigCard><PillTag>{t("card.tag")}</PillTag><h3 className="mt-6 text-[28px] font-black leading-tight text-foreground">{t("card.title")}</h3><p className="mt-3 text-[17px] font-semibold leading-relaxed text-muted-foreground">{t("card.body")}</p><img src={emoji.loveLetter.url} alt="" className="mt-7 size-12 object-contain"/></BigCard><div className="space-y-3"><SwipeCard onSwipe={(direction) => setSwipeDirection(direction)}/><p className="text-center text-sm font-bold text-muted-foreground">{swipeDirection ? t(swipeDirection === "left" ? "swipeLeft" : "swipeRight") : t("card.swipeHint")}</p></div></Section>
-          <Section title={t("sections.together")}><div className="flex flex-wrap gap-2"><FlameStreak count={7} size="small"/><FlameStreak count={7} size="medium"/><FlameStreak count={7} size="large"/></div><div className="space-y-5 pt-2"><AvatarPair firstDone={firstDone} secondDone={secondDone}/><div className="flex gap-2"><SecondaryButton className="h-10 px-3 text-xs" onClick={() => setFirstDone(!firstDone)}>{t("avatars.you")}: {t(firstDone ? "avatars.done" : "avatars.waiting")}</SecondaryButton><SecondaryButton className="h-10 px-3 text-xs" onClick={() => setSecondDone(!secondDone)}>{t("avatars.partner")}: {t(secondDone ? "avatars.done" : "avatars.waiting")}</SecondaryButton></div></div><EmptyState/></Section>
-          <Section title={t("sections.motions")}><div className="relative overflow-hidden rounded-[28px] bg-secondary p-6"><Confetti active={celebrating}/><div className="flex items-center gap-4"><FlameMascot expression="mung" size={76} pulse/><div><p className="text-lg font-black text-foreground">{t("streak.status")}</p><p className="text-sm font-bold text-muted-foreground">{t("sample")}</p></div></div><PrimaryButton className="relative mt-6" onClick={() => { setCelebrating(false); requestAnimationFrame(() => setCelebrating(true)); }}>{t("actions.celebrate")} <img src={emoji.sparkles.url} alt="" className="size-6 object-contain"/></PrimaryButton></div><SecondaryButton onClick={() => setSheetOpen(true)}>{t("actions.openSheet")}</SecondaryButton></Section>
-          <Section title={t("sections.navigation")}><p className="text-[17px] font-semibold text-muted-foreground">{t("brandLine")}</p></Section>
-        </div>
-      </main>
-      <div className="fixed bottom-0 left-1/2 z-20 w-full max-w-[390px] -translate-x-1/2 bg-background/80 px-4 pb-4 pt-2 backdrop-blur-md"><BottomTabBar active={activeTab} onSelect={setActiveTab}/></div>
+  return <div className={dark ? "dark" : undefined}>
+    <div className="bg-background text-foreground">
+      <div className="flex items-center gap-3 border-y border-hairline px-6 py-4"><span className="size-1.5 rounded-full bg-accent" /><span className="label-caps">{t(dark ? "modes.dark" : "modes.light")}</span></div>
+
+      <header className="px-6 pb-12 pt-12">
+        <p className="label-caps">{t("hero.label")}</p>
+        <h1 className="mt-5 font-serif text-[48px] leading-[1.2] tracking-[-0.01em]">{t("hero.title")}</h1>
+        <p className="mt-5 max-w-[300px] text-[16.5px] leading-relaxed text-muted-foreground">{t("hero.sub")}</p>
+        <ImageSlot className="mt-10 h-[260px]" />
+      </header>
+
+      <div className="space-y-14 px-6 pb-16">
+        <Section title={t("sections.colour")}>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-6">{swatches.map((s) => <div key={s.key}><div className={`h-20 rounded-[12px] ${s.cls}`} /><p className="mt-2.5 text-[14px]">{t(`colours.${s.key}`)}</p><p className="text-[12.5px] text-muted-foreground">{dark ? s.dark : s.light}</p></div>)}</div>
+        </Section>
+
+        <Section title={t("sections.duotones")}>
+          <div className="grid grid-cols-2 gap-3">{duotones.map((d) => <DuotoneScreen key={d} tone={d} className="min-h-[128px] p-4"><span /><span className="font-serif text-[20px] leading-[1.35]">{t(`categories.${d}`)}</span></DuotoneScreen>)}</div>
+          <DuotoneScreen tone="deep"><span className="text-[11.5px] uppercase tracking-[0.12em] text-duo-foreground/75">{t("categories.deep")}</span><div><h3 className="font-serif text-[30px] leading-[1.32]">{t("type.titleSample")}</h3><p className="mt-3 text-[15px] text-duo-foreground/75">{t("tags.minutes")}</p></div></DuotoneScreen>
+        </Section>
+
+        <Section title={t("sections.type")}>
+          <div className="space-y-7">
+            <div><p className="label-caps mb-2">{t("type.display")} · 52</p><p className="font-serif text-[52px] leading-[1.22]">{t("type.displaySample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.title")} · 30</p><p className="font-serif text-[30px] leading-[1.32]">{t("type.titleSample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.body")} · 16.5</p><p className="text-[16.5px] leading-[1.65]">{t("type.bodySample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.caption")} · 13</p><p className="text-[13px] text-muted-foreground">{t("type.captionSample")}</p></div>
+            <div><p className="label-caps mb-2">{t("type.label")} · 11.5</p><p className="label-caps">{t("hero.label")} · {t("card.label")}</p></div>
+          </div>
+        </Section>
+
+        <Section title={t("sections.toneMarks")}>
+          <div className="space-y-4" data-testid="tone-marks">
+            {[56, 44, 30].map((s) => <p key={s} className="font-serif leading-[1.35]" style={{ fontSize: s }}>{TONE_WORDS}</p>)}
+            <p className="font-serif text-[30px] leading-[1.4]">{TONE_MARKS}</p>
+            <p className="text-[16.5px] leading-[1.65]">{TONE_MARKS} — {TONE_WORDS}</p>
+            <p className="text-[13px] leading-[1.6]">{TONE_MARKS} — {TONE_WORDS}</p>
+            <p className="label-caps">{TONE_WORDS}</p>
+          </div>
+        </Section>
+
+        <Section title={t("sections.buttons")}>
+          <div className="space-y-2"><PrimaryButton onClick={() => setSheetOpen(true)}>{t("actions.openSheet")}</PrimaryButton><div className="flex justify-center"><TextButton>{t("actions.later")}</TextButton></div></div>
+        </Section>
+
+        <Section title={t("sections.tags")}>
+          <div className="flex flex-wrap gap-2"><Tag accent>{t("tags.new")}</Tag><Tag>{t("tags.daily")}</Tag><Tag>{t("tags.minutes")}</Tag></div>
+        </Section>
+
+        <Section title={t("sections.cards")}>
+          <Card><p className="label-caps">{t("card.label")}</p><h3 className="mt-4 font-serif text-[26px] leading-[1.35]">{t("card.title")}</h3><p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{t("card.body")}</p><Hairline className="my-6" /><AvatarPair firstDone secondDone={false} /></Card>
+        </Section>
+
+        <Section title={t("sections.images")}>
+          <div className="grid grid-cols-5 gap-3"><ImageSlot className="col-span-3 h-[220px]" /><div className="col-span-2 space-y-3"><ImageSlot tone="memory" className="h-[104px]" label=" " /><ImageSlot tone="distance" className="h-[104px]" label=" " /></div></div>
+        </Section>
+
+        <Section title={t("sections.together")}>
+          <AvatarPair firstDone={firstDone} secondDone={secondDone} />
+          <p className="text-[15px] italic text-muted-foreground">{t("waiting", { partner: t("avatars.partner") })}</p>
+          <div className="flex gap-5"><TextButton onClick={() => setFirstDone(!firstDone)}>{t("avatars.toggleYou")}</TextButton><TextButton onClick={() => setSecondDone(!secondDone)}>{t("avatars.togglePartner")}</TextButton></div>
+        </Section>
+
+        <Section title={t("sections.streak")}>
+          <div className="flex items-end gap-8">{[3, 30, 90].map((n) => <div key={n} className="flex flex-col items-center gap-3"><FlameGlyph streak={n} size={20 + n / 4} /><span className="text-[12.5px] text-muted-foreground">{n}</span></div>)}<div className="flex flex-col items-center gap-3"><FlameGlyph atRisk size={30} /><span className="text-[12.5px] text-muted-foreground">{t("streak.atRisk")}</span></div></div>
+          <Hairline />
+          <FlameStreak count={streak} atRisk={atRisk} />
+          <div className="flex gap-5"><TextButton onClick={() => { setStreak((s) => s + 10); setAtRisk(false); }}>{t("streak.growing")}</TextButton><TextButton onClick={() => setAtRisk(!atRisk)}>{t("streak.atRisk")}</TextButton><TextButton onClick={() => { setStreak(27); setAtRisk(false); }}>{t("actions.reset")}</TextButton></div>
+        </Section>
+
+        <Section title={t("sections.empty")}><EmptyState /></Section>
+
+        <Section title={t("sections.motion")}>
+          <div className="relative overflow-hidden rounded-[16px] border border-hairline px-6 py-12">
+            <LightBloom active={bloom} />
+            <div className="relative z-[1] text-center"><p className="label-caps">{t("bloom.label")}</p><p className="mt-3 font-serif text-[26px] leading-[1.35]">{t("bloom.text")}</p><div className="mt-6 flex justify-center"><TextButton onClick={() => setBloom(true)}>{t("actions.bloom")}</TextButton></div></div>
+          </div>
+        </Section>
+
+        <Section title={t("sections.swipe")}>
+          <SwipeCard onSwipe={setSwiped} />
+          <p className="text-[13px] text-muted-foreground" aria-live="polite">{swiped ? t(swiped === "right" ? "swipe.kept" : "swipe.skipped") : t("swipe.hint")}</p>
+        </Section>
+
+        <Section title={t("sections.nav")}>
+          <div className="overflow-hidden rounded-[16px] border border-hairline"><BottomTabBar active={tab} onSelect={setTab} className="border-t-0" /></div>
+        </Section>
+      </div>
+      <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen} dark={dark}>
+        <p className="label-caps">{t("sheet.label")}</p><h3 className="mt-4 font-serif text-[30px] leading-[1.32]">{t("sheet.title")}</h3><p className="mt-3 text-[16px] leading-relaxed text-muted-foreground">{t("sheet.body")}</p>
+        <div className="mt-8 space-y-1"><PrimaryButton onClick={() => setSheetOpen(false)}>{t("actions.begin")}</PrimaryButton><div className="flex justify-center"><TextButton onClick={() => setSheetOpen(false)}>{t("actions.close")}</TextButton></div></div>
+      </BottomSheet>
     </div>
-    <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen}><div className="flex flex-col items-center gap-5 text-center"><FlameMascot expression="yeu" size={112} pulse/><PillTag>{t("sheet.tag")}</PillTag><h2 className="text-[30px] font-black leading-tight">{t("sheet.title")}</h2><p className="text-[17px] font-semibold leading-relaxed text-muted-foreground">{t("sheet.body")}</p><PrimaryButton className="mt-4" onClick={() => setSheetOpen(false)}>{t("actions.close")}</PrimaryButton></div></BottomSheet>
+  </div>;
+}
+
+function Styleguide() {
+  const { t } = useTranslation();
+  return <div className="min-h-screen bg-page">
+    <div className="mx-auto min-h-screen w-full max-w-[390px] overflow-hidden bg-background shadow-soft">
+      <div className="flex items-center justify-between px-6 py-5">
+        <Wordmark text={PRODUCT_WORDMARK} />
+        <div className="flex items-center gap-4">
+          <Link to="/preview-home" className="text-[13px] text-foreground underline decoration-foreground/30 underline-offset-4">{t("actions.viewHome")}</Link>
+          <button onClick={() => { void i18n.changeLanguage(i18n.language === "vi" ? "en" : "vi"); }} className="text-[13px] text-muted-foreground hover:text-foreground">{t("actions.switchLanguage")}</button>
+        </div>
+      </div>
+      <Showcase dark={false} />
+      <Showcase dark />
+    </div>
   </div>;
 }

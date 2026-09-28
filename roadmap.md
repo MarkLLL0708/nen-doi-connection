@@ -1,8 +1,8 @@
 # Roadmap
 
-- [x] Add centralized product config and Vietnamese-first i18n with English translations.
-- [x] Define the complete Nến Đôi theme and motion tokens.
-- [x] Build the reusable visual components, flame mascot expressions, and bottom navigation.
-- [x] Build the 390px `/styleguide` showcase and direct `/` to it.
-- [x] Add PWA metadata and manifest without backend functionality.
-- [x] Verify build, Vietnamese rendering, interactions, reduced motion, and desktop/mobile presentation.
+- [x] Replace design system with editorial "fun but classy" language (tokens, fonts, grain).
+- [x] Remove mascot, emoji icons, confetti, springs.
+- [x] Rebuild components: PrimaryButton, TextButton, Tag, Card, DuotoneScreen, BottomSheet, AvatarPair, FlameStreak, EmptyState, LightBloom, SwipeCard, tab bar.
+- [x] Rebuild /styleguide in light and dark.
+- [x] Add /preview-home with sample data.
+- [ ] Wait for user feedback.
