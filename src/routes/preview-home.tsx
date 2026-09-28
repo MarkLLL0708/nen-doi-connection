@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Camera, Gamepad2, MessageCircle } from "lucide-react";
 import { PRODUCT_NAME } from "@/config/product";
-import { ActionTile, Block, BottomTabBar, CountUp, FitText, formatNumber, Logo, OccasionBanner, PageTransition, PhotoTile, SlideUp, Stagger, StaggerItem, StreakLine, Ticker, type TabKey } from "@/components/visual";
+import { ActionTile, Block, BottomTabBar, CountUp, FitText, formatNumber, Logo, OccasionBanner, PageTransition, PhotoTile, SlideUp, Stagger, StaggerItem, StreakLine, ThemeSwitch, Ticker, useThemeMode, type TabKey } from "@/components/visual";
 import i18n from "@/i18n";
 
 export const Route = createFileRoute("/preview-home")({
@@ -23,10 +23,17 @@ const sample = { days: 412, streak: 23, tet: 131 };
 function PreviewHome() {
   const { t, i18n: i } = useTranslation();
   const [tab, setTab] = useState<TabKey>("home");
+  const [mode, setMode] = useThemeMode();
   return <div className="min-h-dvh bg-page">
     <PageTransition className="mx-auto min-h-dvh max-w-[390px] bg-background pb-28 text-foreground">
       <Ticker text={t("sample.ticker")} className="block-butter" />
-      <header className="flex items-center justify-between px-5 py-4"><Logo /><span className="type-label text-muted-foreground">{t("home.sampleNote")}</span></header>
+      <header className="flex items-center justify-between gap-3 px-5 py-4">
+        <Logo />
+        <div className="flex items-center gap-3">
+          <button onClick={() => { void i.changeLanguage(i.language === "vi" ? "en" : "vi"); }} className="h-10 text-[13px] font-bold text-muted-foreground">{t("actions.switchLanguage")}</button>
+          <ThemeSwitch mode={mode} onChange={setMode} />
+        </div>
+      </header>
 
       <div className="px-4">
         <Block tone="block-ember" className="pb-7 pt-5">
