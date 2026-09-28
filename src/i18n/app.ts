@@ -18,7 +18,7 @@ export const appVi = {
   introStart: "Bắt đầu thôi", introHave: "Mình có tài khoản rồi",
   auth: {
     signInTitle: "Chào lại nha.", signUpTitle: "Tạo tài khoản.", email: "Email", password: "Mật khẩu", passwordHint: "Ít nhất 8 ký tự",
-    signIn: "Đăng nhập", signUp: "Tạo tài khoản", google: "Tiếp tục với Google", apple: "Tiếp tục với Apple", or: "hoặc",
+    guest: "Dùng thử ngay, khỏi đăng ký", guestNote: "Bản thử nghiệm: vào thẳng app, không cần email.", signIn: "Đăng nhập", signUp: "Tạo tài khoản", google: "Tiếp tục với Google", apple: "Tiếp tục với Apple", or: "hoặc",
     toSignUp: "Chưa có tài khoản? Tạo mới", toSignIn: "Đã có tài khoản? Đăng nhập",
     checkTitle: "Kiểm tra hộp thư nhé.", checkBody: "Mình vừa gửi đường dẫn xác nhận tới {{email}}. Bấm vào đó là vào được ngay.",
     badLogin: "Email hoặc mật khẩu chưa đúng.", unconfirmed: "Email này chưa được xác nhận. Kiểm tra hộp thư nhé.", weak: "Mật khẩu cần ít nhất 8 ký tự.", exists: "Email này đã có tài khoản. Đăng nhập nhé.",
@@ -86,7 +86,7 @@ export const appEn: typeof appVi = {
   introStart: "Let's go", introHave: "I already have an account",
   auth: {
     signInTitle: "Welcome back.", signUpTitle: "Create an account.", email: "Email", password: "Password", passwordHint: "At least 8 characters",
-    signIn: "Sign in", signUp: "Create account", google: "Continue with Google", apple: "Continue with Apple", or: "or",
+    guest: "Try it now, no sign-up", guestNote: "Test mode: jump straight in, no email needed.", signIn: "Sign in", signUp: "Create account", google: "Continue with Google", apple: "Continue with Apple", or: "or",
     toSignUp: "No account? Create one", toSignIn: "Have an account? Sign in",
     checkTitle: "Check your inbox.", checkBody: "We sent a confirmation link to {{email}}. Tap it and you're in.",
     badLogin: "That email or password isn't right.", unconfirmed: "This email isn't confirmed yet. Check your inbox.", weak: "Password needs at least 8 characters.", exists: "This email already has an account. Sign in instead.",
