@@ -8,7 +8,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   vite: {
-    optimizeDeps: { include: ["lucide-react", "motion/react", "react-i18next", "i18next", "@radix-ui/react-dialog"] },
+    optimizeDeps: { include: ["lucide-react", "motion/react", "react-i18next", "i18next", "@radix-ui/react-dialog", "@tanstack/router-core", "@tanstack/router-core/isServer", "@tanstack/router-core/ssr/client", "seroval", "@supabase/supabase-js", "zod"] },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
