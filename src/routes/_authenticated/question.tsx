@@ -48,7 +48,9 @@ function sizeFor(text: string) {
 }
 
 function QuestionScreen() {
-  const { data: me } = useMe();
+  const { data: me, isLoading } = useMe();
+  const go = useNavigate();
+  useEffect(() => { if (!isLoading && (!me?.couple || !me.profile?.onboarded)) void go({ to: "/onboarding", replace: true }); }, [isLoading, me, go]);
   if (!me?.couple) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
   return <QuestionFlow me={me} />;
 }

@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
@@ -75,8 +77,9 @@ function AuthPage() {
   };
 
   return <Shell>
-    <div className="flex flex-1 flex-col px-5 pb-8 pt-10">
-      <div className="flex items-center gap-3"><FlameMark size={34} /><span className="type-display text-[34px] lowercase">{PRODUCT_WORDMARK}</span></div>
+    <div className="flex flex-1 flex-col px-5 pb-8 pt-3">
+      <Link to="/preview-home" className="flex h-12 w-fit items-center gap-2 type-button"><ArrowLeft strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("app.back")}</Link>
+      <div className="mt-6 flex items-center gap-3"><FlameMark size={34} /><span className="type-display text-[34px] lowercase">{PRODUCT_WORDMARK}</span></div>
       {sent ? <div className="mt-16">
         <h1 className="type-display"><SlideUp>{t("app.auth.checkTitle")}</SlideUp></h1>
         <p className="mt-4 type-body text-muted-foreground">{t("app.auth.checkBody", { email })}</p>

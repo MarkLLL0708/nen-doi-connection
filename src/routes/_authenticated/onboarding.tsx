@@ -43,18 +43,20 @@ function Onboarding() {
   const set = (patch: Partial<typeof f>) => setF((x) => ({ ...x, ...patch }));
   const avatarUrl = useAvatarUrl(f.avatar);
 
+  // Decide the step list once, so saving the profile mid-flow doesn't shift the step index.
+  const [plan, setPlan] = useState<{ profile: boolean; couple: boolean } | null>(null);
+  useEffect(() => { if (me && !plan) setPlan({ profile: !me.profile?.onboarded, couple: !me.couple }); }, [me, plan]);
   const steps: StepId[] = useMemo(() => {
-    if (!me) return [];
-    const s: StepId[] = me.profile?.onboarded ? [] : [...profileSteps];
-    if (!me.couple) s.push(...coupleSteps);
-    return s;
-  }, [me?.profile?.onboarded, me?.couple]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!plan) return [];
+    return [...(plan.profile ? profileSteps : []), ...(plan.couple ? coupleSteps : [])];
+  }, [plan]);
 
   useEffect(() => {
     if (!me) return;
     if (me.profile?.display_name && !f.name) set({ name: me.profile.display_name });
     if (me.profile?.partner_call_name && !f.call) set({ call: "custom", customCall: me.profile.partner_call_name });
-    if (me.profile?.onboarded && me.couple) void navigate({ to: "/app", replace: true });
+    // Only skip setup for people who were already done when they arrived; mid-flow, createCouple sends them to /pair.
+    if (!plan && me.profile?.onboarded && me.couple) void navigate({ to: "/app", replace: true });
   }, [me]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isLoading || !me) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
@@ -79,10 +81,11 @@ function Onboarding() {
   };
 
   const createCouple = async () => {
+    if (busy) return;
     setBusy(true);
     const { error } = await supabase.rpc("create_couple", { _start_date: f.start, _type: f.type, _my_city: f.myCity, _partner_city: f.partnerCity });
     setBusy(false);
-    if (error) { setErr(/already/.test(error.message) ? t("app.pair.already") : t("app.error")); return; }
+    if (error && !/already/.test(error.message)) { setErr(t("app.error")); return; }
     await invalidate();
     void navigate({ to: "/pair" });
   };

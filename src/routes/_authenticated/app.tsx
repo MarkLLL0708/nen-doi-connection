@@ -10,6 +10,7 @@ import {
   Pressable, SlideUp, Stagger, StaggerItem, StreakLine, Ticker, applyTheme, formatNumber, type TabKey, type ThemeMode,
 } from "@/components/visual";
 import { Shell } from "@/components/app/Shell";
+import { setThemeEverywhere, storedTheme } from "@/components/app/GlobalControls";
 import { PlayTab } from "@/components/app/PlayTab";
 import { DateTab } from "@/components/app/DateTab";
 import { MemoriesTab } from "@/components/app/MemoriesTab";
@@ -39,7 +40,7 @@ function AppScreen() {
 
   useEffect(() => {
     if (!me) return;
-    applyTheme((me.profile?.theme as ThemeMode | undefined) ?? "system");
+    applyTheme(storedTheme() ?? (me.profile?.theme as ThemeMode | undefined) ?? "system");
     if (!me.profile?.onboarded || !me.couple) void navigate({ to: "/onboarding", replace: true });
   }, [me, navigate]);
 
@@ -145,9 +146,9 @@ function SettingsTab({ me }: { me: Me }) {
   const { t } = useTranslation();
   const qc = useQueryClient();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<ThemeMode>((me.profile?.theme as ThemeMode | undefined) ?? "system");
+  const [mode, setMode] = useState<ThemeMode>(storedTheme() ?? (me.profile?.theme as ThemeMode | undefined) ?? "system");
   const change = async (m: ThemeMode) => {
-    setMode(m); applyTheme(m);
+    setMode(m); setThemeEverywhere(m);
     await updateProfile(me.userId, { theme: m });
     void qc.invalidateQueries({ queryKey: ["me"] });
   };
