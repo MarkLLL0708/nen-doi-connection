@@ -17,7 +17,7 @@ export function StepScreen({ stepKey, tone, label, question, note, progress, onB
     <div className="relative z-[2] flex flex-1 flex-col px-5 pb-8 pt-4">
       <div className="flex items-center gap-3">
         {onBack ? <Pressable aria-label={t("app.back")} onClick={onBack} className="grid size-11 place-items-center rounded-full bg-current/10"><ArrowLeft strokeWidth={2.5} className="size-5" /></Pressable> : <span className="size-11" />}
-        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-current/20" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
+        <div className="mr-[92px] h-1.5 flex-1 overflow-hidden rounded-full bg-current/20" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
           <motion.div className="h-full rounded-full bg-current" animate={{ width: `${progress * 100}%` }} transition={{ duration: 0.3, ease: snap }} />
         </div>
       </div>
