@@ -89,7 +89,7 @@ export function Ticker({ text, className }: { text: string; className?: string }
 export function SlideUp({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const reduce = useReducedMotion();
   return <span className={cn("block pb-[0.2em]", className)} style={{ clipPath: "inset(-60% -10% 0 -10%)" }}>
-    <motion.span className="block" initial={reduce ? { opacity: 0 } : { y: "110%" }} whileInView={reduce ? { opacity: 1 } : { y: "0%" }} viewport={{ once: true }} transition={{ duration: 0.35, ease: snap, delay }}>{children}</motion.span>
+    <motion.span className="block" initial={reduce ? { opacity: 0 } : { y: "110%" }} animate={reduce ? { opacity: 1 } : { y: "0%" }} transition={{ duration: 0.35, ease: snap, delay }}>{children}</motion.span>
   </span>;
 }
 

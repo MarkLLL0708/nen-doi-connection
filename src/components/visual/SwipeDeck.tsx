@@ -76,8 +76,8 @@ export function SwipeDeck<T>({ items, getKey, renderCard, onSwipe, className, ca
         if (depth === 0) return <motion.div key={getKey(item)} data-testid="deck-top" drag={busy ? false : "x"} dragMomentum={false} onDragEnd={onDragEnd}
           style={{ x, rotate, touchAction: "pan-y" }} whileDrag={{ cursor: "grabbing" }}
           className={cn("grain absolute inset-0 z-10 flex cursor-grab select-none flex-col rounded-[28px] p-6 shadow-float", cls)}>
-          <Stamp label={t("cb.like")} opacity={likeO} side="left" tone="block-ember" />
-          <Stamp label={t("cb.skip")} opacity={skipO} side="right" tone="block-ink" />
+          <Stamp label={t("cb.like")} opacity={likeO} side="right" colour="var(--ember)" />
+          <Stamp label={t("cb.skip")} opacity={skipO} side="left" colour="var(--ink)" />
           {renderCard(item)}
         </motion.div>;
         return <PeekCard key={getKey(item)} depth={depth} scale={depth === 1 ? nextScale : undefined} y={depth === 1 ? nextY : undefined} className={cls}>{renderCard(item)}</PeekCard>;
@@ -92,8 +92,8 @@ export function SwipeDeck<T>({ items, getKey, renderCard, onSwipe, className, ca
   </div>;
 }
 
-function Stamp({ label, opacity, side, tone }: { label: string; opacity: MotionValue<number>; side: "left" | "right"; tone: string }) {
-  return <motion.span aria-hidden="true" style={{ opacity }} className={cn("type-button absolute top-6 z-20 rounded-[12px] px-4 py-2 text-[20px] tracking-[0.04em]", tone, side === "left" ? "left-6" : "right-6")}>{label}</motion.span>;
+function Stamp({ label, opacity, side, colour }: { label: string; opacity: MotionValue<number>; side: "left" | "right"; colour: string }) {
+  return <motion.span aria-hidden="true" style={{ opacity, color: colour, boxShadow: `inset 0 0 0 3px ${colour}` }} className={cn("block-cream type-button absolute top-6 z-20 rounded-[12px] px-4 py-2 text-[20px] tracking-[0.04em]", side === "left" ? "left-6" : "right-6")}>{label}</motion.span>;
 }
 
 function PeekCard({ children, depth, scale, y, className }: { children: ReactNode; depth: number; scale?: MotionValue<number> | undefined; y?: MotionValue<number> | undefined; className?: string | undefined }) {
