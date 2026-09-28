@@ -14,6 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
+      answer_reactions: {
+        Row: {
+          answer_id: string
+          couple_id: string
+          created_at: string
+          id: string
+          kind: string
+          user_id: string
+        }
+        Insert: {
+          answer_id: string
+          couple_id: string
+          created_at?: string
+          id?: string
+          kind: string
+          user_id?: string
+        }
+        Update: {
+          answer_id?: string
+          couple_id?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answer_reactions_answer_id_fkey"
+            columns: ["answer_id"]
+            isOneToOne: false
+            referencedRelation: "question_answers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_reactions_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      answer_replies: {
+        Row: {
+          answer_date: string
+          body: string
+          couple_id: string
+          created_at: string
+          id: string
+          question_id: string
+          user_id: string
+        }
+        Insert: {
+          answer_date: string
+          body: string
+          couple_id: string
+          created_at?: string
+          id?: string
+          question_id: string
+          user_id?: string
+        }
+        Update: {
+          answer_date?: string
+          body?: string
+          couple_id?: string
+          created_at?: string
+          id?: string
+          question_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answer_replies_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_replies_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "daily_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       couple_members: {
         Row: {
           city: string | null
@@ -39,6 +126,42 @@ export type Database = {
             columns: ["couple_id"]
             isOneToOne: false
             referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      couple_questions: {
+        Row: {
+          couple_id: string
+          created_at: string
+          day: string
+          question_id: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          day: string
+          question_id: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          day?: string
+          question_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "couple_questions_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "couple_questions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "daily_questions"
             referencedColumns: ["id"]
           },
         ]
@@ -368,6 +491,33 @@ export type Database = {
           },
         ]
       }
+      occasion_catalog: {
+        Row: {
+          created_at: string
+          id: string
+          ideas_vi: Json
+          kind: string
+          sort_order: number
+          title_vi: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ideas_vi?: Json
+          kind: string
+          sort_order?: number
+          title_vi: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ideas_vi?: Json
+          kind?: string
+          sort_order?: number
+          title_vi?: string
+        }
+        Relationships: []
+      }
       occasions: {
         Row: {
           couple_id: string
@@ -396,6 +546,35 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "occasions_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pack_consents: {
+        Row: {
+          agreed: boolean
+          couple_id: string
+          decided_at: string
+          user_id: string
+        }
+        Insert: {
+          agreed: boolean
+          couple_id: string
+          decided_at?: string
+          user_id?: string
+        }
+        Update: {
+          agreed?: boolean
+          couple_id?: string
+          decided_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pack_consents_couple_id_fkey"
             columns: ["couple_id"]
             isOneToOne: false
             referencedRelation: "couples"
@@ -700,6 +879,24 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -729,14 +926,22 @@ export type Database = {
       }
       has_posted: { Args: { _date: string }; Returns: boolean }
       has_responded: { Args: { _session: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       is_couple_member: { Args: { _user: string }; Returns: boolean }
       join_couple: { Args: { _code: string }; Returns: string }
       my_couple_id: { Args: never; Returns: string }
       refresh_invite: { Args: never; Returns: string }
+      today_question: { Args: never; Returns: Json }
       today_status: { Args: never; Returns: Json }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -863,6 +1068,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const

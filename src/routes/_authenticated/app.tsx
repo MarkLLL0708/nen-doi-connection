@@ -94,7 +94,7 @@ function Home({ me }: { me: Me }) {
     { name: partnerName, done: !!theirs?.[k], avatar: me.partner?.avatar, url: partnerUrl },
   ];
   const tile = (k: "question" | "photo" | "game", tone: string, icon: typeof Camera) =>
-    <ActionTile tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
+    <ActionTile onClick={k === "question" ? () => void navigate({ to: "/question" }) : undefined} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
       youName={t("app.home.you")} partnerName={partnerName} avatars={<AvatarDuo size={32} people={people(k)} />} />;
 
   const occName = occasion ? t(`app.occasionNames.${occasion.kind}`, { year: occasion.year, count: occasion.count ?? 0, name: occasion.name ?? "" }) : "";

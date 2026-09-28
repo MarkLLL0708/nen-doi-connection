@@ -18,3 +18,5 @@
 - Tailwind `--spacing-screen` is 20px, so `min-h-screen` is wrong here; use `min-h-dvh`.
 - The design language is "Colour Block" (Unbounded + Plus Jakarta Sans, flat palette blocks, 2px icons, snappy springs); reusable motion lives in `src/components/visual/motion.tsx` and `SwipeDeck.tsx`. Dark mode follows the phone via a CSS media query, overridable with `.light`/`.dark` on <html>.
 - `public/manifest.webmanifest` and the flame icon establish PWA presentation only; offline caching and functional flows are intentionally deferred.
+- Daily questions are assigned per couple per day by the `today_question()` RPC (least-used first, so no repeats until the pool is used up); family/money packs join the pool only when both partners have a `pack_consents` yes. Pack keys: memory, family, tet, food, fun, money, distance, conflict, deep.
+- Seed/content tables (daily_questions, game_content, photo_prompts, date_ideas, occasion_catalog) are editable by `admin` via `user_roles` + `has_role`.
