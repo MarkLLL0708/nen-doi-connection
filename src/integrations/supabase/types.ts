@@ -729,6 +729,7 @@ export type Database = {
       }
       has_posted: { Args: { _date: string }; Returns: boolean }
       has_responded: { Args: { _session: string }; Returns: boolean }
+      is_couple_member: { Args: { _user: string }; Returns: boolean }
       join_couple: { Args: { _code: string }; Returns: string }
       my_couple_id: { Args: never; Returns: string }
       refresh_invite: { Args: never; Returns: string }
