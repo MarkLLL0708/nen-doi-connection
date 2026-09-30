@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Verify seven security fixes with signed-in test partners and anonymous callers; explain photo-file warning without changing it.
+- [x] Verify seven security fixes with signed-in test partners and anonymous callers; explain photo-file warning without changing it. Concurrent free seals: one accepted/one denied; anonymous duel denied; own-pair duel and game reveal pass; cross-pair probes denied; own-pair size 2/other null; arbitrary-user role probe denied. Test data removed. Photo policy reviewed only, not changed.
 - [x] Audit English interface strings across all nine topics (couple/friends), Home, Games, Thumb Kiss, Memories, Settings, and alerts; category names/descriptions fully translated in both modes. Vietnamese game/question prompts are content; personal nicknames, place/food names, brand name, and design-system font specimens intentionally retain Vietnamese.
 - [x] Verify paired topic request, instant alert, acceptance, and decline with two simultaneous signed-in sessions: A requested FOOD, B received alert and accepted, both switched; A requested FUN, B received alert and declined, both remained on FOOD; no UI error or crash.
 - [x] Verify alert card specification and five viewport screenshots; report English/light status (English has mixed untranslated content)
