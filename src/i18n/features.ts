@@ -84,6 +84,7 @@ export const featVi = {
     synced: "Chạm rồi! Gửi {{partner}} một nụ hôn.", solo: "Ghép đôi xong mới hôn ngón tay được nhé.",
     count: "Hai đứa đã chạm nhau {{count}} lần", nudge: "Gửi lời mời hôn ngón tay", nudgeSent: "Đã gửi lời mời cho {{partner}}",
     nudgeWait: "Vừa gửi rồi, đợi một phút nhé.", nudgeErr: "Chưa gửi được, thử lại nhé.",
+    conn: { on: "Đã kết nối", retry: "Đang kết nối lại…", off: "Mất kết nối" },
   },
   explore: {
     label: "CHỦ ĐỀ CHUNG", title: "Khám phá", playing: "Đang chơi", requested: "Đã rủ",
@@ -112,8 +113,11 @@ export const featVi = {
     submitDuel: "Nộp bài", waiting: "Đang chờ {{partner}} vẽ xong...",
     drawingBy: "Bức của {{name}}", vote: "Thích bức của {{name}}", voted: "Bạn đã chọn", partnerVoted: "{{partner}} thích bức của {{name}}.",
   },
-  notif: { title: "Thông báo", empty: "Chưa có thông báo nào.", open: "Mở thông báo", unread: "{{count}} chưa đọc",
-    capsule_received: "{{partner}} gửi bạn một lá thư “{{type}}”.", capsule_unlocked: "Thư “{{type}}” đã mở khoá. Đọc ngay nhé.", thumb_nudge: "{{partner}} rủ bạn hôn ngón tay. Vào ngay nhé!", thumb_synced: "Hôn ngón tay thành công với {{partner}}!", drawing_received: "{{partner}} gửi bạn một bức vẽ.", duel_started: "{{partner}} rủ bạn thi vẽ. Vào vẽ ngay nhé!", duel_drawing: "{{partner}} đã nộp bài thi vẽ.", category_request: "{{partner}} muốn đổi sang chủ đề {{category}}. Vào Khám phá để trả lời nhé.", category_accepted: "{{partner}} đã đồng ý. Hai đứa đang ở chủ đề {{category}}.", category_declined: "{{partner}} muốn giữ chủ đề hiện tại, chưa đổi sang {{category}}." },
+  notif: { title: "Thông báo", empty: "Chưa có thông báo nào.", open: "Mở thông báo", unread: "{{count}} chưa đọc", dismiss: "Đóng",
+    capsule_received: "{{partner}} gửi bạn một lá thư “{{type}}”.", capsule_unlocked: "Thư “{{type}}” đã mở khoá. Đọc ngay nhé.", thumb_nudge: "{{partner}} rủ bạn hôn ngón tay. Vào ngay nhé!", thumb_synced: "Hôn ngón tay thành công với {{partner}}!", drawing_received: "{{partner}} gửi bạn một bức vẽ.", duel_started: "{{partner}} rủ bạn thi vẽ. Vào vẽ ngay nhé!", duel_drawing: "{{partner}} đã nộp bài thi vẽ.", category_request: "{{partner}} muốn đổi sang chủ đề {{category}}. Vào Khám phá để trả lời nhé.", category_accepted: "{{partner}} đã đồng ý. Hai đứa đang ở chủ đề {{category}}.", category_declined: "{{partner}} muốn giữ chủ đề hiện tại, chưa đổi sang {{category}}.",
+    question_answered: "{{partner}} vừa trả lời câu hỏi hôm nay.", photo_received: "{{partner}} vừa đăng ảnh hôm nay.", game_turn: "{{partner}} chơi xong rồi, tới lượt bạn.",
+    alertTitle: { capsule_received: "Thư mới!", capsule_unlocked: "Thư đã mở khoá!", thumb_nudge: "Chạm nhau nhé!", thumb_synced: "Chạm nhau rồi!", drawing_received: "Bức vẽ mới!", duel_started: "Thi vẽ nào!", duel_drawing: "Đối thủ nộp bài!", category_request: "Đổi chủ đề?", category_accepted: "Đã đổi chủ đề!", category_declined: "Giữ chủ đề cũ", question_answered: "Có câu trả lời mới!", photo_received: "Ảnh mới!", game_turn: "Tới lượt bạn!", default: "Có tin mới!" },
+    cta: { default: "Xem ngay", thumb_nudge: "Chạm ngay", thumb_synced: "Chạm ngay", category_request: "Trả lời ngay" } },
   coach: {
     metaTitle: "Gợi ý nói chuyện · Nến Đôi", metaDesc: "Gợi ý cách nói những chuyện khó mở lời, riêng tư cho bạn.",
     label: "RIÊNG TƯ", title: "Gợi ý nói chuyện", back: "Quay lại", open: "Gợi ý nói chuyện", openSub: "Khó mở lời? Để mình gợi ý vài cách nói.",
@@ -221,6 +225,7 @@ export const featEn: typeof featVi = {
     synced: "You touched! A kiss for {{partner}}.", solo: "Pair up first to send thumb kisses.",
     count: "You've touched {{count}} times", nudge: "Invite for a thumb kiss", nudgeSent: "Invite sent to {{partner}}",
     nudgeWait: "Just sent one, give it a minute.", nudgeErr: "Couldn't send, try again.",
+    conn: { on: "Connected", retry: "Reconnecting…", off: "Disconnected" },
   },
   explore: {
     label: "SHARED TOPIC", title: "Explore", playing: "Playing", requested: "Asked",
@@ -249,8 +254,11 @@ export const featEn: typeof featVi = {
     submitDuel: "Submit", waiting: "Waiting for {{partner}} to finish...",
     drawingBy: "{{name}}'s drawing", vote: "Love {{name}}'s one", voted: "You picked", partnerVoted: "{{partner}} loved {{name}}'s one.",
   },
-  notif: { title: "Notifications", empty: "No notifications yet.", open: "Open notifications", unread: "{{count}} unread",
-    capsule_received: "{{partner}} sent you an “{{type}}” letter.", capsule_unlocked: "Your “{{type}}” letter just unlocked. Read it now.", thumb_nudge: "{{partner}} wants a thumb kiss. Join now!", thumb_synced: "Thumb kiss with {{partner}} landed!", drawing_received: "{{partner}} sent you a drawing.", duel_started: "{{partner}} started a draw duel. Jump in!", duel_drawing: "{{partner}} submitted their duel drawing.", category_request: "{{partner}} wants to switch to {{category}}. Open Explore to answer.", category_accepted: "{{partner}} agreed. You're both on {{category}} now.", category_declined: "{{partner}} wants to stay on the current topic, not {{category}}." },
+  notif: { title: "Notifications", empty: "No notifications yet.", open: "Open notifications", unread: "{{count}} unread", dismiss: "Close",
+    capsule_received: "{{partner}} sent you an “{{type}}” letter.", capsule_unlocked: "Your “{{type}}” letter just unlocked. Read it now.", thumb_nudge: "{{partner}} wants a thumb kiss. Join now!", thumb_synced: "Thumb kiss with {{partner}} landed!", drawing_received: "{{partner}} sent you a drawing.", duel_started: "{{partner}} started a draw duel. Jump in!", duel_drawing: "{{partner}} submitted their duel drawing.", category_request: "{{partner}} wants to switch to {{category}}. Open Explore to answer.", category_accepted: "{{partner}} agreed. You're both on {{category}} now.", category_declined: "{{partner}} wants to stay on the current topic, not {{category}}.",
+    question_answered: "{{partner}} just answered today's question.", photo_received: "{{partner}} just posted today's photo.", game_turn: "{{partner}} finished their turn — you're up.",
+    alertTitle: { capsule_received: "New letter!", capsule_unlocked: "Letter unlocked!", thumb_nudge: "Touch now!", thumb_synced: "You touched!", drawing_received: "New drawing!", duel_started: "Draw duel!", duel_drawing: "They submitted!", category_request: "Switch topic?", category_accepted: "Topic switched!", category_declined: "Staying put", question_answered: "New answer!", photo_received: "New photo!", game_turn: "Your turn!", default: "Something new!" },
+    cta: { default: "See it now", thumb_nudge: "Touch now", thumb_synced: "Touch now", category_request: "Answer now" } },
   coach: {
     metaTitle: "Talk helper · Nến Đôi", metaDesc: "Private suggestions for saying the hard things.",
     label: "PRIVATE", title: "Talk helper", back: "Back", open: "Talk helper", openSub: "Hard to say? Get a few ways to put it.",

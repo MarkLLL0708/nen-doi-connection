@@ -16,7 +16,7 @@ import { setThemeEverywhere, storedTheme } from "@/components/app/GlobalControls
 import { PlayTab } from "@/components/app/PlayTab";
 import { DateTab } from "@/components/app/DateTab";
 import { MemoriesTab } from "@/components/app/MemoriesTab";
-import { CategoryCard, ExploreTab, useCategoryState } from "@/components/app/ExploreTab";
+import { CategoryCard, ExploreTab } from "@/components/app/ExploreTab";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
 import { diffDays, milestoneToday, parseDate, todayIn, upcomingOccasions } from "@/lib/occasions";
 import i18n from "@/i18n";
@@ -50,11 +50,11 @@ function AppScreen() {
 
   if (isLoading || !me?.couple || !me.profile?.onboarded) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
 
-  return <Shell className="pb-28">
+  return <Shell className="pb-[calc(9.5rem+env(safe-area-inset-bottom))]">
     <PageTransition key={tab} className="flex flex-1 flex-col">
       {tab === "home" ? <Home me={me} /> : tab === "explore" ? <ExploreTab me={me} /> : tab === "settings" ? <SettingsTab me={me} /> : tab === "play" ? <PlayTab me={me} /> : tab === "date" ? <DateTab me={me} /> : <MemoriesTab me={me} />}
     </PageTransition>
-    <div className="fixed inset-x-0 bottom-4 z-30 mx-auto max-w-[390px] px-4">
+    <div className="fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 mx-auto max-w-[390px] px-4">
       <BottomTabBar id="app-tabs" active={tab} onSelect={(k: TabKey) => void navigate({ to: "/app", search: k === "home" ? {} : { tab: k } })} />
     </div>
   </Shell>;
@@ -64,7 +64,6 @@ function Home({ me }: { me: Me }) {
   const { t, i18n: i } = useTranslation();
   const navigate = useNavigate();
   const couple = me.couple!;
-  const cat = useCategoryState();
   const partnerCall = me.profile?.partner_call_name || t("app.setup.call.ban");
   const partnerName = me.partner?.display_name || partnerCall;
   const solo = me.members.length < 2;
@@ -74,7 +73,7 @@ function Home({ me }: { me: Me }) {
   const myUrl = useAvatarUrl(me.profile?.avatar);
   const partnerUrl = useAvatarUrl(me.partner?.avatar);
 
-  const { data: status } = useQuery({ queryKey: ["today", couple.id], refetchInterval: 60_000,
+  const { data: status } = useQuery({ queryKey: ["today", couple.id],
     queryFn: async () => { const { data, error } = await supabase.rpc("today_status"); if (error) throw error; return data as unknown as TodayStatus; } });
   const mine = status?.members.find((m) => m.user_id === me.userId);
   const theirs = status?.members.find((m) => m.user_id !== me.userId);
@@ -104,7 +103,7 @@ function Home({ me }: { me: Me }) {
     { name: partnerName, done: !!theirs?.[k], avatar: me.partner?.avatar, url: partnerUrl },
   ];
   const tile = (k: "question" | "photo" | "game", tone: string, icon: typeof Camera) =>
-    <ActionTile onClick={k === "question" ? () => void navigate(cat.data && !cat.data.active ? { to: "/app", search: { tab: "explore" } } : { to: "/question" }) : k === "photo" ? () => void navigate({ to: "/photo" }) : () => void navigate({ to: "/app", search: { tab: "play" } })} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
+    <ActionTile onClick={k === "question" ? () => void navigate({ to: "/question" }) : k === "photo" ? () => void navigate({ to: "/photo" }) : () => void navigate({ to: "/app", search: { tab: "play" } })} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
       youName={t("app.home.you")} partnerName={partnerName} avatars={<AvatarDuo size={32} people={people(k)} />} />;
 
   const occName = occasion ? t(`app.occasionNames.${occasion.kind}`, { year: occasion.year, count: occasion.count ?? 0, name: occasion.name ?? "" }) : "";

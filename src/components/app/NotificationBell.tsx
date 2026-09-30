@@ -16,7 +16,8 @@ export function NotificationBell({ me }: { me: Me }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const partner = me.profile?.partner_call_name || me.partner?.display_name || t("app.setup.call.ban");
-  const { data } = useQuery({ queryKey: ["notifications"], refetchInterval: 30000, queryFn: async () => {
+  // No polling: the live listener refreshes this list the moment something arrives.
+  const { data } = useQuery({ queryKey: ["notifications"], queryFn: async () => {
     await supabase.rpc("sync_capsule_notices");
     const { data, error } = await supabase.from("notifications").select("*").order("created_at", { ascending: false }).limit(30);
     if (error) throw error; return data;
@@ -37,7 +38,7 @@ export function NotificationBell({ me }: { me: Me }) {
       <p className="type-display text-[28px]">{t("feat.notif.title")}</p>
       {!data?.length ? <p className="mt-4 type-body text-muted-foreground">{t("feat.notif.empty")}</p>
         : <ul className="mt-4 space-y-2">{data.map((n) => { const d = n.data as { type?: string }; return <li key={n.id}>
-          <button onClick={() => { setOpen(false); if (n.kind === "thumb_nudge" || n.kind === "thumb_synced") { void navigate({ to: "/thumb" }); return; } if (n.kind === "drawing_received") { void navigate({ to: "/draw" }); return; } if (n.kind === "duel_started" || n.kind === "duel_drawing") { void navigate({ to: "/draw", search: { mode: "duel" } }); return; } if (n.kind.startsWith("category_")) { void navigate({ to: "/app", search: { tab: "explore" } }); return; } try { localStorage.setItem(MEM_VIEW_KEY, "capsules"); } catch { /* ignore */ } void navigate({ to: "/app", search: { tab: "memories" } }); }}
+          <button onClick={() => { setOpen(false); if (n.kind === "thumb_nudge" || n.kind === "thumb_synced") { void navigate({ to: "/thumb" }); return; } if (n.kind === "drawing_received") { void navigate({ to: "/draw" }); return; } if (n.kind === "duel_started" || n.kind === "duel_drawing") { void navigate({ to: "/draw", search: { mode: "duel" } }); return; } if (n.kind.startsWith("category_")) { void navigate({ to: "/app", search: { tab: "explore" } }); return; } if (n.kind === "question_answered") { void navigate({ to: "/question" }); return; } if (n.kind === "photo_received") { void navigate({ to: "/photo" }); return; } if (n.kind === "game_turn") { void navigate({ to: "/app", search: { tab: "play" } }); return; } try { localStorage.setItem(MEM_VIEW_KEY, "capsules"); } catch { /* ignore */ } void navigate({ to: "/app", search: { tab: "memories" } }); }}
             className={`w-full rounded-[18px] p-4 text-left type-body ${n.read_at ? "bg-surface" : "block-butter"}`}>
             {t(`feat.notif.${n.kind}`, { partner, type: t(`feat.capsule.types.${d.type ?? "miss"}`), category: t(`question.packs.${(n.data as { pack?: string }).pack ?? "memory"}`) })}
             <span className="mt-1 block type-caption opacity-70">{new Date(n.created_at).toLocaleDateString("vi-VN")}</span>

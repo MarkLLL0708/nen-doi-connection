@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.notify_partner_activity() FROM PUBLIC, anon, authenticated;

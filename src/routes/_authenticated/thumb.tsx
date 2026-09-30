@@ -37,27 +37,71 @@ function ThumbScreen() {
   const [burst, setBurst] = useState(0);
   const [count, setCount] = useState<number | null>(null);
   const [nudge, setNudge] = useState<"idle" | "sent" | "wait" | "err">("idle");
+  const [conn, setConn] = useState<"on" | "retry" | "off">("retry");
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const celebrated = useRef(0);
 
   const { data: total } = useQuery({ queryKey: ["thumb-count", coupleId], enabled: !!coupleId, queryFn: async () => {
     const { count: c } = await supabase.from("thumb_syncs").select("id", { count: "exact", head: true });
     return c ?? 0;
   } });
 
+  /** Both phones celebrate off the same signal, whichever one noticed first. */
+  const celebrate = (at: number) => {
+    if (celebrated.current && at - celebrated.current < 2000) return;
+    celebrated.current = at;
+    setSynced(true); setBurst(at);
+    try { navigator.vibrate?.([60, 40, 120]); } catch { /* unsupported */ }
+  };
+
   useEffect(() => {
     if (!coupleId || !me) return;
-    // Private channel: the database only lets the two pair members join it.
-    const ch = supabase.channel(`thumb:${coupleId}`, { config: { private: true, presence: { key: me.userId } } });
-    ch.on("presence", { event: "sync" }, () => {
-      const others = Object.entries(ch.presenceState<PresenceState>()).filter(([k]) => k !== me.userId).flatMap(([, v]) => v);
-      setPartnerHere(others.length > 0);
-      setPartnerPressing(others.some((p) => p.pressing));
-    }).on("broadcast", { event: "press" }, ({ payload }) => {
-      // Faster than presence; presence remains the source of truth for who is here.
-      if (payload?.user_id !== me.userId) { setPartnerHere(true); setPartnerPressing(!!payload?.pressing); }
-    }).subscribe((s) => { if (s === "SUBSCRIBED") void ch.track({ user_id: me.userId, pressing: false }); });
-    channelRef.current = ch;
-    return () => { channelRef.current = null; void supabase.removeChannel(ch); };
+    let closed = false;
+
+    const connect = () => {
+      if (closed) return;
+      setConn("retry");
+      // Private channel: the database only lets the two pair members join it.
+      const ch = supabase.channel(`thumb:${coupleId}`, { config: { private: true, presence: { key: me.userId } } });
+      ch.on("presence", { event: "sync" }, () => {
+        const others = Object.entries(ch.presenceState<PresenceState>()).filter(([k]) => k !== me.userId).flatMap(([, v]) => v);
+        setPartnerHere(others.length > 0);
+        setPartnerPressing(others.some((p) => p.pressing));
+      }).on("broadcast", { event: "press" }, ({ payload }) => {
+        // Faster than presence; presence remains the source of truth for who is here.
+        if (payload?.user_id !== me.userId) { setPartnerHere(true); setPartnerPressing(!!payload?.pressing); }
+      }).on("broadcast", { event: "sync" }, ({ payload }) => {
+        if (payload?.user_id !== me.userId) celebrate(Number(payload?.at) || Date.now());
+      }).subscribe((s) => {
+        if (s === "SUBSCRIBED") { setConn("on"); void ch.track({ user_id: me.userId, pressing: false }); }
+        else if (s === "CHANNEL_ERROR" || s === "TIMED_OUT") setConn("off");
+        else if (s === "CLOSED") setConn("retry");
+      });
+      channelRef.current = ch;
+    };
+    connect();
+
+    // Phones freeze the socket when the screen locks — rebuild it on resume.
+    const resume = () => {
+      if (document.visibilityState !== "visible") return;
+      const old = channelRef.current;
+      channelRef.current = null;
+      if (old) void supabase.removeChannel(old);
+      setPartnerHere(false); setPartnerPressing(false);
+      connect();
+    };
+    document.addEventListener("visibilitychange", resume);
+    window.addEventListener("focus", resume);
+    window.addEventListener("online", resume);
+    return () => {
+      closed = true;
+      document.removeEventListener("visibilitychange", resume);
+      window.removeEventListener("focus", resume);
+      window.removeEventListener("online", resume);
+      const old = channelRef.current;
+      channelRef.current = null;
+      if (old) void supabase.removeChannel(old);
+    };
   }, [coupleId, me?.userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setPress = (v: boolean) => {
@@ -71,8 +115,9 @@ function ThumbScreen() {
   useEffect(() => {
     if (!both) { setSynced(false); return; }
     if (synced) return;
-    setSynced(true); setBurst(Date.now());
-    try { navigator.vibrate?.([60, 40, 120]); } catch { /* unsupported */ }
+    const at = Date.now();
+    celebrate(at);
+    void channelRef.current?.send({ type: "broadcast", event: "sync", payload: { user_id: me?.userId, at } });
     void supabase.rpc("log_thumb_sync").then(({ data }) => { if (typeof data === "number") setCount(data); });
   }, [both]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -96,6 +141,12 @@ function ThumbScreen() {
       </button>
       <p className="type-title text-[20px]">{t("feat.thumb.title")}</p>
     </header>
+    <div className="relative z-10 px-5">
+      <span className="inline-flex items-center gap-2 rounded-full bg-current/10 px-3 py-1.5 type-caption" aria-live="polite">
+        <span aria-hidden="true" className={`size-2.5 rounded-full ${conn === "on" ? "bg-[var(--butter)]" : conn === "retry" ? "bg-[var(--blush)]" : "bg-[var(--ember)]"}`} />
+        {t(`feat.thumb.conn.${conn}`)}
+      </span>
+    </div>
 
     <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-8 px-6 text-center">
       <p className="type-display text-[24px] leading-[1.2]" aria-live="polite">{status}</p>
@@ -117,7 +168,7 @@ function ThumbScreen() {
       <p className="type-caption opacity-80">{t("feat.thumb.count", { count: shown })}</p>
     </div>
 
-    {!solo && !partnerHere && <div className="relative z-10 px-6 pb-10">
+    {!solo && !partnerHere && <div className="relative z-10 px-6 pb-[calc(2.5rem+env(safe-area-inset-bottom))]">
       <PrimaryButton disabled={nudge === "sent"} onClick={() => void sendNudge()}>{nudge === "sent" ? t("feat.thumb.nudgeSent", { partner }) : t("feat.thumb.nudge", { partner })}</PrimaryButton>
       {nudge === "wait" && <p className="mt-2 text-center type-caption opacity-80">{t("feat.thumb.nudgeWait")}</p>}
       {nudge === "err" && <p className="mt-2 text-center type-caption opacity-80">{t("feat.thumb.nudgeErr")}</p>}

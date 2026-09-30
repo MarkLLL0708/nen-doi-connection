@@ -14,9 +14,9 @@ const ORDER = ["memory", "food", "fun", "tet", "deep", "distance", "conflict", "
 type Pending = { id: string; pack: string; mine: boolean; created_at: string };
 export type CategoryState = { active: string | null; packs: { pack: string; count: number }[]; pending: Pending | null };
 
-/** Shared by the pair: polled so both phones see the same active category and request. */
+/** Shared by the pair: refreshed live when the partner asks for or agrees to a topic. */
 export function useCategoryState() {
-  return useQuery({ queryKey: ["categoryState"], refetchInterval: 4000, queryFn: async () => {
+  return useQuery({ queryKey: ["categoryState"], queryFn: async () => {
     const { data, error } = await supabase.rpc("category_state");
     if (error) throw error;
     return data as unknown as CategoryState;
