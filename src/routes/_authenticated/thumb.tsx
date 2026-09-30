@@ -45,7 +45,8 @@ function ThumbScreen() {
 
   useEffect(() => {
     if (!coupleId || !me) return;
-    const ch = supabase.channel(`thumb:${coupleId}`, { config: { presence: { key: me.userId } } });
+    // Private channel: the database only lets the two pair members join it.
+    const ch = supabase.channel(`thumb:${coupleId}`, { config: { private: true, presence: { key: me.userId } } });
     ch.on("presence", { event: "sync" }, () => {
       const others = Object.entries(ch.presenceState<PresenceState>()).filter(([k]) => k !== me.userId).flatMap(([, v]) => v);
       setPartnerHere(others.length > 0);
