@@ -35,7 +35,7 @@ export function ExploreTab({ me }: { me: Me }) {
     if (error) setErr(t("feat.explore.error"));
     await qc.invalidateQueries({ queryKey: ["categoryState"] });
     await qc.invalidateQueries({ queryKey: ["todayQuestion"] });
-    await qc.invalidateQueries({ queryKey: ["todayStatus"] });
+    await qc.invalidateQueries({ queryKey: ["today"] });
     setBusy(false);
   };
 
@@ -53,7 +53,7 @@ export function ExploreTab({ me }: { me: Me }) {
     {pend && !pend.mine && <div role="alert" className="grain block-butter rounded-[24px] p-5">
       <p className="type-body font-bold">{t("feat.explore.incoming", { partner, category: name(pend.pack) })}</p>
       <div className="mt-4 flex gap-2">
-        <PrimaryButton disabled={busy} onClick={() => void run(() => supabase.rpc("respond_category", { _id: pend.id, _accept: true }))}>{t("feat.explore.accept")}</PrimaryButton>
+        <PrimaryButton arrow={false} disabled={busy} onClick={() => void run(() => supabase.rpc("respond_category", { _id: pend.id, _accept: true }))}>{t("feat.explore.accept")}</PrimaryButton>
         <Pressable disabled={busy} onClick={() => void run(() => supabase.rpc("respond_category", { _id: pend.id, _accept: false }))}
           className="h-12 rounded-full bg-surface px-5 type-button">{t("feat.explore.decline")}</Pressable>
       </div>

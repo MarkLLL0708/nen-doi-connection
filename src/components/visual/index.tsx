@@ -139,7 +139,7 @@ export function BottomSheet({ open, onOpenChange, mode, children }: { open: bool
 
 /* ---------- Tab bar ---------- */
 
-export const tabs = [{ key: "home", Icon: House }, { key: "play", Icon: Puzzle }, { key: "date", Icon: Heart }, { key: "memories", Icon: BookOpen }, { key: "settings", Icon: Settings }] as const;
+export const tabs = [{ key: "home", Icon: House }, { key: "explore", Icon: Compass }, { key: "play", Icon: Puzzle }, { key: "date", Icon: Heart }, { key: "memories", Icon: BookOpen }, { key: "settings", Icon: Settings }] as const;
 export type TabKey = typeof tabs[number]["key"];
 
 /** Slim floating bar; the active tab is a solid pill that slides and morphs between tabs. */
