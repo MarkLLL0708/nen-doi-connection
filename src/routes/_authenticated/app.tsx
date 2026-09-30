@@ -16,7 +16,7 @@ import { setThemeEverywhere, storedTheme } from "@/components/app/GlobalControls
 import { PlayTab } from "@/components/app/PlayTab";
 import { DateTab } from "@/components/app/DateTab";
 import { MemoriesTab } from "@/components/app/MemoriesTab";
-import { CategoryCard, ExploreTab, useCategoryState } from "@/components/app/ExploreTab";
+import { CategoryCard, ExploreTab } from "@/components/app/ExploreTab";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
 import { diffDays, milestoneToday, parseDate, todayIn, upcomingOccasions } from "@/lib/occasions";
 import i18n from "@/i18n";
