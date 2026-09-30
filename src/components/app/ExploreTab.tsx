@@ -106,7 +106,7 @@ export function CategoryCard({ me, onOpen }: { me: Me; onOpen: () => void }) {
       <p className="type-caption font-bold opacity-80">{active ? t("feat.explore.playingNow") : t("feat.explore.noneShort")}</p>
       <p className="mt-1 type-display text-[24px] leading-[1.15]">{active ? t(`question.packs.${active}`) : t("feat.explore.pickTitle")}</p>
       {pend && <p className="mt-2 type-caption font-bold">{pend.mine ? t("feat.explore.waiting", { partner }) : t("feat.explore.incoming", { partner, category: t(`question.packs.${pend.pack}`) })}</p>}
-      <motion.span animate={reduce || active ? undefined : { scale: [1, 1.06, 1] }} transition={{ duration: 1.4, repeat: Infinity }}
+      <motion.span animate={reduce || active ? { scale: 1 } : { scale: [1, 1.06, 1] }} transition={reduce || active ? spring : { duration: 1.4, repeat: Infinity }}
         className="mt-4 inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-surface px-5 type-button text-foreground">
         {active ? t("feat.explore.change") : t("feat.explore.pick")}<ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
       </motion.span>
