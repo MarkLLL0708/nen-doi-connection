@@ -267,6 +267,45 @@ export type Database = {
           },
         ]
       }
+      couple_question_passes: {
+        Row: {
+          couple_id: string
+          excluded: boolean
+          question_id: string
+          skips: number
+          updated_at: string
+        }
+        Insert: {
+          couple_id: string
+          excluded?: boolean
+          question_id: string
+          skips?: number
+          updated_at?: string
+        }
+        Update: {
+          couple_id?: string
+          excluded?: boolean
+          question_id?: string
+          skips?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "couple_question_passes_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "couple_question_passes_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "daily_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       couple_questions: {
         Row: {
           couple_id: string
@@ -1202,6 +1241,7 @@ export type Database = {
       my_couple_id: { Args: never; Returns: string }
       my_space_kind: { Args: never; Returns: string }
       open_capsule: { Args: { _id: string }; Returns: undefined }
+      pass_question: { Args: { _mode: string }; Returns: Json }
       refresh_invite: { Args: never; Returns: string }
       round_completed: { Args: { _round: string }; Returns: boolean }
       round_status: { Args: { _round: string }; Returns: Json }
