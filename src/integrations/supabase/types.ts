@@ -184,6 +184,44 @@ export type Database = {
           },
         ]
       }
+      category_requests: {
+        Row: {
+          couple_id: string
+          created_at: string
+          decided_at: string | null
+          from_user: string
+          id: string
+          pack: string
+          status: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          decided_at?: string | null
+          from_user: string
+          id?: string
+          pack: string
+          status?: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          decided_at?: string | null
+          from_user?: string
+          id?: string
+          pack?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_requests_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       coach_history: {
         Row: {
           created_at: string
@@ -344,6 +382,7 @@ export type Database = {
       }
       couples: {
         Row: {
+          active_pack: string | null
           created_at: string
           created_by: string
           id: string
@@ -355,6 +394,7 @@ export type Database = {
           timezone: string
         }
         Insert: {
+          active_pack?: string | null
           created_at?: string
           created_by: string
           id?: string
@@ -366,6 +406,7 @@ export type Database = {
           timezone?: string
         }
         Update: {
+          active_pack?: string | null
           created_at?: string
           created_by?: string
           id?: string
@@ -1220,9 +1261,11 @@ export type Database = {
         Returns: undefined
       }
       can_see_response: { Args: { _session: string }; Returns: boolean }
+      cancel_category: { Args: { _id: string }; Returns: undefined }
       capsule_file_readable: { Args: { _name: string }; Returns: boolean }
       capsule_local_today: { Args: { _couple: string }; Returns: string }
       capsule_readable: { Args: { _id: string }; Returns: boolean }
+      category_state: { Args: never; Returns: Json }
       coach_premium: { Args: { _user: string }; Returns: boolean }
       couple_size: { Args: { _couple: string }; Returns: number }
       create_couple: {
@@ -1273,6 +1316,11 @@ export type Database = {
       open_capsule: { Args: { _id: string }; Returns: undefined }
       pass_question: { Args: { _mode: string }; Returns: Json }
       refresh_invite: { Args: never; Returns: string }
+      request_category: { Args: { _pack: string }; Returns: string }
+      respond_category: {
+        Args: { _accept: boolean; _id: string }
+        Returns: string
+      }
       round_completed: { Args: { _round: string }; Returns: boolean }
       round_status: { Args: { _round: string }; Returns: Json }
       seal_capsule: { Args: { _id: string }; Returns: undefined }
