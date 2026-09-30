@@ -1,4 +1,7 @@
 # Roadmap
+- [ ] Verify alert card specification and five viewport screenshots; report English/light status
+- [ ] Fix and verify Explore, drawing, thumb, coach, Play, and Memories bottom clearance
+- [ ] Verify solo and paired topic switching; report free/paid and 18+ gates without changing them
 - [x] Visual foundation, Colour Block system, styleguide + motion lab
 - [x] Backend (19 tables, RLS, reveal rule, private photo bucket), email/Google/Apple sign-in
 - [x] Intro, auth, profile + couple setup, pairing, Home with real data, tabs, theme setting
