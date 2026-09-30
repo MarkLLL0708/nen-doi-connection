@@ -9,6 +9,9 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "sample.daysLabel": "ngày là bạn của nhau",
     "tabs.date": "Đi chơi",
     "categories.distance": "Bạn xa",
+    "question.packs.family": "TUỔI THƠ & GIA ĐÌNH", "question.packs.money": "TIỀN BẠC & RANH GIỚI",
+    "question.packs.distance": "BẠN XA", "question.packs.conflict": "GIẬN NHAU & LÀM LÀNH",
+
     "app.meta.pairTitle": "Mời bạn thân · Nến Đôi", "app.meta.pairDesc": "Gửi mã cho bạn thân để bắt đầu.",
     "app.meta.homeDesc": "Số ngày làm bạn, chuỗi lửa và việc hôm nay của hai bạn.",
     "app.setup.choice.label": "MỜI BẠN THÂN",
@@ -38,6 +41,9 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "sample.daysLabel": "days as friends",
     "tabs.date": "Hang out",
     "categories.distance": "Far apart",
+    "question.packs.family": "CHILDHOOD & FAMILY", "question.packs.money": "MONEY & BOUNDARIES",
+    "question.packs.distance": "FAR APART", "question.packs.conflict": "FALLING OUT & MAKING UP",
+
     "app.meta.pairTitle": "Invite your best friend · Nến Đôi", "app.meta.pairDesc": "Send the code to your best friend to start.",
     "app.meta.homeDesc": "Days as friends, your streak and today's things.",
     "app.setup.choice.label": "INVITE YOUR BEST FRIEND",

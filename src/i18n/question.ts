@@ -15,6 +15,8 @@ export const questionVi = {
   consent: { label: "CHỦ ĐỀ NHẠY CẢM", title: "Hai bạn có muốn mở chủ đề gia đình và tiền bạc không? Những chủ đề này có thể nhạy cảm.", yes: "Đồng ý", later: "Để sau",
     mineYes: "Bạn đã đồng ý. Chờ {{partner}} nữa thôi.", on: "Đã mở chủ đề gia đình và tiền bạc.", partnerYes: "{{partner}} đã đồng ý." },
   empty: "Chưa có câu hỏi nào. Quay lại sau nhé.", solo: "Mời {{partner}} vào trước, rồi hai bạn cùng trả lời nhé.",
+  skip: "Bỏ qua", na: "Chưa áp dụng", passing: "Đang đổi câu…",
+  passAnswered: "Câu này đã có người trả lời rồi, để mai đổi nhé.", passEmpty: "Hết câu để đổi rồi. Mai quay lại nhé.",
 };
 
 export const questionEn: typeof questionVi = {
@@ -33,4 +35,6 @@ export const questionEn: typeof questionVi = {
   consent: { label: "SENSITIVE TOPICS", title: "Do you two want to open up family and money topics? These can be sensitive.", yes: "I'm in", later: "Not now",
     mineYes: "You said yes. Just waiting for {{partner}}.", on: "Family and money topics are on.", partnerYes: "{{partner}} said yes." },
   empty: "No questions yet. Check back later.", solo: "Invite {{partner}} first, then answer together.",
+  skip: "Skip", na: "Not applicable yet", passing: "Swapping…",
+  passAnswered: "Someone already answered this one. Swap tomorrow.", passEmpty: "No other questions left. Come back tomorrow.",
 };

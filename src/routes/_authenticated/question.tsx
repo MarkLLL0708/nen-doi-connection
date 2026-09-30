@@ -102,6 +102,7 @@ function AnswerStep({ tone, q, text, me, partnerCall, solo, onBack, onSent }: { 
   const { t } = useTranslation();
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
+  const [passing, setPassing] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const send = async () => {
     if (!body.trim()) return;
@@ -110,6 +111,16 @@ function AnswerStep({ tone, q, text, me, partnerCall, solo, onBack, onSent }: { 
     setBusy(false);
     if (error && error.code !== "23505") { setErr(t("app.error")); return; }
     haptic(15); onSent();
+  };
+  // Silent: no reveal, no partner notification, no streak or limit effect. The database picks the next question.
+  const pass = async (mode: "skip" | "na") => {
+    setPassing(true); setErr(null);
+    const { data, error } = await supabase.rpc("pass_question" as never, { _mode: mode } as never);
+    setPassing(false);
+    const res = data as { ok?: boolean; reason?: string } | null;
+    if (error) { setErr(t("app.error")); return; }
+    if (res && res.ok === false) { setErr(t(res.reason === "answered" ? "question.passAnswered" : "question.passEmpty")); return; }
+    setBody(""); haptic(10); onSent();
   };
   return <Shell className={`grain ${tone}`}>
     <TopBar label={t(`question.packs.${q.pack}`)} onBack={onBack} />
@@ -121,8 +132,14 @@ function AnswerStep({ tone, q, text, me, partnerCall, solo, onBack, onSent }: { 
       <textarea id="answer" value={body} onChange={(e) => setBody(e.target.value)} maxLength={1000} rows={6}
         placeholder={t("question.placeholder", { partner: partnerCall })}
         className="mt-8 w-full flex-1 resize-none rounded-[24px] bg-background p-5 type-body text-[18px] text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-4 focus-visible:ring-ring/50 min-h-[180px]" />
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Pressable disabled={passing || busy} onClick={() => void pass("skip")}
+          className="h-11 rounded-full px-4 type-button text-[13px] ring-2 ring-current/30 disabled:opacity-50">{passing ? t("question.passing") : t("question.skip")}</Pressable>
+        <Pressable disabled={passing || busy} onClick={() => void pass("na")}
+          className="h-11 rounded-full px-4 type-button text-[13px] ring-2 ring-current/30 disabled:opacity-50">{t("question.na")}</Pressable>
+      </div>
       {err && <p role="alert" className="mt-3 type-button">{err}</p>}
-      <PrimaryButton className="mt-5 h-16 bg-ink text-cream text-[18px]" disabled={busy || !body.trim()} onClick={() => void send()}>{busy ? t("question.sending") : t("question.send")}</PrimaryButton>
+      <PrimaryButton className="mt-5 h-16 bg-ink text-cream text-[18px]" disabled={busy || passing || !body.trim()} onClick={() => void send()}>{busy ? t("question.sending") : t("question.send")}</PrimaryButton>
     </div>
   </Shell>;
 }
