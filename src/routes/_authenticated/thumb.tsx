@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { ThumbBurst } from "@/components/app/ThumbBurst";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { motion, useReducedMotion } from "motion/react";
@@ -98,6 +99,8 @@ function ThumbScreen() {
 
     <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-8 px-6 text-center">
       <p className="type-display text-[24px] leading-[1.2]" aria-live="polite">{status}</p>
+      <div className="relative grid place-items-center">
+      <ThumbBurst fire={burst} />
       <motion.button type="button" aria-label={t("feat.thumb.hold")} disabled={solo}
         onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); setPress(true); }}
         onPointerUp={() => setPress(false)} onPointerCancel={() => setPress(false)} onContextMenu={(e) => e.preventDefault()}
@@ -109,6 +112,7 @@ function ThumbScreen() {
         <span aria-hidden="true" className="absolute inset-24 rounded-full border-2 border-current" />
         {partnerPressing && <span aria-hidden="true" className="absolute -inset-3 rounded-full border-2 border-[var(--blush)]" />}
       </motion.button>
+      </div>
       <p className="type-caption opacity-80">{t("feat.thumb.hint")}</p>
       <p className="type-caption opacity-80">{t("feat.thumb.count", { count: shown })}</p>
     </div>
