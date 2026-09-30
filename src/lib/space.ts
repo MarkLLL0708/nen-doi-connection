@@ -12,7 +12,7 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "feat.notif.thumb_nudge": "{{partner}} rủ bạn đập tay. Vào ngay nhé!", "feat.notif.thumb_synced": "Đập tay thành công với {{partner}}!",
     "sample.daysLabel": "ngày là bạn của nhau",
     "tabs.date": "Đi chơi",
-    "feat.explore.desc.family": "Tuổi thơ, gia đình và chuyện nhà mỗi đứa.", "feat.explore.desc.money": "Tiền bạc, ranh giới và kèo chia tiền.", "feat.explore.desc.distance": "Giữ thân khi mỗi đứa một nơi.",
+    "feat.explore.desc.family": "Tuổi thơ, gia đình và chuyện nhà mỗi đứa.", "feat.explore.desc.money": "Tiền bạc, ranh giới và kèo chia tiền.", "feat.explore.desc.distance": "Giữ thân khi mỗi đứa một nơi.", "feat.explore.desc.conflict": "Giận nhau thế nào, làm lành ra sao để còn chơi tiếp.",
     "question.packs.family": "TUỔI THƠ & GIA ĐÌNH", "question.packs.money": "TIỀN BẠC & RANH GIỚI",
     "question.packs.distance": "BẠN XA", "question.packs.conflict": "GIẬN NHAU & LÀM LÀNH",
 
@@ -48,7 +48,7 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "feat.thumb.hint": "Keep your thumb on the circle. When you both hold, you high-five.",
     "sample.daysLabel": "days as friends",
     "tabs.date": "Hang out",
-    "feat.explore.desc.family": "Childhood, family and home life.", "feat.explore.desc.money": "Money, boundaries and splitting the bill.", "feat.explore.desc.distance": "Staying close when you live apart.",
+    "feat.explore.desc.family": "Childhood, family and home life.", "feat.explore.desc.money": "Money, boundaries and splitting the bill.", "feat.explore.desc.distance": "Staying close when you live apart.", "feat.explore.desc.conflict": "Falling out and finding your way back to being friends.",
     "question.packs.family": "CHILDHOOD & FAMILY", "question.packs.money": "MONEY & BOUNDARIES",
     "question.packs.distance": "FAR APART", "question.packs.conflict": "FALLING OUT & MAKING UP",
 
@@ -69,7 +69,7 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "app.home.milestone.anniv": "Another year of friendship. Congratulations, you two.",
     "app.occasionNames.anniversary": "{{count}} YEARS AS FRIENDS",
     "app.home.occasionNotes.anniversary": "Go back to the first place you hung out.",
-    "app.home.occasionNotes.tet": "Which day of Tết are you two meeting up?",
+    "app.home.occasionNotes.tet": "Which day of the Lunar New Year are you two meeting up?",
     "feat.date.label": "HANG OUT", "feat.date.title": "Where to today?", "feat.date.body": "Swipe hangout ideas. Only places you both like show up.",
     "feat.timeline.filters.date": "Hangouts", "feat.timeline.kinds.date": "Hangout done",
     "feat.timeline.ms.days": "{{count}} days as friends", "feat.timeline.ms.years": "{{count}} years as friends",
