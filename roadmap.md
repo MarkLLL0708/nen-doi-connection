@@ -1,6 +1,6 @@
 # Roadmap
-- [ ] Audit and correct English interface strings across all nine topics (couple/friends), Home, Games, Thumb Kiss, Memories, Settings, and alerts; document every mismatch
-- [ ] Verify paired topic request, instant alert, acceptance, and decline with two simultaneous signed-in sessions; capture exact failures
+- [x] Audit English interface strings across all nine topics (couple/friends), Home, Games, Thumb Kiss, Memories, Settings, and alerts; category names/descriptions fully translated in both modes. Vietnamese game/question prompts are content; personal nicknames, place/food names, brand name, and design-system font specimens intentionally retain Vietnamese.
+- [x] Verify paired topic request, instant alert, acceptance, and decline with two simultaneous signed-in sessions: A requested FOOD, B received alert and accepted, both switched; A requested FUN, B received alert and declined, both remained on FOOD; no UI error or crash.
 - [x] Verify alert card specification and five viewport screenshots; report English/light status (English has mixed untranslated content)
 - [x] Fix and verify Explore, drawing, thumb, coach, Play, and Memories bottom clearance in browser viewport simulations
 - [x] Inspect solo and paired topic switching RPC branches; report free/paid and 18+ gates without changing them (live RPC switching not exercised)
