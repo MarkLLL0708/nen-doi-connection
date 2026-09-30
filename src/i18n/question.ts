@@ -35,4 +35,6 @@ export const questionEn: typeof questionVi = {
   consent: { label: "SENSITIVE TOPICS", title: "Do you two want to open up family and money topics? These can be sensitive.", yes: "I'm in", later: "Not now",
     mineYes: "You said yes. Just waiting for {{partner}}.", on: "Family and money topics are on.", partnerYes: "{{partner}} said yes." },
   empty: "No questions yet. Check back later.", solo: "Invite {{partner}} first, then answer together.",
+  skip: "Skip", na: "Not applicable yet", passing: "Swapping…",
+  passAnswered: "Someone already answered this one. Swap tomorrow.", passEmpty: "No other questions left. Come back tomorrow.",
 };
