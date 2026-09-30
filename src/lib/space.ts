@@ -9,6 +9,9 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "sample.daysLabel": "ngày là bạn của nhau",
     "tabs.date": "Đi chơi",
     "categories.distance": "Bạn xa",
+    "question.packs.family": "TUỔI THƠ & GIA ĐÌNH", "question.packs.money": "TIỀN BẠC & RANH GIỚI",
+    "question.packs.distance": "BẠN XA", "question.packs.conflict": "GIẬN NHAU & LÀM LÀNH",
+
     "app.meta.pairTitle": "Mời bạn thân · Nến Đôi", "app.meta.pairDesc": "Gửi mã cho bạn thân để bắt đầu.",
     "app.meta.homeDesc": "Số ngày làm bạn, chuỗi lửa và việc hôm nay của hai bạn.",
     "app.setup.choice.label": "MỜI BẠN THÂN",
