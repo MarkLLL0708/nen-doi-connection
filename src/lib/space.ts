@@ -6,6 +6,10 @@ export type SpaceKind = "couple" | "friends";
 /** Copy that differs for a friends space. Keys are i18n paths; values replace the couple wording while a friends space is active. */
 const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
   vi: {
+    "feat.thumb.metaTitle": "Đập tay · Nến Đôi", "feat.thumb.title": "Đập tay", "feat.thumb.open": "Đập tay", "feat.thumb.openSub": "Cùng chạm vào một lúc, dù đang ở đâu.",
+    "feat.thumb.synced": "Đập tay rồi! {{partner}} cũng đang ở đây.", "feat.thumb.solo": "Kết nối bạn thân xong mới đập tay được nhé.",
+    "feat.thumb.count": "Hai đứa đã đập tay {{count}} lần", "feat.thumb.hint": "Giữ ngón tay trên vòng tròn. Hai đứa cùng giữ là đập tay.", "feat.thumb.nudge": "Rủ {{partner}} đập tay",
+    "feat.notif.thumb_nudge": "{{partner}} rủ bạn đập tay. Vào ngay nhé!",
     "sample.daysLabel": "ngày là bạn của nhau",
     "tabs.date": "Đi chơi",
     "categories.distance": "Bạn xa",
@@ -38,6 +42,10 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "feat.play.verdicts.this_or_that": ["Trái gu từng câu. Thế mà vẫn chơi thân, lạ ghê.", "Khác gu mà vẫn chọn nhau làm bạn. Vậy là đủ rồi.", "Mỗi đứa một vị, ghép lại vừa khéo.", "Gu khá hợp. Kèo đi chơi dễ chốt rồi.", "Gần như chung một gu. Đi ăn khỏi cãi.", "Chung gu từng câu. Đáng ngờ lắm nha."],
   },
   en: {
+    "feat.thumb.metaTitle": "High five · Nến Đôi", "feat.thumb.title": "High five", "feat.thumb.open": "High five", "feat.thumb.synced": "High five! {{partner}} is here too.",
+    "feat.thumb.solo": "Connect with your friend first.", "feat.thumb.count": "You've high-fived {{count}} times", "feat.thumb.nudge": "Invite {{partner}} for a high five",
+    "feat.notif.thumb_nudge": "{{partner}} wants a high five. Join now!",
+    "feat.thumb.hint": "Keep your thumb on the circle. When you both hold, you high-five.",
     "sample.daysLabel": "days as friends",
     "tabs.date": "Hang out",
     "categories.distance": "Far apart",

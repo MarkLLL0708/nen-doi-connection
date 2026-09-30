@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
-import { Camera, Gamepad2, MessageCircle, MessagesSquare } from "lucide-react";
+import { Camera, Fingerprint, Gamepad2, MessageCircle, MessagesSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   ActionTile, AvatarDuo, Block, BottomTabBar, CountUp, FitText, FlameMark, GeometricBurst, Logo, OccasionBanner, PageTransition, PhotoTile,
@@ -138,6 +138,10 @@ function Home({ me }: { me: Me }) {
       <StaggerItem>{tile("photo", "block-butter", Camera)}</StaggerItem>
       <StaggerItem>{tile("game", "block-blush", Gamepad2)}</StaggerItem>
     </Stagger>
+    <div className="mt-3 px-4"><Pressable haptics onClick={() => void navigate({ to: "/thumb" })} className="block-ink flex w-full items-center justify-between gap-3 rounded-[24px] p-5 text-left">
+      <span><span className="block type-title text-[20px]">{t("feat.thumb.open")}</span><span className="mt-1 block type-caption opacity-80">{t("feat.thumb.openSub", { partner: partnerCall })}</span></span>
+      <Fingerprint strokeWidth={2} className="size-6 shrink-0" aria-hidden="true" />
+    </Pressable></div>
     <div className="mt-3 px-4"><Pressable haptics onClick={() => void navigate({ to: "/coach" })} className="flex w-full items-center justify-between gap-3 rounded-[24px] bg-surface p-5 text-left">
       <span><span className="block type-title text-[20px]">{t("feat.coach.open")}</span><span className="mt-1 block type-caption text-muted-foreground">{t("feat.coach.openSub")}</span></span>
       <MessagesSquare strokeWidth={2} className="size-7 shrink-0" aria-hidden="true" />
