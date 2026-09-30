@@ -166,7 +166,7 @@ function ThumbScreen() {
       <p className="type-caption opacity-80">{t("feat.thumb.count", { count: shown })}</p>
     </div>
 
-    {!solo && !partnerHere && <div className="relative z-10 px-6 pb-10">
+    {!solo && !partnerHere && <div className="relative z-10 px-6 pb-[calc(2.5rem+env(safe-area-inset-bottom))]">
       <PrimaryButton disabled={nudge === "sent"} onClick={() => void sendNudge()}>{nudge === "sent" ? t("feat.thumb.nudgeSent", { partner }) : t("feat.thumb.nudge", { partner })}</PrimaryButton>
       {nudge === "wait" && <p className="mt-2 text-center type-caption opacity-80">{t("feat.thumb.nudgeWait")}</p>}
       {nudge === "err" && <p className="mt-2 text-center type-caption opacity-80">{t("feat.thumb.nudgeErr")}</p>}
