@@ -48,7 +48,7 @@ export function ExploreTab({ me }: { me: Me }) {
     <header className="pt-12">
       <p className="type-caption text-muted-foreground">{t("feat.explore.label")}</p>
       <h1 className="type-display text-[32px] leading-[1.15]">{t("feat.explore.title")}</h1>
-      <p className="mt-2 type-body text-muted-foreground">{data.active ? t("feat.explore.activeNow", { category: name(data.active) }) : t("feat.explore.none")}</p>
+      <p className="mt-2 type-body text-muted-foreground">{data.active ? t("feat.explore.activeNow", { category: name(data.active) }) : t("feat.explore.firstPick")}</p>
     </header>
 
     {pend && !pend.mine && <div role="alert" className="grain block-butter rounded-[24px] p-5">

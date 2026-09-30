@@ -1,3 +1,4 @@
+import { useCategoryState } from "@/components/app/ExploreTab";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -63,6 +64,9 @@ function QuestionFlow({ me }: { me: Me }) {
   const partnerCall = me.profile?.partner_call_name || t("app.setup.call.ban");
   const partnerName = me.partner?.display_name || partnerCall;
   const solo = me.members.length < 2;
+  const cat = useCategoryState();
+  // No shared topic yet: send the pair to the picker first.
+  useEffect(() => { if (!solo && cat.data && !cat.data.active) void navigate({ to: "/app", search: { tab: "explore" }, replace: true }); }, [cat.data, solo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const today = useQuery({ queryKey: ["todayQuestion", me.couple!.id], queryFn: async () => {
     const { data, error } = await supabase.rpc("today_question" as never); if (error) throw error; return data as unknown as Today | null;

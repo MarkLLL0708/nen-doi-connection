@@ -64,6 +64,7 @@ function Home({ me }: { me: Me }) {
   const { t, i18n: i } = useTranslation();
   const navigate = useNavigate();
   const couple = me.couple!;
+  const cat = useCategoryState();
   const partnerCall = me.profile?.partner_call_name || t("app.setup.call.ban");
   const partnerName = me.partner?.display_name || partnerCall;
   const solo = me.members.length < 2;
