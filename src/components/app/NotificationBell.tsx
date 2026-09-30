@@ -37,9 +37,9 @@ export function NotificationBell({ me }: { me: Me }) {
       <p className="type-display text-[28px]">{t("feat.notif.title")}</p>
       {!data?.length ? <p className="mt-4 type-body text-muted-foreground">{t("feat.notif.empty")}</p>
         : <ul className="mt-4 space-y-2">{data.map((n) => { const d = n.data as { type?: string }; return <li key={n.id}>
-          <button onClick={() => { setOpen(false); if (n.kind === "thumb_nudge") { void navigate({ to: "/thumb" }); return; } try { localStorage.setItem(MEM_VIEW_KEY, "capsules"); } catch { /* ignore */ } void navigate({ to: "/app", search: { tab: "memories" } }); }}
+          <button onClick={() => { setOpen(false); if (n.kind === "thumb_nudge") { void navigate({ to: "/thumb" }); return; } if (n.kind.startsWith("category_")) { void navigate({ to: "/app", search: { tab: "explore" } }); return; } try { localStorage.setItem(MEM_VIEW_KEY, "capsules"); } catch { /* ignore */ } void navigate({ to: "/app", search: { tab: "memories" } }); }}
             className={`w-full rounded-[18px] p-4 text-left type-body ${n.read_at ? "bg-surface" : "block-butter"}`}>
-            {t(`feat.notif.${n.kind}`, { partner, type: t(`feat.capsule.types.${d.type ?? "miss"}`) })}
+            {t(`feat.notif.${n.kind}`, { partner, type: t(`feat.capsule.types.${d.type ?? "miss"}`), category: t(`question.packs.${(n.data as { pack?: string }).pack ?? "memory"}`) })}
             <span className="mt-1 block type-caption opacity-70">{new Date(n.created_at).toLocaleDateString("vi-VN")}</span>
           </button></li>; })}</ul>}
     </BottomSheet>

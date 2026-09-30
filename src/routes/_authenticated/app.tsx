@@ -16,12 +16,13 @@ import { setThemeEverywhere, storedTheme } from "@/components/app/GlobalControls
 import { PlayTab } from "@/components/app/PlayTab";
 import { DateTab } from "@/components/app/DateTab";
 import { MemoriesTab } from "@/components/app/MemoriesTab";
+import { ExploreTab } from "@/components/app/ExploreTab";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
 import { diffDays, milestoneToday, parseDate, todayIn, upcomingOccasions } from "@/lib/occasions";
 import i18n from "@/i18n";
 import { FAKE_HOUR_KEY, testFlag } from "@/lib/testmode";
 
-const tabKeys = ["home", "play", "date", "memories", "settings"] as const;
+const tabKeys = ["home", "explore", "play", "date", "memories", "settings"] as const;
 
 export const Route = createFileRoute("/_authenticated/app")({
   validateSearch: z.object({ tab: z.enum(tabKeys).optional() }),
@@ -51,7 +52,7 @@ function AppScreen() {
 
   return <Shell className="pb-28">
     <PageTransition key={tab} className="flex flex-1 flex-col">
-      {tab === "home" ? <Home me={me} /> : tab === "settings" ? <SettingsTab me={me} /> : tab === "play" ? <PlayTab me={me} /> : tab === "date" ? <DateTab me={me} /> : <MemoriesTab me={me} />}
+      {tab === "home" ? <Home me={me} /> : tab === "explore" ? <ExploreTab me={me} /> : tab === "settings" ? <SettingsTab me={me} /> : tab === "play" ? <PlayTab me={me} /> : tab === "date" ? <DateTab me={me} /> : <MemoriesTab me={me} />}
     </PageTransition>
     <div className="fixed inset-x-0 bottom-4 z-30 mx-auto max-w-[390px] px-4">
       <BottomTabBar id="app-tabs" active={tab} onSelect={(k: TabKey) => void navigate({ to: "/app", search: k === "home" ? {} : { tab: k } })} />

@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { LayoutGroup, motion, useReducedMotion, type HTMLMotionProps } from "motion/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, BookOpen, Camera, Check, Clock, Heart, House, Puzzle, Settings, type LucideIcon } from "lucide-react";
+import { ArrowRight, BookOpen, Camera, Check, Clock, Compass, Heart, House, Puzzle, Settings, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PRODUCT_WORDMARK } from "@/config/product";
 import { Odometer, Pressable, spring } from "./motion";
@@ -139,7 +139,7 @@ export function BottomSheet({ open, onOpenChange, mode, children }: { open: bool
 
 /* ---------- Tab bar ---------- */
 
-export const tabs = [{ key: "home", Icon: House }, { key: "play", Icon: Puzzle }, { key: "date", Icon: Heart }, { key: "memories", Icon: BookOpen }, { key: "settings", Icon: Settings }] as const;
+export const tabs = [{ key: "home", Icon: House }, { key: "explore", Icon: Compass }, { key: "play", Icon: Puzzle }, { key: "date", Icon: Heart }, { key: "memories", Icon: BookOpen }, { key: "settings", Icon: Settings }] as const;
 export type TabKey = typeof tabs[number]["key"];
 
 /** Slim floating bar; the active tab is a solid pill that slides and morphs between tabs. */
