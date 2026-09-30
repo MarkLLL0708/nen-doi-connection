@@ -1163,6 +1163,32 @@ export type Database = {
           },
         ]
       }
+      thumb_syncs: {
+        Row: {
+          couple_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "thumb_syncs_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -1238,6 +1264,7 @@ export type Database = {
       is_couple_member: { Args: { _user: string }; Returns: boolean }
       join_couple: { Args: { _code: string }; Returns: string }
       list_capsules: { Args: never; Returns: Json }
+      log_thumb_sync: { Args: never; Returns: number }
       my_couple_id: { Args: never; Returns: string }
       my_space_kind: { Args: never; Returns: string }
       open_capsule: { Args: { _id: string }; Returns: undefined }
@@ -1246,6 +1273,7 @@ export type Database = {
       round_completed: { Args: { _round: string }; Returns: boolean }
       round_status: { Args: { _round: string }; Returns: Json }
       seal_capsule: { Args: { _id: string }; Returns: undefined }
+      send_thumb_nudge: { Args: never; Returns: boolean }
       start_round: { Args: { _type: string }; Returns: string }
       swipe_date: { Args: { _idea: string; _liked: boolean }; Returns: boolean }
       sync_capsule_notices: { Args: never; Returns: number }

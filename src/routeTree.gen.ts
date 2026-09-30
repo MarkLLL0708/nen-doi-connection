@@ -26,6 +26,7 @@ import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authentic
 import { Route as AuthenticatedPairRouteImport } from './routes/_authenticated/pair'
 import { Route as AuthenticatedPhotoRouteImport } from './routes/_authenticated/photo'
 import { Route as AuthenticatedQuestionRouteImport } from './routes/_authenticated/question'
+import { Route as AuthenticatedThumbRouteImport } from './routes/_authenticated/thumb'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -111,6 +112,11 @@ const AuthenticatedQuestionRoute = AuthenticatedQuestionRouteImport.update({
   path: '/question',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedThumbRoute = AuthenticatedThumbRouteImport.update({
+  id: '/thumb',
+  path: '/thumb',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/pair': typeof AuthenticatedPairRoute
   '/photo': typeof AuthenticatedPhotoRoute
   '/question': typeof AuthenticatedQuestionRoute
+  '/thumb': typeof AuthenticatedThumbRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/pair': typeof AuthenticatedPairRoute
   '/photo': typeof AuthenticatedPhotoRoute
   '/question': typeof AuthenticatedQuestionRoute
+  '/thumb': typeof AuthenticatedThumbRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/_authenticated/pair': typeof AuthenticatedPairRoute
   '/_authenticated/photo': typeof AuthenticatedPhotoRoute
   '/_authenticated/question': typeof AuthenticatedQuestionRoute
+  '/_authenticated/thumb': typeof AuthenticatedThumbRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/pair'
     | '/photo'
     | '/question'
+    | '/thumb'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/pair'
     | '/photo'
     | '/question'
+    | '/thumb'
   id:
     | '__root__'
     | '/'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/_authenticated/pair'
     | '/_authenticated/photo'
     | '/_authenticated/question'
+    | '/_authenticated/thumb'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -361,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedQuestionRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/thumb': {
+      id: '/_authenticated/thumb'
+      path: '/thumb'
+      fullPath: '/thumb'
+      preLoaderRoute: typeof AuthenticatedThumbRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -371,6 +390,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPairRoute: typeof AuthenticatedPairRoute
   AuthenticatedPhotoRoute: typeof AuthenticatedPhotoRoute
   AuthenticatedQuestionRoute: typeof AuthenticatedQuestionRoute
+  AuthenticatedThumbRoute: typeof AuthenticatedThumbRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -380,6 +400,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPairRoute: AuthenticatedPairRoute,
   AuthenticatedPhotoRoute: AuthenticatedPhotoRoute,
   AuthenticatedQuestionRoute: AuthenticatedQuestionRoute,
+  AuthenticatedThumbRoute: AuthenticatedThumbRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
