@@ -16,7 +16,7 @@ import { setThemeEverywhere, storedTheme } from "@/components/app/GlobalControls
 import { PlayTab } from "@/components/app/PlayTab";
 import { DateTab } from "@/components/app/DateTab";
 import { MemoriesTab } from "@/components/app/MemoriesTab";
-import { ExploreTab } from "@/components/app/ExploreTab";
+import { CategoryCard, ExploreTab, useCategoryState } from "@/components/app/ExploreTab";
 import { updateProfile, useAvatarUrl, useMe, type Me, type TodayStatus } from "@/lib/couple";
 import { diffDays, milestoneToday, parseDate, todayIn, upcomingOccasions } from "@/lib/occasions";
 import i18n from "@/i18n";
@@ -103,7 +103,7 @@ function Home({ me }: { me: Me }) {
     { name: partnerName, done: !!theirs?.[k], avatar: me.partner?.avatar, url: partnerUrl },
   ];
   const tile = (k: "question" | "photo" | "game", tone: string, icon: typeof Camera) =>
-    <ActionTile onClick={k === "question" ? () => void navigate({ to: "/question" }) : k === "photo" ? () => void navigate({ to: "/photo" }) : () => void navigate({ to: "/app", search: { tab: "play" } })} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
+    <ActionTile onClick={k === "question" ? () => void navigate(cat.data && !cat.data.active ? { to: "/app", search: { tab: "explore" } } : { to: "/question" }) : k === "photo" ? () => void navigate({ to: "/photo" }) : () => void navigate({ to: "/app", search: { tab: "play" } })} tone={tone} icon={icon} title={t(`app.home.tiles.${k}`)} youDone={!!mine?.[k]} partnerDone={!!theirs?.[k]}
       youName={t("app.home.you")} partnerName={partnerName} avatars={<AvatarDuo size={32} people={people(k)} />} />;
 
   const occName = occasion ? t(`app.occasionNames.${occasion.kind}`, { year: occasion.year, count: occasion.count ?? 0, name: occasion.name ?? "" }) : "";
@@ -134,6 +134,7 @@ function Home({ me }: { me: Me }) {
     <div className="px-5 py-6"><StreakLine count={streak} atRisk={atRisk} note={atRisk ? t("app.home.risk") : t("app.home.steady")} /></div>
     {atRisk && <p role="status" className="mx-4 -mt-2 mb-5 rounded-[20px] bg-ink px-5 py-4 type-button text-cream">{t("app.home.risk")}</p>}
 
+    <div className="mb-3 px-4"><CategoryCard me={me} onOpen={() => void navigate({ to: "/app", search: { tab: "explore" } })} /></div>
     <Stagger className="space-y-3 px-4">
       <StaggerItem>{tile("question", "block-plum", MessageCircle)}</StaggerItem>
       <StaggerItem>{tile("photo", "block-butter", Camera)}</StaggerItem>
