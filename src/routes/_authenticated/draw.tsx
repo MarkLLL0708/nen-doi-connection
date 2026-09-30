@@ -34,7 +34,7 @@ function DrawScreen() {
 
   if (isLoading || !me?.couple) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
 
-  return <Shell className="pb-10">
+  return <Shell className="pb-[calc(2.5rem+env(safe-area-inset-bottom))]">
     <div className="flex flex-1 flex-col px-4 pt-4">
       <button onClick={() => void navigate({ to: "/app" })} className="flex h-12 w-fit items-center gap-2 type-button">
         <ArrowLeft strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("feat.draw.back")}
@@ -164,10 +164,12 @@ function Duel({ me }: { me: Me }) {
   const theirVote = (votes.data ?? []).find((v) => v.user_id !== me.userId)?.liked_user_id;
 
   return <div>
-    <Block tone="block-plum">
-      <p className="type-label">{t("feat.draw.promptLabel")}</p>
-      <p className="mt-2 type-display text-[32px] leading-[1.15]">{round.data.prompt}</p>
-      {!both && <p className="mt-3 type-title nums" role="timer">{left > 0 ? t("feat.draw.seconds", { s: left }) : t("feat.draw.timeUp")}</p>}
+    <Block tone="block-plum" className="p-4">
+      <div className="flex min-w-0 items-start justify-between gap-2">
+        <div className="min-w-0"><p className="type-label">{t("feat.draw.promptLabel")}</p>
+          <p className="mt-1 type-title text-[20px] leading-[1.2]">{round.data.prompt}</p></div>
+        {!both && <p className="shrink-0 type-button nums" role="timer">{left > 0 ? t("feat.draw.seconds", { s: left }) : t("feat.draw.timeUp")}</p>}
+      </div>
     </Block>
 
     {!mine ? <div className="mt-5">

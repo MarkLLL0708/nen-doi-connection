@@ -104,22 +104,22 @@ export function DrawCanvas({ background, submitLabel, busy, submitSignal, onSubm
       onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} onPointerLeave={up}
       className="aspect-square w-full touch-none rounded-[24px] bg-cream" style={{ touchAction: "none" }} />
 
-    <div className="mt-4 flex flex-wrap items-center gap-2">
-      {TOKENS.map((tk, i) => <button key={tk} type="button" aria-label={t(`feat.draw.colours.${tk.slice(2)}`)} aria-pressed={!erase && colour === i}
+    <div className="mt-3 flex flex-wrap items-center gap-2">
+      {TOKENS.map((tk, i) => <Pressable key={tk} aria-label={t(`feat.draw.colours.${tk.slice(2)}`)} aria-pressed={!erase && colour === i}
         onClick={() => { setColour(i); setErase(false); }}
-        className={`size-11 rounded-full ${tk === "--ink" ? "block-ink" : tk === "--ember" ? "block-ember" : tk === "--butter" ? "block-butter" : tk === "--plum" ? "block-plum" : "block-blush"} ${!erase && colour === i ? "ring-4 ring-foreground" : ""}`} />)}
+         className={`size-11 rounded-full ${tk === "--ink" ? "block-ink" : tk === "--ember" ? "block-ember" : tk === "--butter" ? "block-butter" : tk === "--plum" ? "block-plum" : "block-blush"} ${!erase && colour === i ? "ring-4 ring-foreground" : ""}`} />)}
       <Pressable haptics aria-pressed={erase} aria-label={t("feat.draw.eraser")} onClick={() => setErase(true)}
         className={`grid size-11 place-items-center rounded-full ${erase ? "block-ember" : "bg-surface"}`}><Eraser strokeWidth={2} className="size-5" aria-hidden="true" /></Pressable>
     </div>
 
-    <div className="mt-3 flex flex-wrap items-center gap-2">
-      {WIDTHS.map((w, i) => <button key={w} type="button" aria-pressed={width === i} aria-label={t(`feat.draw.sizes.${i}`)} onClick={() => setWidth(i)}
+    <div className="mt-2 flex flex-wrap items-center gap-2">
+      {WIDTHS.map((w, i) => <Pressable key={w} aria-pressed={width === i} aria-label={t(`feat.draw.sizes.${i}`)} onClick={() => setWidth(i)}
         className={`grid h-11 min-w-11 place-items-center rounded-full px-3 ${width === i ? "block-ink" : "bg-surface"}`}>
-        <span className="block rounded-full bg-current" style={{ width: w / 2 + 4, height: w / 2 + 4 }} /></button>)}
+        <span className="block rounded-full bg-current" style={{ width: w / 2 + 4, height: w / 2 + 4 }} /></Pressable>)}
       <Pressable haptics disabled={!count} aria-label={t("feat.draw.undo")} onClick={undo} className="grid size-11 place-items-center rounded-full bg-surface disabled:opacity-40"><Undo2 strokeWidth={2} className="size-5" aria-hidden="true" /></Pressable>
       <Pressable haptics disabled={!count} aria-label={t("feat.draw.clear")} onClick={clear} className="grid size-11 place-items-center rounded-full bg-surface disabled:opacity-40"><Trash2 strokeWidth={2} className="size-5" aria-hidden="true" /></Pressable>
     </div>
 
-    <PrimaryButton className="mt-4" disabled={busy || disabled} onClick={submit}>{submitLabel}</PrimaryButton>
+    <PrimaryButton className="mt-3" disabled={busy || disabled} onClick={submit}>{submitLabel}</PrimaryButton>
   </div>;
 }

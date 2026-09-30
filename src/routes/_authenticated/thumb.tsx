@@ -132,7 +132,7 @@ function ThumbScreen() {
   const status = solo ? t("feat.thumb.solo") : both ? t("feat.thumb.synced", { partner })
     : partnerPressing ? t("feat.thumb.partnerHolding", { partner }) : partnerHere ? t("feat.thumb.together", { partner }) : t("feat.thumb.waiting", { partner });
 
-  return <div className="block-ink relative flex min-h-dvh flex-col overflow-hidden">
+  return <div className="block-ink relative flex min-h-dvh flex-col pb-[env(safe-area-inset-bottom)]">
     <ColourFlood at={null} active={synced} colourClass="block-ember" />
     <GeometricBurst fire={burst} />
     <header className="relative z-10 flex items-center gap-3 px-5 py-4">
@@ -168,7 +168,7 @@ function ThumbScreen() {
       <p className="type-caption opacity-80">{t("feat.thumb.count", { count: shown })}</p>
     </div>
 
-    {!solo && !partnerHere && <div className="relative z-10 px-6 pb-[calc(2.5rem+env(safe-area-inset-bottom))]">
+    {!solo && !partnerHere && <div className="relative z-10 px-6 pb-10">
       <PrimaryButton disabled={nudge === "sent"} onClick={() => void sendNudge()}>{nudge === "sent" ? t("feat.thumb.nudgeSent", { partner }) : t("feat.thumb.nudge", { partner })}</PrimaryButton>
       {nudge === "wait" && <p className="mt-2 text-center type-caption opacity-80">{t("feat.thumb.nudgeWait")}</p>}
       {nudge === "err" && <p className="mt-2 text-center type-caption opacity-80">{t("feat.thumb.nudgeErr")}</p>}

@@ -54,7 +54,7 @@ function Coach() {
   const toggleHistory = async () => { if (!me) return; await updateProfile(me.userId, { save_coach_history: !me.profile?.save_coach_history }); void qc.invalidateQueries({ queryKey: ["me"] }); };
   const left = remaining.data?.remaining;
 
-  if (res?.kind === "safety") return <Shell><div className="flex flex-1 flex-col px-5 pb-10 pt-3">
+  if (res?.kind === "safety") return <Shell><div className="flex flex-1 flex-col px-5 pb-[calc(2.5rem+env(safe-area-inset-bottom))] pt-3">
     <button onClick={() => setRes(null)} className="flex h-12 w-fit items-center gap-2 type-button"><ArrowLeft strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("feat.coach.safetyBack")}</button>
     <div role="alert" data-testid="safety-card" className="grain block-plum mt-6 rounded-[28px] p-6">
       <ShieldAlert strokeWidth={2} className="relative z-[2] size-8" aria-hidden="true" />
@@ -65,7 +65,7 @@ function Coach() {
     <p className="mt-6 px-1 type-caption text-muted-foreground">{t("feat.coach.disclaimer")}</p>
   </div></Shell>;
 
-  return <Shell><div className="flex flex-1 flex-col px-4 pb-12 pt-3">
+  return <Shell><div className="flex flex-1 flex-col px-4 pb-[calc(3rem+env(safe-area-inset-bottom))] pt-3">
     <button onClick={() => void navigate({ to: "/app" })} className="flex h-12 w-fit items-center gap-2 type-button"><ArrowLeft strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("feat.coach.back")}</button>
     <p className="mt-2 px-1 type-label text-muted-foreground">{t("feat.coach.label")}</p>
     <h1 className="mt-2 px-1 type-display text-[36px] leading-[1.15]"><SlideUp>{t("feat.coach.title")}</SlideUp></h1>
