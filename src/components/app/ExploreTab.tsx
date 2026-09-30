@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { supabase } from "@/integrations/supabase/client";
 import { Pressable, PrimaryButton, Stagger, StaggerItem, spring } from "@/components/visual";
 import type { Me } from "@/lib/couple";
-import { questionPackTone } from "@/routes/_authenticated/question";
+import { questionPackTone } from "@/lib/packs";
 
 const ORDER = ["memory", "food", "fun", "tet", "deep", "distance", "conflict", "family", "money"];
 type Pending = { id: string; pack: string; mine: boolean; created_at: string };

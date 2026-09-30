@@ -1,3 +1,5 @@
+import { questionPackTone } from "@/lib/packs";
+export { questionPackTone };
 import { useCategoryState } from "@/components/app/ExploreTab";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
@@ -24,11 +26,6 @@ export const Route = createFileRoute("/_authenticated/question")({
   component: QuestionScreen,
 });
 
-/** Pack → flood colour (Colour Block). */
-export const questionPackTone: Record<string, string> = {
-  food: "block-ember", memory: "block-blush", tet: "block-tet", distance: "block-plum", deep: "block-deep", fun: "block-butter",
-  conflict: "block-plum", family: "block-butter", money: "block-deep",
-};
 
 type Today = { date: string; id: string; pack: string; text_vi: string; text_vi_north: string | null; text_vi_south: string | null;
   sensitive_on: boolean; consent_mine: boolean | null; consent_partner: boolean | null; partner_answered: boolean };
