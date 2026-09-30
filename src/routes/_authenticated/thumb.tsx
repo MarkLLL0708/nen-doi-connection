@@ -140,6 +140,10 @@ function ThumbScreen() {
         <ArrowLeft strokeWidth={2} className="size-5" aria-hidden="true" />
       </button>
       <p className="type-title text-[20px]">{t("feat.thumb.title")}</p>
+      <span className="ml-auto flex items-center gap-2 rounded-full bg-current/10 px-3 py-1.5 type-caption">
+        <span aria-hidden="true" className={`size-2.5 rounded-full ${conn === "on" ? "bg-[var(--butter)]" : conn === "retry" ? "bg-[var(--blush)]" : "bg-[var(--ember)]"}`} />
+        {t(`feat.thumb.conn.${conn}`)}
+      </span>
     </header>
 
     <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-8 px-6 text-center">
