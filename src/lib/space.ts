@@ -41,6 +41,9 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "sample.daysLabel": "days as friends",
     "tabs.date": "Hang out",
     "categories.distance": "Far apart",
+    "question.packs.family": "CHILDHOOD & FAMILY", "question.packs.money": "MONEY & BOUNDARIES",
+    "question.packs.distance": "FAR APART", "question.packs.conflict": "FALLING OUT & MAKING UP",
+
     "app.meta.pairTitle": "Invite your best friend · Nến Đôi", "app.meta.pairDesc": "Send the code to your best friend to start.",
     "app.meta.homeDesc": "Days as friends, your streak and today's things.",
     "app.setup.choice.label": "INVITE YOUR BEST FRIEND",
