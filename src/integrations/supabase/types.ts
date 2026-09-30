@@ -1168,16 +1168,19 @@ export type Database = {
           couple_id: string
           created_at: string
           id: string
+          sync_date: string
         }
         Insert: {
           couple_id: string
           created_at?: string
           id?: string
+          sync_date: string
         }
         Update: {
           couple_id?: string
           created_at?: string
           id?: string
+          sync_date?: string
         }
         Relationships: [
           {
