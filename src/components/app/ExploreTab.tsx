@@ -26,6 +26,8 @@ export function useCategoryState() {
 export function ExploreTab({ me }: { me: Me }) {
   const { t } = useTranslation();
   const qc = useQueryClient();
+  const navigate = useNavigate();
+
   const { data } = useCategoryState();
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
