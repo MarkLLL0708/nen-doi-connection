@@ -1,4 +1,6 @@
 # Roadmap
+- [ ] Audit and correct English interface strings across all nine topics (couple/friends), Home, Games, Thumb Kiss, Memories, Settings, and alerts; document every mismatch
+- [ ] Verify paired topic request, instant alert, acceptance, and decline with two simultaneous signed-in sessions; capture exact failures
 - [x] Verify alert card specification and five viewport screenshots; report English/light status (English has mixed untranslated content)
 - [x] Fix and verify Explore, drawing, thumb, coach, Play, and Memories bottom clearance in browser viewport simulations
 - [x] Inspect solo and paired topic switching RPC branches; report free/paid and 18+ gates without changing them (live RPC switching not exercised)
