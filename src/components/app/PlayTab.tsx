@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -62,6 +63,7 @@ export function PlayTab({ me }: { me: Me }) {
   const settings = useGameSettings();
   const rounds = useRoundsToday(me);
   const { partner } = usePartner(me);
+  const navigate = useNavigate();
   if (game) return <GameScreen me={me} type={game} onBack={() => setGame(null)} />;
   const limit = settings.data?.limit ?? 2;
   const used = rounds.data?.length ?? 0;
@@ -83,6 +85,15 @@ export function PlayTab({ me }: { me: Me }) {
           </Pressable>
         </StaggerItem>;
       })}
+      <StaggerItem>
+        <Pressable haptics onClick={() => void navigate({ to: "/draw", search: { mode: "duel" } })} className="grain block-plum flex min-h-[150px] w-full flex-col justify-between rounded-[28px] p-6 text-left">
+          <span className="relative z-[2] type-label">{t("feat.draw.duelBody", { partner, seconds: 60 })}</span>
+          <span className="relative z-[2] mt-5 flex items-end justify-between gap-3">
+            <span className="type-display text-[30px] leading-[1.15]">{t("feat.draw.duelTitle")}</span>
+            <span className="shrink-0 rounded-full bg-ink px-4 py-2 type-button text-cream">{t("feat.play.start")}</span>
+          </span>
+        </Pressable>
+      </StaggerItem>
     </Stagger>
   </div>;
 }

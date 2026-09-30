@@ -533,6 +533,135 @@ export type Database = {
           },
         ]
       }
+      draw_rounds: {
+        Row: {
+          couple_id: string
+          created_at: string
+          created_by: string
+          ends_at: string
+          id: string
+          prompt: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          created_by: string
+          ends_at: string
+          id?: string
+          prompt: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          ends_at?: string
+          id?: string
+          prompt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "draw_rounds_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      draw_votes: {
+        Row: {
+          couple_id: string
+          created_at: string
+          id: string
+          liked_user_id: string
+          round_id: string
+          user_id: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          id?: string
+          liked_user_id: string
+          round_id: string
+          user_id: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          id?: string
+          liked_user_id?: string
+          round_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "draw_votes_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "draw_votes_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "draw_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drawings: {
+        Row: {
+          couple_id: string
+          created_at: string
+          id: string
+          image: string
+          reply_to: string | null
+          round_id: string | null
+          user_id: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          id?: string
+          image: string
+          reply_to?: string | null
+          round_id?: string | null
+          user_id: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          id?: string
+          image?: string
+          reply_to?: string | null
+          round_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drawings_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawings_reply_to_fkey"
+            columns: ["reply_to"]
+            isOneToOne: false
+            referencedRelation: "drawings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawings_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "draw_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       game_content: {
         Row: {
           audience: string[]
@@ -1293,6 +1422,7 @@ export type Database = {
           couple_id: string
         }[]
       }
+      duel_complete: { Args: { _round: string }; Returns: boolean }
       gen_invite_code: { Args: never; Returns: string }
       has_answered: {
         Args: { _date: string; _question: string }
