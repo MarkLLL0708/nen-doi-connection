@@ -22,6 +22,7 @@ import { Route as StyleguideRouteImport } from './routes/styleguide'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedCoachRouteImport } from './routes/_authenticated/coach'
+import { Route as AuthenticatedDrawRouteImport } from './routes/_authenticated/draw'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPairRouteImport } from './routes/_authenticated/pair'
 import { Route as AuthenticatedPhotoRouteImport } from './routes/_authenticated/photo'
@@ -92,6 +93,11 @@ const AuthenticatedCoachRoute = AuthenticatedCoachRouteImport.update({
   path: '/coach',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDrawRoute = AuthenticatedDrawRouteImport.update({
+  id: '/draw',
+  path: '/draw',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/app': typeof AuthenticatedAppRoute
   '/coach': typeof AuthenticatedCoachRoute
+  '/draw': typeof AuthenticatedDrawRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pair': typeof AuthenticatedPairRoute
   '/photo': typeof AuthenticatedPhotoRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/app': typeof AuthenticatedAppRoute
   '/coach': typeof AuthenticatedCoachRoute
+  '/draw': typeof AuthenticatedDrawRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pair': typeof AuthenticatedPairRoute
   '/photo': typeof AuthenticatedPhotoRoute
@@ -171,6 +179,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/_authenticated/app': typeof AuthenticatedAppRoute
   '/_authenticated/coach': typeof AuthenticatedCoachRoute
+  '/_authenticated/draw': typeof AuthenticatedDrawRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pair': typeof AuthenticatedPairRoute
   '/_authenticated/photo': typeof AuthenticatedPhotoRoute
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/app'
     | '/coach'
+    | '/draw'
     | '/onboarding'
     | '/pair'
     | '/photo'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/app'
     | '/coach'
+    | '/draw'
     | '/onboarding'
     | '/pair'
     | '/photo'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/_authenticated/app'
     | '/_authenticated/coach'
+    | '/_authenticated/draw'
     | '/_authenticated/onboarding'
     | '/_authenticated/pair'
     | '/_authenticated/photo'
@@ -345,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCoachRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/draw': {
+      id: '/_authenticated/draw'
+      path: '/draw'
+      fullPath: '/draw'
+      preLoaderRoute: typeof AuthenticatedDrawRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/onboarding': {
       id: '/_authenticated/onboarding'
       path: '/onboarding'
@@ -386,6 +405,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppRoute: typeof AuthenticatedAppRoute
   AuthenticatedCoachRoute: typeof AuthenticatedCoachRoute
+  AuthenticatedDrawRoute: typeof AuthenticatedDrawRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPairRoute: typeof AuthenticatedPairRoute
   AuthenticatedPhotoRoute: typeof AuthenticatedPhotoRoute
@@ -396,6 +416,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppRoute: AuthenticatedAppRoute,
   AuthenticatedCoachRoute: AuthenticatedCoachRoute,
+  AuthenticatedDrawRoute: AuthenticatedDrawRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPairRoute: AuthenticatedPairRoute,
   AuthenticatedPhotoRoute: AuthenticatedPhotoRoute,
