@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { supabase } from "@/integrations/supabase/client";
 import { Pressable, PrimaryButton, Stagger, StaggerItem, spring } from "@/components/visual";
 import type { Me } from "@/lib/couple";
 import { questionPackTone } from "@/lib/packs";
+
 
 const ORDER = ["memory", "food", "fun", "tet", "deep", "distance", "conflict", "family", "money"];
 type Pending = { id: string; pack: string; mine: boolean; created_at: string };
@@ -45,11 +47,16 @@ export function ExploreTab({ me }: { me: Me }) {
   const packs = [...data.packs].sort((a, b) => ORDER.indexOf(a.pack) - ORDER.indexOf(b.pack));
 
   return <div className="flex flex-1 flex-col gap-5 pt-2">
-    <header className="pt-12">
+    <header className="pt-5">
+      <Pressable aria-label={t("app.back")} onClick={() => void navigate({ to: "/app" })}
+        className="mb-4 flex h-11 w-fit items-center gap-2 rounded-full bg-surface px-4 type-button text-foreground">
+        <ArrowLeft strokeWidth={2.5} className="size-5" aria-hidden="true" />{t("app.back")}
+      </Pressable>
       <p className="type-caption text-muted-foreground">{t("feat.explore.label")}</p>
       <h1 className="type-display text-[32px] leading-[1.15]">{t("feat.explore.title")}</h1>
       <p className="mt-2 type-body text-muted-foreground">{data.active ? t("feat.explore.activeNow", { category: name(data.active) }) : t("feat.explore.firstPick")}</p>
     </header>
+
 
     {pend && !pend.mine && <div role="alert" className="grain block-butter rounded-[24px] p-5">
       <p className="type-body font-bold">{t("feat.explore.incoming", { partner, category: name(pend.pack) })}</p>
