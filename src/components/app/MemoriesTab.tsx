@@ -17,7 +17,7 @@ const tones = ["block-plum", "block-butter", "block-blush", "block-ember"];
 const field = "h-14 w-full rounded-[18px] bg-surface px-4 type-body focus:outline-none focus-visible:ring-4 focus-visible:ring-ring/50";
 
 export function MemoriesTab({ me }: { me: Me }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const qc = useQueryClient();
   const [adding, setAdding] = useState(false);
   const [view, setView] = useState<"timeline" | "capsules" | "diary" | "list">("timeline");
@@ -46,7 +46,7 @@ export function MemoriesTab({ me }: { me: Me }) {
         <div className="relative z-[2]">
           {m.storage_path && <MemoryPhoto path={m.storage_path} />}
           <div className="flex items-start justify-between gap-3">
-            <p className="type-label">{m.happened_on ? new Date(m.happened_on).toLocaleDateString("vi-VN") : ""}</p>
+            <p className="type-label">{m.happened_on ? new Date(m.happened_on).toLocaleDateString(i18n.language === "en" ? "en-US" : "vi-VN") : ""}</p>
             <button aria-label={t("feat.memories.delete")} onClick={() => void remove(m.id)} className="-m-2 grid size-10 place-items-center"><Trash2 strokeWidth={2} className="size-4" /></button>
           </div>
           <p className="mt-2 type-title">{m.title}</p>

@@ -11,7 +11,7 @@ export const MEM_VIEW_KEY = "nendoi.memView";
 
 /** In-app notification center. Checks for newly unlocked capsules whenever it loads. */
 export function NotificationBell({ me }: { me: Me }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const qc = useQueryClient();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ export function NotificationBell({ me }: { me: Me }) {
           <button onClick={() => { setOpen(false); if (n.kind === "thumb_nudge" || n.kind === "thumb_synced") { void navigate({ to: "/thumb" }); return; } if (n.kind === "drawing_received") { void navigate({ to: "/draw" }); return; } if (n.kind === "duel_started" || n.kind === "duel_drawing") { void navigate({ to: "/draw", search: { mode: "duel" } }); return; } if (n.kind.startsWith("category_")) { void navigate({ to: "/app", search: { tab: "explore" } }); return; } if (n.kind === "question_answered") { void navigate({ to: "/question" }); return; } if (n.kind === "photo_received") { void navigate({ to: "/photo" }); return; } if (n.kind === "game_turn") { void navigate({ to: "/app", search: { tab: "play" } }); return; } try { localStorage.setItem(MEM_VIEW_KEY, "capsules"); } catch { /* ignore */ } void navigate({ to: "/app", search: { tab: "memories" } }); }}
             className={`w-full rounded-[18px] p-4 text-left type-body ${n.read_at ? "bg-surface" : "block-butter"}`}>
             {t(`feat.notif.${n.kind}`, { partner, type: t(`feat.capsule.types.${d.type ?? "miss"}`), category: t(`question.packs.${(n.data as { pack?: string }).pack ?? "memory"}`) })}
-            <span className="mt-1 block type-caption opacity-70">{new Date(n.created_at).toLocaleDateString("vi-VN")}</span>
+            <span className="mt-1 block type-caption opacity-70">{new Date(n.created_at).toLocaleDateString(i18n.language === "en" ? "en-US" : "vi-VN")}</span>
           </button></li>; })}</ul>}
     </BottomSheet>
   </>;
