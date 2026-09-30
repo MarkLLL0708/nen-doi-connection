@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { supabase } from "@/integrations/supabase/client";
-import { Pressable, PrimaryButton, Stagger, StaggerItem } from "@/components/visual";
+import { Pressable, PrimaryButton, Stagger, StaggerItem, spring } from "@/components/visual";
 import type { Me } from "@/lib/couple";
-import { questionPackTone } from "@/routes/_authenticated/question";
+import { questionPackTone } from "@/lib/packs";
 
 const ORDER = ["memory", "food", "fun", "tet", "deep", "distance", "conflict", "family", "money"];
 type Pending = { id: string; pack: string; mine: boolean; created_at: string };
@@ -47,7 +48,7 @@ export function ExploreTab({ me }: { me: Me }) {
     <header className="pt-12">
       <p className="type-caption text-muted-foreground">{t("feat.explore.label")}</p>
       <h1 className="type-display text-[32px] leading-[1.15]">{t("feat.explore.title")}</h1>
-      <p className="mt-2 type-body text-muted-foreground">{data.active ? t("feat.explore.activeNow", { category: name(data.active) }) : t("feat.explore.none")}</p>
+      <p className="mt-2 type-body text-muted-foreground">{data.active ? t("feat.explore.activeNow", { category: name(data.active) }) : t("feat.explore.firstPick")}</p>
     </header>
 
     {pend && !pend.mine && <div role="alert" className="grain block-butter rounded-[24px] p-5">
@@ -88,4 +89,27 @@ export function ExploreTab({ me }: { me: Me }) {
       })}
     </Stagger>
   </div>;
+}
+
+/** Home card: shows the pair's shared topic and opens the picker directly. Flips in whenever the topic changes. */
+export function CategoryCard({ me, onOpen }: { me: Me; onOpen: () => void }) {
+  const { t } = useTranslation();
+  const { data } = useCategoryState();
+  const reduce = useReducedMotion();
+  if (!data) return null;
+  const partner = me.profile?.partner_call_name || me.partner?.display_name || t("app.setup.call.ban");
+  const active = data.active, pend = data.pending;
+  const tone = active ? (questionPackTone[active] ?? "block-ember") : "block-ink";
+  return <motion.div key={active ?? "none"} initial={reduce ? false : { rotateX: -90, opacity: 0 }} animate={{ rotateX: 0, opacity: 1 }} transition={spring} style={{ transformPerspective: 800 }}>
+    <Pressable haptics onClick={onOpen} aria-label={active ? t("feat.explore.cardAria", { category: t(`question.packs.${active}`) }) : t("feat.explore.pick")}
+      className={`grain w-full rounded-[24px] p-5 text-left ${tone}`}>
+      <p className="type-caption font-bold opacity-80">{active ? t("feat.explore.playingNow") : t("feat.explore.noneShort")}</p>
+      <p className="mt-1 type-display text-[24px] leading-[1.15]">{active ? t(`question.packs.${active}`) : t("feat.explore.pickTitle")}</p>
+      {pend && <p className="mt-2 type-caption font-bold">{pend.mine ? t("feat.explore.waiting", { partner }) : t("feat.explore.incoming", { partner, category: t(`question.packs.${pend.pack}`) })}</p>}
+      <motion.span animate={reduce || active ? { scale: 1 } : { scale: [1, 1.06, 1] }} transition={reduce || active ? spring : { duration: 1.4, repeat: Infinity }}
+        className="mt-4 inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full bg-surface px-5 type-button text-foreground">
+        {active ? t("feat.explore.change") : t("feat.explore.pick")}<ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
+      </motion.span>
+    </Pressable>
+  </motion.div>;
 }

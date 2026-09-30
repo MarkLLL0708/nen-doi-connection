@@ -1,3 +1,5 @@
+import { questionPackTone } from "@/lib/packs";
+import { useCategoryState } from "@/components/app/ExploreTab";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -23,11 +25,6 @@ export const Route = createFileRoute("/_authenticated/question")({
   component: QuestionScreen,
 });
 
-/** Pack → flood colour (Colour Block). */
-export const questionPackTone: Record<string, string> = {
-  food: "block-ember", memory: "block-blush", tet: "block-tet", distance: "block-plum", deep: "block-deep", fun: "block-butter",
-  conflict: "block-plum", family: "block-butter", money: "block-deep",
-};
 
 type Today = { date: string; id: string; pack: string; text_vi: string; text_vi_north: string | null; text_vi_south: string | null;
   sensitive_on: boolean; consent_mine: boolean | null; consent_partner: boolean | null; partner_answered: boolean };
@@ -63,6 +60,9 @@ function QuestionFlow({ me }: { me: Me }) {
   const partnerCall = me.profile?.partner_call_name || t("app.setup.call.ban");
   const partnerName = me.partner?.display_name || partnerCall;
   const solo = me.members.length < 2;
+  const cat = useCategoryState();
+  // No shared topic yet: send the pair to the picker first.
+  useEffect(() => { if (!solo && cat.data && !cat.data.active) void navigate({ to: "/app", search: { tab: "explore" }, replace: true }); }, [cat.data, solo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const today = useQuery({ queryKey: ["todayQuestion", me.couple!.id], queryFn: async () => {
     const { data, error } = await supabase.rpc("today_question" as never); if (error) throw error; return data as unknown as Today | null;
