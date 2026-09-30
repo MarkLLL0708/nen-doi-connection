@@ -1,5 +1,4 @@
 import { questionPackTone } from "@/lib/packs";
-export { questionPackTone };
 import { useCategoryState } from "@/components/app/ExploreTab";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
