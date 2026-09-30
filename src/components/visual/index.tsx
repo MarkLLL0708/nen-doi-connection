@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { LayoutGroup, motion, useReducedMotion, type HTMLMotionProps } from "motion/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, BookOpen, Camera, Check, Clock, Heart, House, Puzzle, Settings, type LucideIcon } from "lucide-react";
+import { ArrowRight, BookOpen, Camera, Check, Clock, Compass, Heart, House, Puzzle, Settings, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PRODUCT_WORDMARK } from "@/config/product";
 import { Odometer, Pressable, spring } from "./motion";
