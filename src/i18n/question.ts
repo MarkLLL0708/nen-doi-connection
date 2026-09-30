@@ -21,7 +21,7 @@ export const questionVi = {
 
 export const questionEn: typeof questionVi = {
   metaTitle: "Today's question · Nến Đôi", metaDesc: "One question a day, two answers, opened together.",
-  packs: { memory: "MEMORIES", family: "FAMILY & MEETING THE PARENTS", tet: "TẾT & HOLIDAYS", food: "FOOD", fun: "JUST FOR FUN", money: "MONEY & FUTURE", distance: "LONG DISTANCE", conflict: "FIGHTING & MAKING UP", deep: "DEEP" },
+  packs: { memory: "MEMORIES", family: "FAMILY & MEETING THE PARENTS", tet: "LUNAR NEW YEAR & HOLIDAYS", food: "FOOD", fun: "JUST FOR FUN", money: "MONEY & FUTURE", distance: "LONG DISTANCE", conflict: "FIGHTING & MAKING UP", deep: "DEEP" },
   today: "TODAY'S QUESTION",
   placeholder: "Be honest. {{partner}} can only read it after answering too.",
   send: "Send", sending: "Sending…", back: "Back home",
