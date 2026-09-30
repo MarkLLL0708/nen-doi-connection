@@ -308,6 +308,7 @@ export type Database = {
           created_at: string
           created_by: string
           id: string
+          kind: string
           partner_city: string | null
           relationship_type: string | null
           start_date: string | null
@@ -318,6 +319,7 @@ export type Database = {
           created_at?: string
           created_by: string
           id?: string
+          kind?: string
           partner_city?: string | null
           relationship_type?: string | null
           start_date?: string | null
@@ -328,6 +330,7 @@ export type Database = {
           created_at?: string
           created_by?: string
           id?: string
+          kind?: string
           partner_city?: string | null
           relationship_type?: string | null
           start_date?: string | null
@@ -338,6 +341,7 @@ export type Database = {
       }
       daily_questions: {
         Row: {
+          audience: string[]
           created_at: string
           id: string
           pack: string
@@ -350,6 +354,7 @@ export type Database = {
           text_vi_sweet: string | null
         }
         Insert: {
+          audience?: string[]
           created_at?: string
           id?: string
           pack: string
@@ -362,6 +367,7 @@ export type Database = {
           text_vi_sweet?: string | null
         }
         Update: {
+          audience?: string[]
           created_at?: string
           id?: string
           pack?: string
@@ -377,6 +383,7 @@ export type Database = {
       }
       date_ideas: {
         Row: {
+          audience: string[]
           budget: string | null
           city: string | null
           created_at: string
@@ -385,6 +392,7 @@ export type Database = {
           title_vi: string
         }
         Insert: {
+          audience?: string[]
           budget?: string | null
           city?: string | null
           created_at?: string
@@ -393,6 +401,7 @@ export type Database = {
           title_vi: string
         }
         Update: {
+          audience?: string[]
           budget?: string | null
           city?: string | null
           created_at?: string
@@ -446,6 +455,7 @@ export type Database = {
       }
       game_content: {
         Row: {
+          audience: string[]
           content: Json
           id: string
           pack: string | null
@@ -453,6 +463,7 @@ export type Database = {
           type: string
         }
         Insert: {
+          audience?: string[]
           content: Json
           id?: string
           pack?: string | null
@@ -460,6 +471,7 @@ export type Database = {
           type: string
         }
         Update: {
+          audience?: string[]
           content?: Json
           id?: string
           pack?: string | null
@@ -711,6 +723,7 @@ export type Database = {
       }
       occasion_catalog: {
         Row: {
+          audience: string[]
           created_at: string
           id: string
           ideas_vi: Json
@@ -719,6 +732,7 @@ export type Database = {
           title_vi: string
         }
         Insert: {
+          audience?: string[]
           created_at?: string
           id?: string
           ideas_vi?: Json
@@ -727,6 +741,7 @@ export type Database = {
           title_vi: string
         }
         Update: {
+          audience?: string[]
           created_at?: string
           id?: string
           ideas_vi?: Json
@@ -868,10 +883,12 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address_term: string | null
           age_confirmed: boolean
           avatar: string | null
           birthday: string | null
           consent_at: string | null
+          content_style: string | null
           created_at: string
           dialect: string | null
           display_name: string | null
@@ -886,10 +903,12 @@ export type Database = {
           tone: string | null
         }
         Insert: {
+          address_term?: string | null
           age_confirmed?: boolean
           avatar?: string | null
           birthday?: string | null
           consent_at?: string | null
+          content_style?: string | null
           created_at?: string
           dialect?: string | null
           display_name?: string | null
@@ -904,10 +923,12 @@ export type Database = {
           tone?: string | null
         }
         Update: {
+          address_term?: string | null
           age_confirmed?: boolean
           avatar?: string | null
           birthday?: string | null
           consent_at?: string | null
+          content_style?: string | null
           created_at?: string
           dialect?: string | null
           display_name?: string | null
@@ -1148,6 +1169,19 @@ export type Database = {
           couple_id: string
         }[]
       }
+      create_space: {
+        Args: {
+          _kind: string
+          _my_city: string
+          _partner_city: string
+          _start_date: string
+          _type: string
+        }
+        Returns: {
+          code: string
+          couple_id: string
+        }[]
+      }
       gen_invite_code: { Args: never; Returns: string }
       has_answered: {
         Args: { _date: string; _question: string }
@@ -1166,6 +1200,7 @@ export type Database = {
       join_couple: { Args: { _code: string }; Returns: string }
       list_capsules: { Args: never; Returns: Json }
       my_couple_id: { Args: never; Returns: string }
+      my_space_kind: { Args: never; Returns: string }
       open_capsule: { Args: { _id: string }; Returns: undefined }
       refresh_invite: { Args: never; Returns: string }
       round_completed: { Args: { _round: string }; Returns: boolean }
