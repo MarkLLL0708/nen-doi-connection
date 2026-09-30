@@ -1,0 +1,2 @@
+ALTER TABLE public.capsules DROP CONSTRAINT capsules_type_check;
+ALTER TABLE public.capsules ADD CONSTRAINT capsules_type_check CHECK (type = ANY (ARRAY['miss','sad','birthday','anniversary','fight','cheer']));
