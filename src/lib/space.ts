@@ -9,7 +9,7 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
     "feat.thumb.metaTitle": "Đập tay · Nến Đôi", "feat.thumb.title": "Đập tay", "feat.thumb.open": "Đập tay", "feat.thumb.openSub": "Cùng chạm vào một lúc, dù đang ở đâu.",
     "feat.thumb.synced": "Đập tay rồi! {{partner}} cũng đang ở đây.", "feat.thumb.solo": "Kết nối bạn thân xong mới đập tay được nhé.",
     "feat.thumb.count": "Hai đứa đã đập tay {{count}} lần", "feat.thumb.hint": "Giữ ngón tay trên vòng tròn. Hai đứa cùng giữ là đập tay.", "feat.thumb.nudge": "Rủ {{partner}} đập tay",
-    "feat.notif.thumb_nudge": "{{partner}} rủ bạn đập tay. Vào ngay nhé!",
+    "feat.notif.thumb_nudge": "{{partner}} rủ bạn đập tay. Vào ngay nhé!", "feat.notif.thumb_synced": "Đập tay thành công với {{partner}}!",
     "sample.daysLabel": "ngày là bạn của nhau",
     "tabs.date": "Đi chơi",
     "feat.explore.desc.family": "Tuổi thơ, gia đình và chuyện nhà mỗi đứa.", "feat.explore.desc.money": "Tiền bạc, ranh giới và kèo chia tiền.", "feat.explore.desc.distance": "Giữ thân khi mỗi đứa một nơi.",
@@ -45,7 +45,7 @@ const FRIENDS: Record<"vi" | "en", Record<string, unknown>> = {
   en: {
     "feat.thumb.metaTitle": "High five · Nến Đôi", "feat.thumb.title": "High five", "feat.thumb.open": "High five", "feat.thumb.synced": "High five! {{partner}} is here too.",
     "feat.thumb.solo": "Connect with your friend first.", "feat.thumb.count": "You've high-fived {{count}} times", "feat.thumb.nudge": "Invite {{partner}} for a high five",
-    "feat.notif.thumb_nudge": "{{partner}} wants a high five. Join now!",
+    "feat.notif.thumb_nudge": "{{partner}} wants a high five. Join now!", "feat.notif.thumb_synced": "High five with {{partner}} landed!",
     "feat.thumb.hint": "Keep your thumb on the circle. When you both hold, you high-five.",
     "sample.daysLabel": "days as friends",
     "tabs.date": "Hang out",
