@@ -140,14 +140,14 @@ export function LiveAlerts() {
   return <AnimatePresence>
     <motion.div key={current.id} className="fixed inset-0 z-[70] flex justify-center px-4 pt-[max(1.5rem,env(safe-area-inset-top))]"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <button type="button" aria-label={t("feat.notif.dismiss")} onClick={close} className="absolute inset-0 bg-ink/60" />
+      <Pressable aria-label={t("feat.notif.dismiss")} onClick={close} className="absolute inset-0 bg-ink/60" />
       <motion.div role="alertdialog" aria-live="assertive" aria-label={title}
         initial={reduce ? false : { y: -40, opacity: 0, scale: 0.96 }} animate={{ y: 0, opacity: 1, scale: 1 }} transition={spring}
-        className={`grain relative z-[1] h-fit w-[82%] max-w-[420px] rounded-[28px] p-6 ${m.tone}`}>
-        <button type="button" onClick={close} aria-label={t("feat.notif.dismiss")}
+        className={`grain relative z-[1] h-fit max-h-[calc(100dvh-3rem-env(safe-area-inset-top))] w-[78%] max-w-[420px] overflow-y-auto rounded-[28px] p-6 ${m.tone}`}>
+        <Pressable onClick={close} aria-label={t("feat.notif.dismiss")}
           className="absolute right-4 top-4 grid size-10 place-items-center rounded-full bg-surface text-foreground">
           <X strokeWidth={2.5} className="size-5" aria-hidden="true" />
-        </button>
+        </Pressable>
         <span className="relative z-[2] grid size-14 place-items-center rounded-[18px] bg-surface text-foreground">
           <Icon strokeWidth={2} className="size-7" aria-hidden="true" />
         </span>
