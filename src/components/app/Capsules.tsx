@@ -33,10 +33,10 @@ function nextOccurrence(md: string | null | undefined, today: Date) {
   if (x <= today) x.setFullYear(x.getFullYear() + 1);
   return dateKey(x);
 }
-const fmt = (d: string) => new Date(`${d}T00:00:00`).toLocaleDateString("vi-VN");
+const fmt = (d: string, language: string) => new Date(`${d}T00:00:00`).toLocaleDateString(language === "en" ? "en-US" : "vi-VN");
 
 export function Capsules({ me }: { me: Me }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data } = useCapsules();
   const [composing, setComposing] = useState(false);
   const partner = me.profile?.partner_call_name || me.partner?.display_name || t("app.setup.call.ban");
@@ -57,7 +57,7 @@ export function Capsules({ me }: { me: Me }) {
         <p className="type-title text-[19px] leading-[1.2]">{t(`feat.capsule.types.${c.type}`)}</p>
         <span className="shrink-0 rounded-full bg-cream px-3 py-1 type-button text-[13px] text-ink">{c.status === "opened" ? t("feat.capsule.stOpened") : t("feat.capsule.stSent")}</span>
       </div>
-      {c.unlock_on && <p className="relative z-[2] mt-2 type-caption">{t("feat.capsule.sealedUntil", { date: fmt(c.unlock_on) })}</p>}
+      {c.unlock_on && <p className="relative z-[2] mt-2 type-caption">{t("feat.capsule.sealedUntil", { date: fmt(c.unlock_on, i18n.language) })}</p>}
     </div>)}</Section>}
   </div>;
 }
@@ -67,7 +67,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function Received({ c, me, partner }: { c: Capsule; me: Me; partner: string }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const qc = useQueryClient();
   const reduce = useReducedMotion();
   const [ask, setAsk] = useState(false);
@@ -91,7 +91,7 @@ function Received({ c, me, partner }: { c: Capsule; me: Me; partner: string }) {
         {c.body && <p className="whitespace-pre-line break-words type-body" data-testid="capsule-body">{c.body}</p>}
         {c.voice_path && <div className="mt-3"><VoicePlayer path={c.voice_path} seconds={c.voice_seconds} /></div>}
       </motion.div> : <motion.div key="sealed" exit={{ opacity: 0 }} className="mt-4">
-        {dated && !c.readable ? <p className="flex items-center gap-2 type-button"><Lock strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.capsule.sealedUntil", { date: fmt(c.unlock_on!) })} · {t("feat.capsule.daysLeft", { count: left })}</p>
+        {dated && !c.readable ? <p className="flex items-center gap-2 type-button"><Lock strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.capsule.sealedUntil", { date: fmt(c.unlock_on!, i18n.language) })} · {t("feat.capsule.daysLeft", { count: left })}</p>
           : <>
             {!dated && <p className="type-caption">{t("feat.capsule.openWhen")}</p>}
             <button onClick={() => (dated ? void open() : setAsk(true))} className="mt-3 inline-flex h-12 items-center gap-2 rounded-[16px] bg-ink px-5 type-button text-cream"><MailOpen strokeWidth={2.5} className="size-4" aria-hidden="true" />{t("feat.capsule.open")}</button>

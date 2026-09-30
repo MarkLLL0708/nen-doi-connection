@@ -63,7 +63,7 @@ function useTimeline(me: Me) {
 }
 
 export function Timeline({ me }: { me: Me }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const qc = useQueryClient();
   const { data } = useTimeline(me);
   const [filter, setFilter] = useState<Filter>("all");
@@ -102,7 +102,7 @@ export function Timeline({ me }: { me: Me }) {
       className={cn("grain rounded-[24px] p-5", toneFor[e.kind])}>
       <div className="relative z-[2]">
         <div className="flex items-start justify-between gap-3">
-          <p className="type-label">{t(`feat.timeline.kinds.${e.kind}`)} · {new Date(`${e.date}T00:00:00`).toLocaleDateString("vi-VN")}</p>
+          <p className="type-label">{t(`feat.timeline.kinds.${e.kind}`)} · {new Date(`${e.date}T00:00:00`).toLocaleDateString(i18n.language === "en" ? "en-US" : "vi-VN")}</p>
           {e.own && e.memoryId && <button aria-label={t("feat.timeline.delete")} onClick={() => void remove(e.memoryId!)} className="-m-2 grid size-10 shrink-0 place-items-center"><Trash2 strokeWidth={2} className="size-4" /></button>}
         </div>
         <div className="mt-2"><EntryBody e={e} /></div>

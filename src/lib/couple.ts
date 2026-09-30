@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import { applySpaceKind } from "@/lib/space";
 
 export type Profile = Tables<"profiles">;
 export type Couple = Tables<"couples">;
@@ -37,7 +38,9 @@ export async function fetchMe(): Promise<Me | null> {
 }
 
 export function useMe() {
-  return useQuery({ queryKey: meKey, queryFn: fetchMe, staleTime: 10_000 });
+  const query = useQuery({ queryKey: meKey, queryFn: fetchMe, staleTime: 10_000 });
+  useEffect(() => { if (query.data?.couple) applySpaceKind(query.data.couple.kind === "friends" ? "friends" : "couple"); }, [query.data?.couple?.kind]);
+  return query;
 }
 
 export function useInvalidateMe() {

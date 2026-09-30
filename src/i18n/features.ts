@@ -235,7 +235,7 @@ export const featEn: typeof featVi = {
     waiting: "Waiting for {{partner}} to agree", waitingSub: "New topic: {{category}}. Until then you stay on the current one.", cancel: "Cancel request",
     playingNow: "NOW PLAYING", noneShort: "NO TOPIC YET", pickTitle: "Pick a topic together", pick: "Pick a topic", change: "Change topic", cardAria: "Now playing: {{category}}. Change topic", firstPick: "Pick a topic first — today's question will come from it.",
     count: "{{count}} questions", error: "Couldn't switch, try again.",
-    desc: { memory: "Firsts and moments you still think about.", family: "Family, parents and meeting them.", tet: "Tết, holidays and yearly rituals.", food: "Go-to dishes, favourite spots, food plans.", fun: "Light questions for a good laugh.", money: "Money, plans and what to agree on.", distance: "Staying close when you're apart.", conflict: "How you argue and how you make up.", deep: "Questions worth slowing down for." },
+    desc: { memory: "Firsts and moments you still think about.", family: "Family, parents and meeting them.", tet: "Lunar New Year, holidays and yearly rituals.", food: "Go-to dishes, favourite spots, food plans.", fun: "Light questions for a good laugh.", money: "Money, plans and what to agree on.", distance: "Staying close when you're apart.", conflict: "How you argue and how you make up.", deep: "Questions worth slowing down for." },
   },
   draw: {
     metaTitle: "Shared sketchpad · Nến Đôi", metaDesc: "Draw each other a few lines, then race for 60 seconds.",
