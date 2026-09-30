@@ -16,7 +16,8 @@ export function NotificationBell({ me }: { me: Me }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const partner = me.profile?.partner_call_name || me.partner?.display_name || t("app.setup.call.ban");
-  const { data } = useQuery({ queryKey: ["notifications"], refetchInterval: 30000, queryFn: async () => {
+  // No polling: the live listener refreshes this list the moment something arrives.
+  const { data } = useQuery({ queryKey: ["notifications"], queryFn: async () => {
     await supabase.rpc("sync_capsule_notices");
     const { data, error } = await supabase.from("notifications").select("*").order("created_at", { ascending: false }).limit(30);
     if (error) throw error; return data;

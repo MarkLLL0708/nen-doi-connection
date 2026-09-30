@@ -1,5 +1,4 @@
 import { questionPackTone } from "@/lib/packs";
-import { useCategoryState } from "@/components/app/ExploreTab";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -60,16 +59,13 @@ function QuestionFlow({ me }: { me: Me }) {
   const partnerCall = me.profile?.partner_call_name || t("app.setup.call.ban");
   const partnerName = me.partner?.display_name || partnerCall;
   const solo = me.members.length < 2;
-  const cat = useCategoryState();
-  // No shared topic yet: send the pair to the picker first.
-  useEffect(() => { if (!solo && cat.data && !cat.data.active) void navigate({ to: "/app", search: { tab: "explore" }, replace: true }); }, [cat.data, solo]); // eslint-disable-line react-hooks/exhaustive-deps
-
+  // A question always shows, topic or not — the live listener refreshes it when the other person answers.
   const today = useQuery({ queryKey: ["todayQuestion", me.couple!.id], queryFn: async () => {
     const { data, error } = await supabase.rpc("today_question" as never); if (error) throw error; return data as unknown as Today | null;
-  }, refetchInterval: (q) => (q.state.data && !q.state.data.partner_answered ? 5000 : false) });
+  } });
   const q = today.data;
 
-  const answers = useQuery({ enabled: !!q, queryKey: ["answers", q?.id, q?.date], refetchInterval: 5000, queryFn: async () => {
+  const answers = useQuery({ enabled: !!q, queryKey: ["answers", q?.id, q?.date], queryFn: async () => {
     const { data, error } = await supabase.from("question_answers").select("id,user_id,body").eq("question_id", q!.id).eq("answer_date", q!.date);
     if (error) throw error; return data as Answer[];
   } });

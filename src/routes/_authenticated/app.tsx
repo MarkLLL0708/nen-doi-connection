@@ -50,11 +50,11 @@ function AppScreen() {
 
   if (isLoading || !me?.couple || !me.profile?.onboarded) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
 
-  return <Shell className="pb-28">
+  return <Shell className="pb-[calc(9.5rem+env(safe-area-inset-bottom))]">
     <PageTransition key={tab} className="flex flex-1 flex-col">
       {tab === "home" ? <Home me={me} /> : tab === "explore" ? <ExploreTab me={me} /> : tab === "settings" ? <SettingsTab me={me} /> : tab === "play" ? <PlayTab me={me} /> : tab === "date" ? <DateTab me={me} /> : <MemoriesTab me={me} />}
     </PageTransition>
-    <div className="fixed inset-x-0 bottom-4 z-30 mx-auto max-w-[390px] px-4">
+    <div className="fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 mx-auto max-w-[390px] px-4">
       <BottomTabBar id="app-tabs" active={tab} onSelect={(k: TabKey) => void navigate({ to: "/app", search: k === "home" ? {} : { tab: k } })} />
     </div>
   </Shell>;
@@ -74,7 +74,7 @@ function Home({ me }: { me: Me }) {
   const myUrl = useAvatarUrl(me.profile?.avatar);
   const partnerUrl = useAvatarUrl(me.partner?.avatar);
 
-  const { data: status } = useQuery({ queryKey: ["today", couple.id], refetchInterval: 60_000,
+  const { data: status } = useQuery({ queryKey: ["today", couple.id],
     queryFn: async () => { const { data, error } = await supabase.rpc("today_status"); if (error) throw error; return data as unknown as TodayStatus; } });
   const mine = status?.members.find((m) => m.user_id === me.userId);
   const theirs = status?.members.find((m) => m.user_id !== me.userId);
