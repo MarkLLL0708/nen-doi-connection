@@ -44,7 +44,7 @@ export function ExploreTab({ me }: { me: Me }) {
   const packs = [...data.packs].sort((a, b) => ORDER.indexOf(a.pack) - ORDER.indexOf(b.pack));
 
   return <div className="flex flex-1 flex-col gap-5 pt-2">
-    <header>
+    <header className="pt-12">
       <p className="type-caption text-muted-foreground">{t("feat.explore.label")}</p>
       <h1 className="type-display text-[32px] leading-[1.15]">{t("feat.explore.title")}</h1>
       <p className="mt-2 type-body text-muted-foreground">{data.active ? t("feat.explore.activeNow", { category: name(data.active) }) : t("feat.explore.none")}</p>
@@ -55,7 +55,7 @@ export function ExploreTab({ me }: { me: Me }) {
       <div className="mt-4 flex gap-2">
         <PrimaryButton arrow={false} disabled={busy} onClick={() => void run(() => supabase.rpc("respond_category", { _id: pend.id, _accept: true }))}>{t("feat.explore.accept")}</PrimaryButton>
         <Pressable disabled={busy} onClick={() => void run(() => supabase.rpc("respond_category", { _id: pend.id, _accept: false }))}
-          className="h-12 rounded-full bg-surface px-5 type-button">{t("feat.explore.decline")}</Pressable>
+          className="h-14 shrink-0 whitespace-nowrap rounded-[18px] bg-surface px-5 type-button">{t("feat.explore.decline")}</Pressable>
       </div>
     </div>}
 
