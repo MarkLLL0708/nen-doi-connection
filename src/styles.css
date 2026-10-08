@@ -109,3 +109,59 @@
 .flood-auto { background: var(--ink); color: var(--on-ink); } .flood-auto-text { color: var(--on-ink); }
 .dark .flood-auto { background: var(--ember); color: var(--on-ember); } .dark .flood-auto-text { color: var(--on-ember); }
 @media (prefers-color-scheme: dark) { html:not(.light) .flood-auto { background: var(--ember); color: var(--on-ember); } html:not(.light) .flood-auto-text { color: var(--on-ember); } }
+
+
+/* Production interaction + mobile viewport hardening */
+html {
+  min-height: 100%;
+  background: var(--color-page);
+  overscroll-behavior-y: none;
+  text-rendering: optimizeLegibility;
+}
+body {
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+button, a, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+button, [role="button"], a {
+  touch-action: manipulation;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 3px;
+}
+input, textarea, select {
+  font: inherit;
+}
+::selection {
+  background: var(--ember);
+  color: var(--on-ember);
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(18 18 18 / 0.2);
+  border-radius: 999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(245 239 230 / 0.2);
+}
+@media (min-width: 768px) {
+  body {
+    min-height: 100vh;
+  }
+}
+@media (max-width: 767px) {
+  body {
+    min-height: 100svh;
+  }
+}
