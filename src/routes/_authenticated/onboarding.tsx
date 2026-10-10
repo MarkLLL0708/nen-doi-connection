@@ -32,7 +32,7 @@ type StepId = typeof profileSteps[number] | typeof coupleSteps[number];
 function Onboarding() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: me, isLoading } = useMe();
+  const { data: me, isLoading, isError, refetch } = useMe();
   const invalidate = useInvalidateMe();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -59,6 +59,7 @@ function Onboarding() {
     if (!plan && me.profile?.onboarded && me.couple) void navigate({ to: "/app", replace: true });
   }, [me]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  if (isError) return <Shell><div className="grid flex-1 content-center justify-items-center gap-4 px-6 text-center"><p role="alert" className="type-body">{t("app.error")}</p><button type="button" onClick={() => void refetch()} className="rounded-full bg-ink px-5 py-3 type-button text-cream">{t("app.retry")}</button></div></Shell>;
   if (isLoading || !me) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
   const step = steps[Math.min(idx, steps.length - 1)];
   if (!step) return null;
@@ -83,21 +84,34 @@ function Onboarding() {
   const createCouple = async () => {
     if (busy) return;
     setBusy(true);
-    const { error } = await supabase.rpc("create_couple", { _start_date: f.start, _type: f.type, _my_city: f.myCity, _partner_city: f.partnerCity });
-    setBusy(false);
-    if (error && !/already/.test(error.message)) { setErr(t("app.error")); return; }
-    await invalidate();
-    void navigate({ to: "/pair" });
+    setErr(null);
+    try {
+      const { error } = await supabase.rpc("create_couple", { _start_date: f.start, _type: f.type, _my_city: f.myCity, _partner_city: f.partnerCity });
+      if (error && !/already/.test(error.message)) { setErr(t("app.error")); return; }
+      await invalidate();
+      void navigate({ to: "/pair" });
+    } catch {
+      setErr(t("app.error"));
+    } finally {
+      setBusy(false);
+    }
   };
 
   const upload = async (file: File) => {
+    if (busy) return;
     setBusy(true);
-    const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
-    const path = `u-${me.userId}/avatar/${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("photos").upload(path, file, { upsert: false, contentType: file.type });
-    setBusy(false);
-    if (error) { setErr(t("app.error")); return; }
-    set({ avatar: `file:${path}` });
+    setErr(null);
+    try {
+      const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const path = `u-${me.userId}/avatar/${Date.now()}.${ext}`;
+      const { error } = await supabase.storage.from("photos").upload(path, file, { upsert: false, contentType: file.type });
+      if (error) { setErr(t("app.error")); return; }
+      set({ avatar: `file:${path}` });
+    } catch {
+      setErr(t("app.error"));
+    } finally {
+      setBusy(false);
+    }
   };
 
   const common = { stepKey: step, tone: tones[idx % tones.length]!, progress: (idx + 1) / steps.length, onBack: back, busy };
