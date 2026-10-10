@@ -1,0 +1,46 @@
+name: Production QA
+
+on:
+  push:
+    branches: ["main", "codex/**"]
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: production-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # The repository currently has a large pre-existing formatting backlog.
+      # Lint changed TypeScript files for semantic issues without blocking on
+      # unrelated formatting violations elsewhere in the codebase.
+      - name: Lint changed TypeScript files
+        shell: bash
+        run: |
+          git fetch origin main
+          FILES="$(git diff --name-only origin/main...HEAD -- '*.ts' '*.tsx')"
+          if [ -z "$FILES" ]; then
+            echo "No changed TypeScript files to lint."
+          else
+            echo "$FILES"
+            bunx eslint $FILES --rule 'prettier/prettier: off'
+          fi
+
+      - name: Production build
+        run: bun run build

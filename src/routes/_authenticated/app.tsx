@@ -38,7 +38,8 @@ export const Route = createFileRoute("/_authenticated/app")({
 });
 
 function AppScreen() {
-  const { data: me, isLoading } = useMe();
+  const { data: me, isLoading, isError, refetch } = useMe();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { tab = "home" } = Route.useSearch();
 
@@ -48,6 +49,7 @@ function AppScreen() {
     if (!me.profile?.onboarded || !me.couple) void navigate({ to: "/onboarding", replace: true });
   }, [me, navigate]);
 
+  if (isError) return <Shell><div className="grid flex-1 content-center justify-items-center gap-4 px-6 text-center"><p role="alert" className="type-body">{t("app.error")}</p><button type="button" onClick={() => void refetch()} className="rounded-full bg-ink px-5 py-3 type-button text-cream">{t("app.retry")}</button></div></Shell>;
   if (isLoading || !me?.couple || !me.profile?.onboarded) return <Shell><div className="grid flex-1 place-items-center"><FlameMark size={40} /></div></Shell>;
 
   return <Shell className="pb-[calc(9.5rem+env(safe-area-inset-bottom))]">

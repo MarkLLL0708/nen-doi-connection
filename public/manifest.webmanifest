@@ -1,1 +1,19 @@
-{"name":"Nến Đôi","short_name":"Nến Đôi","description":"Một chút gần nhau, mỗi ngày.","start_url":"/styleguide","scope":"/","display":"standalone","background_color":"#FAF6F0","theme_color":"#FAF6F0","lang":"vi","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "Nến Đôi",
+  "short_name": "Nến Đôi",
+  "description": "Một chút gần nhau, mỗi ngày.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAF6F0",
+  "theme_color": "#FAF6F0",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

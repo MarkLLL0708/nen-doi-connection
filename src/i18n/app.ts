@@ -9,7 +9,7 @@ export const appVi = {
     joinTitle: "Lời mời · Nến Đôi", joinDesc: "Ai đó đang chờ bạn trên Nến Đôi.",
   },
   ticker: "HAI NGƯỜI • MỖI NGÀY • MỘT CHÚT •",
-  next: "Tiếp tục", back: "Quay lại", skip: "Bỏ qua", save: "Lưu", loading: "Đang tải…", error: "Có lỗi rồi. Thử lại nhé.",
+  next: "Tiếp tục", back: "Quay lại", skip: "Bỏ qua", save: "Lưu", loading: "Đang tải…", error: "Có lỗi rồi. Thử lại nhé.", retry: "Thử lại",
   intro: [
     { label: "NẾN ĐÔI", title: "Mỗi ngày một chút, gần nhau thêm một chút" },
     { label: "CÂU HỎI · TRÒ CHƠI", title: "Chơi cùng nhau, hiểu nhau hơn" },
@@ -78,7 +78,7 @@ export const appEn: typeof appVi = {
     joinTitle: "Invite · Nến Đôi", joinDesc: "Someone is waiting for you on Nến Đôi.",
   },
   ticker: "TWO PEOPLE • EVERY DAY • A LITTLE •",
-  next: "Continue", back: "Back", skip: "Skip", save: "Save", loading: "Loading…", error: "Something went wrong. Try again.",
+  next: "Continue", back: "Back", skip: "Skip", save: "Save", loading: "Loading…", error: "Something went wrong. Try again.", retry: "Try again",
   intro: [
     { label: "NẾN ĐÔI", title: "A little every day, a little closer" },
     { label: "QUESTIONS · GAMES", title: "Play together, know each other better" },
