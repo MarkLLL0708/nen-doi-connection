@@ -35,34 +35,79 @@ function AuthPage() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    void supabase.auth.getSession().then(({ data }) => { if (data.session) void navigate({ to: "/app", replace: true }); });
-    const { data: sub } = supabase.auth.onAuthStateChange((e, s) => { if (e === "SIGNED_IN" && s) void navigate({ to: "/app", replace: true }); });
-    return () => sub.subscription.unsubscribe();
-  }, [navigate]);
+    let active = true;
+    void supabase.auth.getSession()
+      .then(({ data, error }) => {
+        if (error) throw error;
+        if (active && data.session) void navigate({ to: "/app", replace: true });
+      })
+      .catch(() => {
+        if (active) setErr(t("app.error"));
+      });
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) void navigate({ to: "/app", replace: true });
+    });
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
+  }, [navigate, t]);
 
   const submit = async (e: FormEvent) => {
-    e.preventDefault(); setErr(null);
-    if (password.length < 8) { setErr(t("app.auth.weak")); return; }
-    setBusy(true);
-    if (mode === "in") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) setErr(/confirm/i.test(error.message) ? t("app.auth.unconfirmed") : t("app.auth.badLogin"));
-      else void navigate({ to: "/app", replace: true });
-    } else {
-      const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin } });
-      if (error) setErr(/registered|exists/i.test(error.message) ? t("app.auth.exists") : t("app.error"));
-      else if (data.session) void navigate({ to: "/app", replace: true });
-      else setSent(true);
+    e.preventDefault();
+    setErr(null);
+    if (password.length < 8) {
+      setErr(t("app.auth.weak"));
+      return;
     }
-    setBusy(false);
+
+    setBusy(true);
+    try {
+      if (mode === "in") {
+        const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+        if (error) {
+          setErr(/confirm/i.test(error.message) ? t("app.auth.unconfirmed") : t("app.auth.badLogin"));
+        } else {
+          void navigate({ to: "/app", replace: true });
+        }
+      } else {
+        const { data, error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: { emailRedirectTo: window.location.origin },
+        });
+        if (error) {
+          setErr(/registered|exists/i.test(error.message) ? t("app.auth.exists") : t("app.error"));
+        } else if (data.session) {
+          void navigate({ to: "/app", replace: true });
+        } else {
+          setSent(true);
+        }
+      }
+    } catch {
+      setErr(t("app.error"));
+    } finally {
+      setBusy(false);
+    }
   };
 
   const social = async (provider: "google" | "apple") => {
+    if (busy) return;
     setErr(null);
-    const r = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
-    if (r.error) { setErr(t("app.error")); return; }
-    if (r.redirected) return;
-    void navigate({ to: "/app", replace: true });
+    setBusy(true);
+    try {
+      const r = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
+      if (r.error) {
+        setErr(t("app.error"));
+        return;
+      }
+      if (r.redirected) return;
+      void navigate({ to: "/app", replace: true });
+    } catch {
+      setErr(t("app.error"));
+    } finally {
+      setBusy(false);
+    }
   };
 
   return <Shell>
@@ -85,10 +130,10 @@ function AuthPage() {
         </form>
         <p className="my-5 type-label text-muted-foreground">{t("app.auth.or")}</p>
         <div className="space-y-3">
-          <SecondaryButton type="button" onClick={() => void social("google")}>{t("app.auth.google")}</SecondaryButton>
-          <SecondaryButton type="button" onClick={() => void social("apple")}>{t("app.auth.apple")}</SecondaryButton>
+          <SecondaryButton type="button" disabled={busy} onClick={() => void social("google")}>{t("app.auth.google")}</SecondaryButton>
+          <SecondaryButton type="button" disabled={busy} onClick={() => void social("apple")}>{t("app.auth.apple")}</SecondaryButton>
         </div>
-        <GhostButton className="mt-4" onClick={() => { setMode(mode === "in" ? "up" : "in"); setErr(null); }}>{mode === "in" ? t("app.auth.toSignUp") : t("app.auth.toSignIn")}</GhostButton>
+        <GhostButton className="mt-4" disabled={busy} onClick={() => { setMode(mode === "in" ? "up" : "in"); setErr(null); }}>{mode === "in" ? t("app.auth.toSignUp") : t("app.auth.toSignIn")}</GhostButton>
       </>}
     </div>
   </Shell>;
