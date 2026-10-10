@@ -82,7 +82,10 @@ export async function fetchMe(): Promise<Me | null> {
 
 export function useMe() {
   const query = useQuery({ queryKey: meKey, queryFn: fetchMe, staleTime: 10_000 });
-  useEffect(() => { if (query.data?.couple) applySpaceKind(query.data.couple.kind === "friends" ? "friends" : "couple"); }, [query.data?.couple?.kind]);
+  const coupleKind = query.data?.couple?.kind;
+  useEffect(() => {
+    if (coupleKind) applySpaceKind(coupleKind === "friends" ? "friends" : "couple");
+  }, [coupleKind]);
   return query;
 }
 
